@@ -34,7 +34,7 @@ void management() {
 			//deliveryManagement();
 		}
 
-		//Pricesss
+		//Prices
 		else if (managementOption == 3) {
 			//pricesManagement();
 		}
