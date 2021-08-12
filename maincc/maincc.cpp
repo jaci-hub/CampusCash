@@ -1,0 +1,161 @@
+#include<bits/stdc++.h>
+#include "criar_sender.h"
+#include "criar_receiver.h"
+#include "send_cash.h"
+#include "menu.h"
+#include "SchoolStudentOptionLoginMenu.h"
+#include "logIn_option.h"
+#include "criar_orderFood.h"
+#include "delivery.h"
+#include "orderFood_payment.h"
+#include "show_orders_byFoodBuilding.h"
+#include "library.h"
+#include "outdoors.h"
+#include "cashTransactionRecord.h"
+#include "management.h"
+
+using namespace std;
+
+//THIS APP CAN EVEN BE AN ALTERNATIVE WAY FOR STUDENTS TO REGISTER FOR THE TYPE OF MEAL PLAN THEY WANT FOR A PARTICULAR YEAR/SEMESTER
+
+int main() {
+    cout << "*** Campus Cash (CC) ***" << "\n";
+
+    //log in as school
+    logIn_option();
+
+    if (selection == 1) {
+        //criar_school_staff();
+        // 
+        backToStaffMenu:
+        cout << "*** Campus Cash (CC) ***" << "\n";
+        //cout << "** Welcome " << staff.get_name() << " **" << "\n";
+
+        //show menu
+        schoolOptionMenu(); //from SchoolStudentOptionLoginMenu.h
+
+        //Go to Show orders
+        if (menuChoice == 1) {
+            show_orders_byFoodBuilding();
+            if (ordersOption == 3)
+                goto backToStaffMenu;
+            
+            cout << "\n";
+            //ask if staff would like to go to menu or log out
+            cout << "1- Back to main Menu\n";
+            cout << "Any key- Log out\n";
+            cout << "Please, enter an option: ";
+            string reoption;
+            cin >> reoption;
+            if (reoption != "1")
+                cout << "\n" << "Thank you!" << "\n";
+            else goto backToStaffMenu;
+        }
+
+        //Go to Cash Transaction Record
+        else if (menuChoice == 2) { //asks for password/PIN
+            string cashTransRecoPin;
+            cout << "PIN: ";
+            cin >> cashTransRecoPin;
+            if (cashTransRecoPin == "0123") {
+                cout << "*** Campus Cash (CC) ***" << "\n";
+                cout << "* Recent Transactions *" << "\n";
+                cashTransactionRecord();
+                cout << "\n";
+                //ask if staff would like to go to menu or log out
+                cout << "1- Back to main Menu\n";
+                cout << "Any key- Log out\n";
+                cout << "Please, enter an option: ";
+                string reoption;
+                cin >> reoption;
+                if (reoption != "1")
+                    cout << "\n" << "Thank you!" << "\n";
+                else goto backToStaffMenu;
+            }
+        }
+
+        //Go to management
+        else if (menuChoice == 3) { 
+            management(); //asks for password/PIN
+            if (managementOption == 4)
+                goto backToStaffMenu;
+            cout << "\n";
+            //ask if staff would like to go to menu or log out
+            cout << "1- Back to main Menu\n";
+            cout << "Any key- Log out\n";
+            cout << "Please, enter an option: ";
+            string reoption;
+            cin >> reoption;
+            if (reoption != "1")
+                cout << "\n" << "Thank you!" << "\n";
+            else goto backToStaffMenu;
+        }
+
+        //Log Out
+        else if (menuChoice == 4)
+            cout << "\n" << "Thank you!" << "\n";
+
+    }
+
+    //log in as student
+    else if (selection == 2) {
+        //criar o sender/fazer log in as a student
+        criar_sender();
+        //system("clear");
+
+        backToMenu:
+        cout << "*** Campus Cash (CC) ***" << "\n";
+        cout << "** Welcome " << student1.get_name() << " **" << "\n";
+        cout << "\n";
+        cout << "* Meals Balance: " << student1.get_mealPlanBalance() << "\n";
+        cout << "* Coyote Cash : $" << fixed << setprecision(2) << student1.get_balance() << "\n\n";
+        
+        //Show Menu
+        menu();
+
+        //OPTION 1- Order Food
+        if (option == 1) {
+            order_food();
+            delivery();
+            orderFood_payment();
+            cout << "\n";
+            //ask if student would like to go to menu or log out
+            cout << "1- Back to main Menu\n";
+            cout << "Any key- Log out\n";
+            cout << "Please, enter an option: ";
+            string reoption;
+            cin >> reoption;
+            if (reoption != "1")
+                cout << "\n" << "Thank you!" << "\n";
+            else goto backToMenu;
+        }
+
+        //OPTION 2- Send cash
+        else if (option == 2) {
+            //criar o receptor
+            criar_receiver();
+            //fazer envio
+            send_cash();
+            cout << "\n";
+            //ask if student would like to go to menu or log out
+            cout << "1- Back to main Menu\n";
+            cout << "Any key- Log out\n";
+            cout << "Please, enter an option: ";
+            string reoption;
+            cin >> reoption;
+            if (reoption != "1")
+                cout << "\n" << "Thank you!" << "\n";
+            else goto backToMenu;
+        }
+
+        //OPTION 3- Log out
+        else if (option == 3)
+            cout << "\n" << "Thank you!" << "\n";
+    }
+
+    //EXIT
+    else if (selection == 3)
+        cout << "\n" << "Thank you!" << "\n";
+
+    return 0;
+}
