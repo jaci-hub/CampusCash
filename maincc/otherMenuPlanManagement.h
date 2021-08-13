@@ -18,7 +18,7 @@ void otherMenuPlanManagement() {
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
-		//criar CategoryTableName if it doesnt exists yet
+		//criar CategoryTableName if it doesnt exist yet
 		CategoryTableName = buildingName_class.get_buildingName() + "CategoryTable";
 		if (tableExists(CategoryTableName) == false) {
 			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(255) UNIQUE) ";
@@ -28,7 +28,7 @@ void otherMenuPlanManagement() {
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
 
-		cout << "* Select an option \n";
+		cout << "* Select a category \n";
 		//listing the categories in the CategoryTableName
 		listarCoisas("categoryID", "categoryName", CategoryTableName);
 

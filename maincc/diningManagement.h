@@ -24,7 +24,7 @@ void diningManagement() {
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
-		cout << "* Select an option \n";
+		cout << "* Select a building \n";
 		//listing the buildings in the foodBuildingsTable
 		listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
 
@@ -51,7 +51,7 @@ void diningManagement() {
 			string newBuildingName;
 			cin.ignore();
 			getline(cin, newBuildingName);
-			addCoisaToTable(newBuildingName, "foodBuilding", "foodBuildingsTable"); //ADDED
+			addCoisaToTable(newBuildingName, "foodBuildingName", "foodBuildingsTable"); //ADDED
 
 				//***criar table of orders da new building***//
 			//take out all spaces and lower-case all letters
@@ -89,13 +89,16 @@ void diningManagement() {
 
 				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 			//Drop "MenuPlanTable"
-			dropTable(menuTableInUse);
+			if(tableExists(menuTableInUse))
+				dropTable(menuTableInUse);
 
 			//Drop "categoryTable"
-			dropTable(CategoryTableName);
+			if (tableExists(CategoryTableName))
+				dropTable(CategoryTableName);
 			
 			//Drop "ItemsTable"
-			dropTable(ItemsTableName);
+			if (tableExists(ItemsTableName))
+				dropTable(ItemsTableName);
 		}
 	}
 	else puts("Connection to DataBase has failed");
