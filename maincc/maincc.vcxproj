@@ -157,6 +157,7 @@
     <ClInclude Include="criar_receiver.h" />
     <ClInclude Include="criar_sender.h" />
     <ClInclude Include="delivery.h" />
+    <ClInclude Include="deliveryManagement.h" />
     <ClInclude Include="diningManagement.h" />
     <ClInclude Include="formatName.h" />
     <ClInclude Include="getCurrentDateTime.h" />

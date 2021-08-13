@@ -137,5 +137,8 @@
     <ClInclude Include="listarCoisas.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="deliveryManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

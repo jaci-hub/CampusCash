@@ -1,6 +1,7 @@
 #pragma once
 #include<bits/stdc++.h>
 #include "diningManagement.h"
+#include "deliveryManagement.h"
 using namespace std;
 
 int managementPIN, managementOption;
@@ -26,12 +27,12 @@ void management() {
 
 		//Dining
 		if (managementOption == 1) {
-			diningManagement(); //DONE!!!
+			diningManagement();
 		}
 
 		//Delivery
 		else if (managementOption == 2) {
-			//deliveryManagement();
+			deliveryManagement();
 		}
 
 		//Prices
