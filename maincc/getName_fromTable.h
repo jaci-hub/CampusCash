@@ -25,10 +25,7 @@ string getName_fromTable(string tableName, string columnToLookAt, string IDcolum
 			row = mysql_fetch_row(res);
 			return row[0];
 		}
-		else {
-			cout << "Query failed: " << mysql_error(conn) << "\n";
-			//return 0;
-		}
+		else cout << "Query failed: " << mysql_error(conn) << "\n";
 	}
 	else puts("Connection to DataBase has failed");
 }

@@ -16,8 +16,8 @@ int qstateManagement;
 void diningManagement() {
 	//Stablishing the connection to mysql database
 	MYSQL* conn;
-	MYSQL_ROW row;
-	MYSQL_RES* res;
+	//MYSQL_ROW row;
+	//MYSQL_RES* res;
 	conn = mysql_init(0);
 
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
@@ -84,7 +84,7 @@ void diningManagement() {
 			//take out all spaces and lower-case all letters
 			NameTobeRem = formatName(NameTobeRem);
 
-			string queryRemOrders = "DROP TABLE " + NameTobeRem + "OrdersTable";
+			string queryRemOrders = "DROP TABLE " + NameTobeRem + "OrdersTable"; 
 			const char* qRemOrders = queryRemOrders.c_str();
 			qstateAdd = mysql_query(conn, qRemOrders);
 			if (qstateAdd)

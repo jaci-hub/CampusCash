@@ -10,8 +10,8 @@ int qstateDeliveryManagement;
 void deliveryManagement() {
 	//Stablishing the connection to mysql database
 	MYSQL* conn;
-	MYSQL_ROW row;
-	MYSQL_RES* res;
+	//MYSQL_ROW row;
+	//MYSQL_RES* res;
 	conn = mysql_init(0);
 
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
