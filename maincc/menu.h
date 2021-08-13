@@ -1,5 +1,6 @@
 #pragma once
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
 using namespace std;
 
 //THIS APP CAN EVEN BE AN ALTERNATIVE WAY FOR STUDENTS TO REGISTER FOR THE TYPE OF MEAL PLAN THEY WANT FOR A PARTICULAR YEAR/SEMESTER

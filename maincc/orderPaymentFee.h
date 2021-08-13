@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "criar_orderFood.h"
 #include "delivery.h"
 

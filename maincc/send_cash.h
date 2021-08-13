@@ -1,5 +1,6 @@
 #pragma once
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
 #include "criar_sender.h"
 #include "criar_receiver.h"
 #include "file_com_pragmaonce_mysql.h"

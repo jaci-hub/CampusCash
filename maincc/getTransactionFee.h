@@ -1,5 +1,6 @@
 #pragma once
-
+#include <iostream>
+#include <string>
 double amount_toSend;
 
 double get_transactionFee() { //charge a 2% fee in every transaction

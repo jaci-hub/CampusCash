@@ -1,5 +1,6 @@
 #pragma once
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
 #include "classOrderFood.h"
 #include "orderTotal.h"
 #include "menu.h"

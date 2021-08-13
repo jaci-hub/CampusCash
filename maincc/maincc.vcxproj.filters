@@ -65,12 +65,6 @@
     <ClInclude Include="show_orders_byFoodBuilding.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="library.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="outdoors.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="cashTransactionRecord.h">
       <Filter>Header Files</Filter>
     </ClInclude>

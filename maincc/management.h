@@ -1,5 +1,6 @@
 #pragma once
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
 #include "diningManagement.h"
 #include "deliveryManagement.h"
 using namespace std;

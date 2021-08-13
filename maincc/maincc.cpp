@@ -1,4 +1,6 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <iomanip>
+#include <string>
 #include "criar_sender.h"
 #include "criar_receiver.h"
 #include "send_cash.h"
@@ -9,8 +11,6 @@
 #include "delivery.h"
 #include "orderFood_payment.h"
 #include "show_orders_byFoodBuilding.h"
-#include "library.h"
-#include "outdoors.h"
 #include "cashTransactionRecord.h"
 #include "management.h"
 

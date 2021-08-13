@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "classOrderFood.h"
 #include "criar_orderFood.h"
 

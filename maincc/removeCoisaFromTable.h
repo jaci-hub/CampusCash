@@ -1,5 +1,6 @@
 #pragma once
-#include<bits/stdc++.h>
+#include <iostream>
+#include <string>
 #include "file_com_pragmaonce_mysql.h"
 using namespace std;
 
