@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "dropTable.h"
 using namespace std;
 
 string onOffCampusBuildingsTableName, roomNumsTableName;
@@ -135,11 +136,7 @@ void deliveryManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			string queryRemItemsTable = "DROP TABLE " + categoryTobeRem + buildingName_class.get_buildingName() + "ItemsTable";
-			const char* qRemItemsTable = queryRemItemsTable.c_str();
-			qstateAdd = mysql_query(conn, qRemItemsTable);
-			if (qstateAdd)
-				cout << "Query failed: " << mysql_error(conn) << "\n";
+			dropTable(categoryTobeRem + buildingName_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 		}
 	}
 	else puts("Connection to DataBase has failed");

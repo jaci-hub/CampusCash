@@ -9,6 +9,7 @@
 #include "getName_fromTable.h"
 #include "buildingName_class.h"
 #include "listarCoisas.h"
+#include "dropTable.h"
 using namespace std;
 
 int qstateManagement;
@@ -84,13 +85,17 @@ void diningManagement() {
 			//take out all spaces and lower-case all letters
 			NameTobeRem = formatName(NameTobeRem);
 
-			string queryRemOrders = "DROP TABLE " + NameTobeRem + "OrdersTable"; 
-			const char* qRemOrders = queryRemOrders.c_str();
-			qstateAdd = mysql_query(conn, qRemOrders);
-			if (qstateAdd)
-				cout << "Query failed: " << mysql_error(conn) << "\n";
+			dropTable(NameTobeRem + "OrdersTable"); //TABLE DROPPED
 
-			//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
+				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
+			//Drop "MenuPlanTable"
+			dropTable(menuTableInUse);
+
+			//Drop "categoryTable"
+			dropTable(CategoryTableName);
+			
+			//Drop "ItemsTable"
+			dropTable(ItemsTableName);
 		}
 	}
 	else puts("Connection to DataBase has failed");

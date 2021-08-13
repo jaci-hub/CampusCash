@@ -159,6 +159,7 @@
     <ClInclude Include="delivery.h" />
     <ClInclude Include="deliveryManagement.h" />
     <ClInclude Include="diningManagement.h" />
+    <ClInclude Include="dropTable.h" />
     <ClInclude Include="formatName.h" />
     <ClInclude Include="getCurrentDateTime.h" />
     <ClInclude Include="getCurrentDay.h" />
