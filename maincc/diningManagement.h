@@ -89,6 +89,8 @@ void diningManagement() {
 			qstateAdd = mysql_query(conn, qRemOrders);
 			if (qstateAdd)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 		}
 	}
 	else puts("Connection to DataBase has failed");
