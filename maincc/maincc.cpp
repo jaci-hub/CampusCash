@@ -4,9 +4,9 @@
 #include "criar_sender.h"
 #include "criar_receiver.h"
 #include "send_cash.h"
-#include "menu.h"
-#include "SchoolStudentOptionLoginMenu.h"
-#include "logIn_option.h"
+#include "loggedInAsStudentMenu.h"
+#include "loggedInAsSchoolMenu.h"
+#include "generalLogIn.h"
 #include "criar_orderFood.h"
 #include "delivery.h"
 #include "orderFood_payment.h"
@@ -16,14 +16,13 @@
 
 using namespace std;
 
-//THIS APP CAN EVEN BE AN ALTERNATIVE WAY FOR STUDENTS TO REGISTER FOR THE TYPE OF MEAL PLAN THEY WANT FOR A PARTICULAR YEAR/SEMESTER
-
 int main() {
     cout << "*** Campus Cash (CC) ***" << "\n";
 
-    //log in as school
-    logIn_option();
+    //log in as school or student menu
+    generalLogIn();
 
+    //*****log in as school*****
     if (selection == 1) {
         //criar_school_staff();
         // 
@@ -97,7 +96,7 @@ int main() {
 
     }
 
-    //log in as student
+    //******log in as student******
     else if (selection == 2) {
         //criar o sender/fazer log in as a student
         criar_sender();

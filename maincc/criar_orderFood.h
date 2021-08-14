@@ -3,10 +3,9 @@
 #include <string>
 #include "classOrderFood.h"
 #include "orderTotal.h"
-#include "menu.h"
+#include "loggedInAsStudentMenu.h"
 using namespace std;
 
-//Order Food ------------->>WAIT UNTIL management() IS DONE!!!
 void order_food() {
 	selectPlace:
 	cout << "*** Order from \n";

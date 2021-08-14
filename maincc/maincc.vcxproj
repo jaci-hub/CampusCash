@@ -149,7 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="addCoisaToTable.h" />
-    <ClInclude Include="buildingName_class.h" />
+    <ClInclude Include="allinOne_class.h" />
     <ClInclude Include="cashTransactionRecord.h" />
     <ClInclude Include="classOrderFood.h" />
     <ClInclude Include="classQueue.h" />
@@ -178,13 +178,13 @@
     <ClInclude Include="file_com_pragmaonce_mysql.h" />
     <ClInclude Include="getTransactionFee.h" />
     <ClInclude Include="management.h" />
-    <ClInclude Include="menu.h" />
+    <ClInclude Include="loggedInAsStudentMenu.h" />
     <ClInclude Include="criar_orderFood.h" />
     <ClInclude Include="orderFood_payment.h" />
     <ClInclude Include="orderPaymentFee.h" />
     <ClInclude Include="orderTotal.h" />
-    <ClInclude Include="logIn_option.h" />
-    <ClInclude Include="schoolStudentOptionLoginMenu.h" />
+    <ClInclude Include="generalLogin.h" />
+    <ClInclude Include="loggedInAsSchoolMenu.h" />
     <ClInclude Include="send_cash.h" />
     <ClInclude Include="tableExists.h" />
   </ItemGroup>

@@ -58,7 +58,7 @@ void deliveryManagement() {
 			categoryName = formatName(categoryName);
 
 			//listing categoryName table selected
-			listarCoisas("itemID", "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable");
+			listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
 
 			//adding/removing an item options
 			cout << "a- Add\n";
@@ -73,14 +73,14 @@ void deliveryManagement() {
 				string newItemName;
 				cin.ignore();
 				getline(cin, newItemName);
-				addCoisaToTable(newItemName, "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable"); //ADDED
+				addCoisaToTable(newItemName, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //ADDED
 			}
 
 			//remove item
 			else if (itemOption == "r") {
 				cout << "* Select item to be removed\n";
 				//listing items from itemsTable
-				listarCoisas("itemID", "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable");
+				listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
 
 				cout << "Please, enter an option: ";
 				int IDtobeRem;
@@ -88,10 +88,10 @@ void deliveryManagement() {
 				string ItemTobeRem, IDtobeRemString = to_string(IDtobeRem);
 
 				//Getting the item name first
-				ItemTobeRem = getName_fromTable(categoryName + buildingName_class.get_buildingName() + "ItemsTable", "itemName", "itemID", IDtobeRemString);
+				ItemTobeRem = getName_fromTable(categoryName + allinOne_class.get_buildingName() + "ItemsTable", "itemName", "itemID", IDtobeRemString);
 
 				//Now removing the item
-				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable"); //REMOVED
+				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //REMOVED
 			}
 		}
 
@@ -108,7 +108,7 @@ void deliveryManagement() {
 			//take out all spaces and lower-case all letters
 			newCategoryName = formatName(newCategoryName);
 
-			string queryNewItemsTable = "CREATE TABLE " + newCategoryName + buildingName_class.get_buildingName() + "ItemsTable(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE)";
+			string queryNewItemsTable = "CREATE TABLE " + newCategoryName + allinOne_class.get_buildingName() + "ItemsTable(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE)";
 			const char* qNewItemsTable = queryNewItemsTable.c_str();
 			qstateOtherMenuPlanManagement = mysql_query(conn, qNewItemsTable);
 			if (qstateOtherMenuPlanManagement)
@@ -136,7 +136,7 @@ void deliveryManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			dropTable(categoryTobeRem + buildingName_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
+			dropTable(categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 		}
 	}
 	else puts("Connection to DataBase has failed");

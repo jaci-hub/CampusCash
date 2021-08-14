@@ -5,7 +5,7 @@
 #include "getCurrentDay.h"
 #include "getCurrentMonth.h"
 #include "getCurrentYear.h"
-#include "buildingName_class.h"
+#include "allinOne_class.h"
 #include "tableExists.h"
 #include "getLastDay.h"
 #include "diningManagement.h"
@@ -76,7 +76,7 @@ void menuPlanManagement() {
         cout << monthName << ", " << ano << "\n";
 
         //set o nome da new menuTableInUse
-        menuTableInUse = mealType + buildingName_class.get_buildingName() + "MenuPlanTable" + mes + ano;
+        menuTableInUse = mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
         
         //CRIACAO DA MENU PLAN TABLE FOR THE MONTH if it doesnt already exists
         if (tableExists(menuTableInUse) == false) {

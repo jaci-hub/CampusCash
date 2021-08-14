@@ -19,7 +19,7 @@ void otherMenuPlanManagement() {
 
 	if (conn) {
 		//criar CategoryTableName if it doesnt exist yet
-		CategoryTableName = buildingName_class.get_buildingName() + "CategoryTable";
+		CategoryTableName = allinOne_class.get_buildingName() + "CategoryTable";
 		if (tableExists(CategoryTableName) == false) {
 			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(255) UNIQUE) ";
 			const char* qOtherCategoryTable = queryOtherCategoryTable.c_str();
@@ -49,7 +49,7 @@ void otherMenuPlanManagement() {
 			categoryName = formatName(categoryName);
 
 			//listing categoryName table selected
-			listarCoisas("itemID", "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable");
+			listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
 
 			//adding/removing an item options
 			cout << "a- Add\n";
@@ -64,14 +64,14 @@ void otherMenuPlanManagement() {
 				string newItemName;
 				cin.ignore();
 				getline(cin, newItemName);
-				addCoisaToTable(newItemName, "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable"); //ADDED
+				addCoisaToTable(newItemName, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //ADDED
 			}
 
 			//remove item
 			else if (itemOption == "r") {
 				cout << "* Select item to be removed\n";
 				//listing items from itemsTable
-				listarCoisas("itemID", "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable");
+				listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
 
 				cout << "Please, enter an option: ";
 				int IDtobeRem;
@@ -79,10 +79,10 @@ void otherMenuPlanManagement() {
 				string ItemTobeRem, IDtobeRemString = to_string(IDtobeRem);
 
 				//Getting the item name first
-				ItemTobeRem = getName_fromTable(categoryName + buildingName_class.get_buildingName() + "ItemsTable", "itemName", "itemID", IDtobeRemString);
+				ItemTobeRem = getName_fromTable(categoryName + allinOne_class.get_buildingName() + "ItemsTable", "itemName", "itemID", IDtobeRemString);
 
 				//Now removing the item
-				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + buildingName_class.get_buildingName() + "ItemsTable"); //REMOVED
+				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //REMOVED
 			}
 		}
 
@@ -99,7 +99,7 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			newCategoryName = formatName(newCategoryName);
 
-			ItemsTableName = newCategoryName + buildingName_class.get_buildingName() + "ItemsTable";
+			ItemsTableName = newCategoryName + allinOne_class.get_buildingName() + "ItemsTable";
 
 			string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE)";
 			const char* qNewItemsTable = queryNewItemsTable.c_str();
@@ -129,7 +129,7 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			dropTable(categoryTobeRem + buildingName_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
+			dropTable(categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 		}
 	}
 	else puts("Connection to DataBase has failed");

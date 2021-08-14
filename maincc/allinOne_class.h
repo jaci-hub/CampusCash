@@ -3,11 +3,11 @@
 #include <string>
 using namespace std;
 
-class BuildingName_class {
+class AllinOne_class {
 	string buildingName;
 
 public:
-	BuildingName_class() {
+	AllinOne_class() {
 		buildingName = this->buildingName;
 	}
 
@@ -18,4 +18,4 @@ public:
 	friend void diningManagement();
 };
 
-BuildingName_class buildingName_class;
+AllinOne_class allinOne_class;

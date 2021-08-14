@@ -7,7 +7,7 @@
 #include "formatName.h"
 #include "menuPlanManagement.h"
 #include "getName_fromTable.h"
-#include "buildingName_class.h"
+#include "allinOne_class.h"
 #include "listarCoisas.h"
 #include "dropTable.h"
 using namespace std;
@@ -32,21 +32,21 @@ void diningManagement() {
 		cout << "a- Add\n";
 		cout << "r- Remove\n";
 		cout << "Please, enter an option: ";
-		string optionEscolhida1;
-		cin >> optionEscolhida1;
+		string optionEscolhida;
+		cin >> optionEscolhida;
 
 		//heading to Menu Plan
-		if (isdigit(optionEscolhida1[0]) != 0) {
+		if (isdigit(optionEscolhida[0]) != 0) {
 			//Setting buildingName
-			buildingName_class.buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", optionEscolhida1);
+			allinOne_class.buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", optionEscolhida);
 			//take out all spaces and lower-case all letters
-			buildingName_class.buildingName = formatName(buildingName_class.buildingName);
+			allinOne_class.buildingName = formatName(allinOne_class.buildingName);
 
 			menuPlanManagement(); //from menuPlanManagement.h
 		}
 
 		//add
-		else if (optionEscolhida1 == "a") {
+		else if (optionEscolhida == "a") {
 			cout << "* Name of the new building: ";
 			string newBuildingName;
 			cin.ignore();
@@ -65,18 +65,17 @@ void diningManagement() {
 		}
 
 		//remove
-		else if (optionEscolhida1 == "r") {
+		else if (optionEscolhida == "r") {
 			cout << "* Select building to be removed\n";
 			//listing the buildings in the foodBuildingsTable
 			listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
 
 			cout << "Please, enter an option: ";
-			int IDtobeRem;
+			string NameTobeRem, IDtobeRem;
 			cin >> IDtobeRem;
-			string NameTobeRem, IDtobeRemString = to_string(IDtobeRem);
 
 			//Getting the food buildings name first
-			NameTobeRem = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", IDtobeRemString);
+			NameTobeRem = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", IDtobeRem);
 
 			//Now removing the building
 			removeCoisaFromTable(NameTobeRem, "foodBuildingName", "foodBuildingsTable"); //REMOVED
@@ -89,15 +88,18 @@ void diningManagement() {
 
 				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 			//Drop "MenuPlanTable"
+			//menuTableInUse = ? assign menuTableInUse appropriately!! it needs to be formed from the database somehow
 			if(tableExists(menuTableInUse))
 				dropTable(menuTableInUse);
 
 			//Drop "categoryTable"
-			if (tableExists(CategoryTableName))
+			//categoryTable = ? assign categoryTable appropriately!! it needs to be formed from the database somehow
+			if (tableExists(CategoryTableName)) 
 				dropTable(CategoryTableName);
 			
 			//Drop "ItemsTable"
-			if (tableExists(ItemsTableName))
+			//ItemsTable = ? assign ItemsTable appropriately!! it needs to be formed from the database somehow
+			if (tableExists(ItemsTableName)) 
 				dropTable(ItemsTableName);
 		}
 	}

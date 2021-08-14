@@ -20,7 +20,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="menu.h">
+    <ClInclude Include="loggedInAsStudentMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="classSender.h">
@@ -38,7 +38,7 @@
     <ClInclude Include="file_com_pragmaonce_mysql.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="logIn_option.h">
+    <ClInclude Include="generalLogin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="criar_orderFood.h">
@@ -71,7 +71,7 @@
     <ClInclude Include="management.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="schoolStudentOptionLoginMenu.h">
+    <ClInclude Include="loggedInAsSchoolMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="classQueue.h">
@@ -116,7 +116,7 @@
     <ClInclude Include="getCurrentSecond.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="buildingName_class.h">
+    <ClInclude Include="allinOne_class.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tableExists.h">
