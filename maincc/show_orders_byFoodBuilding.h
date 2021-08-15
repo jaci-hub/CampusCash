@@ -20,6 +20,15 @@ void show_orders_byFoodBuilding() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
+        //Create foodBuildingsTable if it doesnt exist yet
+        if (tableExists("foodBuildingsTable") == false) {
+            string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT)";
+            const char* qCriarTable = queryCriarTable.c_str();
+            qstateShowOrders = mysql_query(conn, qCriarTable);
+            if (qstateShowOrders)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
+        }
+
         cout << "* Select building \n";
         //listing the buildings in the foodBuildingsTable
         listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
