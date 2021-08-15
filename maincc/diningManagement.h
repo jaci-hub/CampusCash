@@ -57,7 +57,7 @@ void diningManagement() {
 
 		//add
 		else if (optionEscolhida == "a") {
-			cout << "* Name of the new building: ";
+			cout << "* Name: ";
 			string newBuildingName;
 			cin.ignore();
 			getline(cin, newBuildingName);

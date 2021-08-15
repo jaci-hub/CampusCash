@@ -139,7 +139,7 @@ void menuPlanManagement() {
         cin >> dayChosen;
         if (dayChosen == to_string(i))
             goto mesAndAno;
-        else if (stoi(dayChosen) <= stoi(getCurrentDay())) {
+        else if (stoi(dayChosen) <= stoi(getCurrentDay()) && stoi(mes) == stoi(getCurrentMonth())) {
             cout << "**Cant select today or past days!\n";
             goto listaDosDias;
         }
@@ -261,9 +261,9 @@ void menuPlanManagement() {
         else if(mealChosen == "5") {
             otherMenuPlanManagement(); //from otherMenuPlanManagement.h
 
-            //update or back to select meal
+            //back to...
             cout << "\n";
-            cout << "1- Back to meals\n";
+            cout << "1- Back to meals\n"; //WHY wont these 1,2,3 work????????????
             cout << "2- Back to days\n";
             cout << "3- Back to type of meal\n";
             cout << "4- EXIT Dining\n";

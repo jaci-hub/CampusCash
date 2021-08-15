@@ -18,6 +18,7 @@ void otherMenuPlanManagement() {
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
+	listaDasCategories:
 		//criar CategoryTableName if it doesnt exist yet
 		CategoryTableName = allinOne_class.get_buildingName() + "CategoryTable";
 
@@ -31,7 +32,7 @@ void otherMenuPlanManagement() {
 			//Add CategoryTableName to the MCIrecordTable
 			addCoisaToTable(CategoryTableName, "CategoryTables", "MCIrecordTable"); //ADDED
 		}
-		listaDasCategories:
+		
 		cout << "* Select a category \n";
 		//listing the categories in the CategoryTableName
 		listarCoisas("categoryID", "categoryName", CategoryTableName);
@@ -53,10 +54,10 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryName = formatName(categoryName);
 
+			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + ": \n";
 			//listing categoryName table selected
 			listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
 
-			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + ": \n";
 			//adding/removing an item options
 			cout << "a- Add\n";
 			cout << "r- Remove\n";
@@ -67,7 +68,7 @@ void otherMenuPlanManagement() {
 
 			//add item
 			if (itemOption == "a") { //WHY THIS DONT GO BACK TO THE RIGHT PLACE WHEN I PRESS EITHER1,2 OR 3??? AFTER INSERTING THE ITEM
-				cout << "* Name of the new item: ";
+				cout << "* Name: ";
 				string newItemName;
 				cin.ignore();
 				getline(cin, newItemName);
@@ -98,7 +99,7 @@ void otherMenuPlanManagement() {
 
 		//add category
 		else if (categoryOption == "a") {
-			cout << "* Name of the new category: ";
+			cout << "* Name: ";
 			string newCategoryName;
 			cin.ignore();
 			getline(cin, newCategoryName);
