@@ -143,6 +143,28 @@ void diningManagement() {
 				}
 			}
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+				//***Removing all records related to the table from MCIrecordTable
+			//MenuPlanTables
+				string queryRemMenuPlanTables = "DELETE FROM MCIrecordTable WHERE MenuPlanTables LIKE '%" + NameTobeRem + "%'";
+				const char* qRemMenuPlanTables = queryRemMenuPlanTables.c_str();
+				qstateRem = mysql_query(conn, qRemMenuPlanTables);
+				if (qstateRem)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//CategoryTables
+				string queryRemCategoryTables = "DELETE FROM MCIrecordTable WHERE CategoryTables LIKE '%" + NameTobeRem + "%'";
+				const char* qRemCategoryTables = queryRemCategoryTables.c_str();
+				qstateRem = mysql_query(conn, qRemCategoryTables);
+				if (qstateRem)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//ItemsTables
+				string queryRemItemsTables = "DELETE FROM MCIrecordTable WHERE ItemsTables LIKE '%" + NameTobeRem + "%'";
+				const char* qRemItemsTables = queryRemItemsTables.c_str();
+				qstateRem = mysql_query(conn, qRemItemsTables);
+				if (qstateRem)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
 	}
 	else puts("Connection to DataBase has failed");

@@ -27,6 +27,8 @@ void cashTransactionRecord() {
                 qstateTransactionRec = mysql_query(conn, qCriarTable);
                 if (qstateTransactionRec)
                     cout << "Query failed: " << mysql_error(conn) << "\n";
+
+                cout << "No transactions!\n";
             }
 
             //Taking care of sender
