@@ -108,6 +108,9 @@ void menuPlanManagement() {
                 if (qstateMenuPlanManagement)
                     cout << "Query failed: " << mysql_error(conn) << "\n";
             }
+
+            //Add menuTableInUse to the MCIrecordTable
+            addCoisaToTable(menuTableInUse, "MenuPlanTables", "MCIrecordTable"); //ADDED
         }
 
         listaDosDias:

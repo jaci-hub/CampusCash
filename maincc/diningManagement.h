@@ -17,8 +17,8 @@ int qstateManagement;
 void diningManagement() {
 	//Stablishing the connection to mysql database
 	MYSQL* conn;
-	//MYSQL_ROW row;
-	//MYSQL_RES* res;
+	MYSQL_ROW row;
+	MYSQL_RES* res;
 	conn = mysql_init(0);
 
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
@@ -59,9 +59,18 @@ void diningManagement() {
 
 			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable" + "(studentEmail VARCHAR(255) NOT NULL, mealType VARCHAR(255) NOT NULL, the_food VARCHAR(255), the_drink VARCHAR(255), the_sides VARCHAR(255), otherFood VARCHAR(255), orderID INT KEY AUTO_INCREMENT, onOffCampus VARCHAR(10) NOT NULL, houseRoom VARCHAR(255) NOT NULL, totalAmount DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2) NOT NULL, transDateTime VARCHAR(255) NOT NULL)";
 			const char* qAddOrders = queryAddOrders.c_str();
-			qstateAdd = mysql_query(conn, qAddOrders);
-			if (qstateAdd)
+			qstateManagement = mysql_query(conn, qAddOrders);
+			if (qstateManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//***criar MCI - MenuPlan, Category and Items - record table***//
+			if (tableExists("MCIrecordTable") == false) {
+				string queryMCI = "CREATE TABLE MCIrecordTable(MenuPlanTables VARCHAR(255), CategoryTables VARCHAR(255), ItemsTables VARCHAR(255))";
+				const char* qMCI = queryMCI.c_str();
+				qstateManagement = mysql_query(conn, qMCI);
+				if (qstateManagement)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
+			}
 		}
 
 		//remove
@@ -88,19 +97,43 @@ void diningManagement() {
 
 				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 			//Drop "MenuPlanTable"
-			//menuTableInUse = ? assign menuTableInUse appropriately!! it needs to be formed from the database somehow
-			if(tableExists(menuTableInUse))
-				dropTable(menuTableInUse);
+			string queryDropMenuPlanTable = "SELECT * FROM MCIrecordTable WHERE MenuPlanTables LIKE '%" + NameTobeRem + "MenuPlanTable" + "%'";
+			const char* qDropMenuPlanTable = queryDropMenuPlanTable.c_str();
+			qstateMenuPlanManagement = mysql_query(conn, qDropMenuPlanTable);
+			if (!qstateMenuPlanManagement) {
+				res = mysql_store_result(conn);
+				while (row = mysql_fetch_row(res)) {
+					if (tableExists(row[0]))
+						dropTable(row[0]);
+				}
+			}
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			//Drop "categoryTable"
-			//categoryTable = ? assign categoryTable appropriately!! it needs to be formed from the database somehow
-			if (tableExists(CategoryTableName)) 
-				dropTable(CategoryTableName);
+			//Drop "CategoryTable"
+			string queryDropCategoryTable = "SELECT * FROM MCIrecordTable WHERE CategoryTables = '" + NameTobeRem + "CategoryTable'";
+			const char* qDropCategoryTable = queryDropCategoryTable.c_str();
+			qstateMenuPlanManagement = mysql_query(conn, qDropCategoryTable);
+			if (!qstateMenuPlanManagement) {
+				res = mysql_store_result(conn);
+				while (row = mysql_fetch_row(res)) {
+					if (tableExists(row[1]))
+						dropTable(row[1]);
+				}
+			}
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
 			
 			//Drop "ItemsTable"
-			//ItemsTable = ? assign ItemsTable appropriately!! it needs to be formed from the database somehow
-			if (tableExists(ItemsTableName)) 
-				dropTable(ItemsTableName);
+			string queryDropItemsTable = "SELECT * FROM MCIrecordTable WHERE ItemsTables LIKE '%" + NameTobeRem + "ItemsTable" + "%'";
+			const char* qDropItemsTable = queryDropItemsTable.c_str();
+			qstateMenuPlanManagement = mysql_query(conn, qDropItemsTable);
+			if (!qstateMenuPlanManagement) {
+				res = mysql_store_result(conn);
+				while (row = mysql_fetch_row(res)) {
+					if (tableExists(row[2]))
+						dropTable(row[2]);
+				}
+			}
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
 	}
 	else puts("Connection to DataBase has failed");

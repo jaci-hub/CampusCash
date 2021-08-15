@@ -20,12 +20,16 @@ void otherMenuPlanManagement() {
 	if (conn) {
 		//criar CategoryTableName if it doesnt exist yet
 		CategoryTableName = allinOne_class.get_buildingName() + "CategoryTable";
+
 		if (tableExists(CategoryTableName) == false) {
 			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(255) UNIQUE) ";
 			const char* qOtherCategoryTable = queryOtherCategoryTable.c_str();
 			qstateOtherMenuPlanManagement = mysql_query(conn, qOtherCategoryTable);
 			if (qstateOtherMenuPlanManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//Add CategoryTableName to the MCIrecordTable
+			addCoisaToTable(CategoryTableName, "CategoryTables", "MCIrecordTable"); //ADDED
 		}
 
 		cout << "* Select a category \n";
@@ -106,6 +110,9 @@ void otherMenuPlanManagement() {
 			qstateOtherMenuPlanManagement = mysql_query(conn, qNewItemsTable);
 			if (qstateOtherMenuPlanManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//Add ItemsTableName to the MCIrecordTable
+			addCoisaToTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
 		}
 
 		//remove category
