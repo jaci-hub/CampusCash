@@ -60,6 +60,7 @@ int main() {
                 cout << "*** Campus Cash (CC) ***" << "\n";
                 cout << "* Recent Transactions *" << "\n";
                 cashTransactionRecord();
+
                 cout << "\n";
                 //ask if staff would like to go to menu or log out
                 cout << "1- Back to main Menu\n";
@@ -76,8 +77,9 @@ int main() {
         //Go to management
         else if (menuChoice == 3) { 
             management(); //asks for password/PIN
-            if (managementOption == 4)
+            if (managementOption == 5)
                 goto backToStaffMenu;
+
             cout << "\n";
             //ask if staff would like to go to menu or log out
             cout << "1- Back to main Menu\n";

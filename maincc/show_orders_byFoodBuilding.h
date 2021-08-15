@@ -89,7 +89,7 @@ void show_orders_byFoodBuilding() {
 
                 cout << "1- Next\n";
                 cout << "2- Cancel Orders\n";
-                cout << "3- Back to Menu\n";
+                cout << "3- Back to main Menu\n"; //THIS IS IN THE if-statement in main()
                 cout << "Please, enter an option: ";
                 cin >> ordersOption;
 

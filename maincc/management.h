@@ -11,13 +11,13 @@ void management() {
 	//Ask for PIN cuz only limited staff can log in
 	cout << "PIN: ";
 	cin >> managementPIN;
-	if (managementPIN == 1234 || optionFinalmente == "4") {
+	if (managementPIN == 1234) {
 		cout << "0- Meals time period\n";
 		cout << "1- Dining\n";
 		cout << "2- Delivery\n";
 		cout << "3- Prices\n";
 		cout << "4- Fees\n";
-		cout << "5- Back to Menu\n";
+		cout << "5- Back to main Menu\n"; //THIS IS IN THE if-statement in main()
 		cout << "Please, enter an option: ";
 		cin >> managementOption;
 

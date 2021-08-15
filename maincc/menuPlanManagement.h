@@ -31,6 +31,7 @@ void menuPlanManagement() {
         cout << "1- MeatEater\n";
         cout << "2- Vegetarian\n";
         cout << "3- Vegan\n";
+        cout << "4- Back\n";
         cout << "Please, enter an option: ";
         cin >> mealTypeID;
 
@@ -40,7 +41,10 @@ void menuPlanManagement() {
             mealType = "vegetarian";
         else if (mealTypeID == 3)
             mealType = "vegan";
+        else if (mealTypeID == 4)
+            goto menuPlanManagementEnd;
 
+        mesAndAno:
         //Display current month and year
         string mes, ano;
         cout << "* Select a month\n";
@@ -56,11 +60,19 @@ void menuPlanManagement() {
         cout << "10- October\n";
         cout << "11- November\n";
         cout << "12- December\n";
+        cout << "13- Back\n";
         cout << "Please, enter an option: ";
         cin >> mes;
+        if (mes == "13")
+            goto listaDosMealType;
         cout << "* Year: ";
         cin >> ano;
 
+        //Cant select dates before today
+        if (stoi(mes) < stoi(getCurrentMonth()) || stoi(ano) < stoi(getCurrentYear())) {
+            cout << "**Cant select past dates!\n";
+            goto mesAndAno;
+        }
         string monthName;
         string queryMonthName = "SELECT MONTHNAME('" + ano + "-" + mes + "-" + getCurrentDay() + "')";
         const char* qMonthName = queryMonthName.c_str();
@@ -73,7 +85,9 @@ void menuPlanManagement() {
         else cout << "Query failed: " << mysql_error(conn) << "\n";
 
         cout << "**Menu Plan**\n";
-        cout << monthName << ", " << ano << "\n";
+        cout << monthName << ", " << ano << "\n\n";
+
+        cout << "* Just a moment...\n\n";
 
         //set o nome da new menuTableInUse
         menuTableInUse = mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
@@ -117,10 +131,18 @@ void menuPlanManagement() {
         //display the days
         string dayChosen;
         cout << "* Select day\n";
-        for (int i = 1; i <= stoi(getLastDay(mes, ano)); i++)
+        int i;
+        for ( i = 1; i <= stoi(getLastDay(mes, ano)); i++)
             cout << i << "- " << i << "\n";
+        cout << to_string(i) << "- Back\n";
         cout << "Please, enter an option: ";
         cin >> dayChosen;
+        if (dayChosen == to_string(i))
+            goto mesAndAno;
+        else if (stoi(dayChosen) <= stoi(getCurrentDay())) {
+            cout << "**Cant select today or past days!\n";
+            goto listaDosDias;
+        }
 
         //display day, date chosen
         string dayName;
@@ -142,6 +164,7 @@ void menuPlanManagement() {
 
         //other option
         cout << "5- Other\n";
+        cout << "6- Back\n";
 
         string mealChosen;
         cout << "Please, enter an option: ";
@@ -192,11 +215,12 @@ void menuPlanManagement() {
 
                 if (optionFinalmente == "1")
                     goto listaDosMeals;
-                else if(optionFinalmente == "2")
+                else if (optionFinalmente == "2")
                     goto listaDosDias;
                 else if (optionFinalmente == "3")
                     goto listaDosMealType;
-                //else if (optionFinalmente == "4") THIS IS IN management()
+                else if (optionFinalmente == "4")
+                    goto menuPlanManagementEnd;
             }
             //else display it
             else {
@@ -230,12 +254,14 @@ void menuPlanManagement() {
                     goto listaDosDias;
                 else if (optionFinalmente == "3")
                     goto listaDosMealType;
-                //else if (optionFinalmente == "4") THIS IS IN management()
+                else if (optionFinalmente == "4")
+                    goto menuPlanManagementEnd;
             }
         }
         else if(mealChosen == "5") {
             otherMenuPlanManagement(); //from otherMenuPlanManagement.h
 
+            //update or back to select meal
             cout << "\n";
             cout << "1- Back to meals\n";
             cout << "2- Back to days\n";
@@ -250,8 +276,15 @@ void menuPlanManagement() {
                 goto listaDosDias;
             else if (optionFinalmente == "3")
                 goto listaDosMealType;
-            //else if (optionFinalmente == "4") THIS IS IN management()
+            else if (optionFinalmente == "4")
+                goto menuPlanManagementEnd;
         }
+
+        else if (mealChosen == "6")
+            goto listaDosDias;
     }
     else puts("Connection to DataBase has failed");
+
+menuPlanManagementEnd:
+cout << "";
 }

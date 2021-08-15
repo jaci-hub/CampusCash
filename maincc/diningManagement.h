@@ -40,6 +40,7 @@ void diningManagement() {
 		//adding/removing a building options
 		cout << "a- Add\n";
 		cout << "r- Remove\n";
+		cout << "b- Back\n";
 		cout << "Please, enter an option: ";
 		string optionEscolhida;
 		cin >> optionEscolhida;
@@ -97,6 +98,9 @@ void diningManagement() {
 
 			//Now removing the building
 			removeCoisaFromTable(NameTobeRem, "foodBuildingName", "foodBuildingsTable"); //REMOVED
+
+			//Since it takes time to take all this tables down, then display this message
+			cout << "* Just a moment...\n";
 
 				//***dropping the table of orders da removed building***//
 			//take out all spaces and lower-case all letters
@@ -166,6 +170,12 @@ void diningManagement() {
 				if (qstateRem)
 					cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
+
+		else if(optionEscolhida == "b")
+			goto diningManagementEnd;
 	}
 	else puts("Connection to DataBase has failed");
+
+diningManagementEnd:
+cout << "";
 }

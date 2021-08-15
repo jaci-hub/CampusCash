@@ -31,7 +31,7 @@ void otherMenuPlanManagement() {
 			//Add CategoryTableName to the MCIrecordTable
 			addCoisaToTable(CategoryTableName, "CategoryTables", "MCIrecordTable"); //ADDED
 		}
-
+		listaDasCategories:
 		cout << "* Select a category \n";
 		//listing the categories in the CategoryTableName
 		listarCoisas("categoryID", "categoryName", CategoryTableName);
@@ -39,6 +39,7 @@ void otherMenuPlanManagement() {
 		//adding/removing a category options
 		cout << "a- Add\n";
 		cout << "r- Remove\n";
+		cout << "e- EXIT other\n";
 		cout << "Please, enter an option: ";
 		string categoryOption;
 		cin >> categoryOption;
@@ -55,10 +56,12 @@ void otherMenuPlanManagement() {
 			//listing categoryName table selected
 			listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
 
+			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + ": \n";
 			//adding/removing an item options
 			cout << "a- Add\n";
 			cout << "r- Remove\n";
-			cout << "Please, enter an option: ";
+			cout << "b- Back to categories\n";
+			cout << "Please, enter an option: "; //CANT SELECT ITEMS!!! THEY ARE ONLY TO BE DISPLAYED!!!
 			string itemOption;
 			cin >> itemOption;
 
@@ -88,8 +91,10 @@ void otherMenuPlanManagement() {
 				//Now removing the item
 				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //REMOVED
 			}
-		}
 
+			else if (itemOption == "b")
+				goto listaDasCategories;
+		}
 
 		//add category
 		else if (categoryOption == "a") {
@@ -138,6 +143,14 @@ void otherMenuPlanManagement() {
 
 			dropTable(categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 		}
+
+		//end funcao
+		else if (categoryOption == "e")
+			goto otherMenuPlanManagementEnd;
 	}
 	else puts("Connection to DataBase has failed");
+
+otherMenuPlanManagementEnd:
+	cout << "";
 }
+
