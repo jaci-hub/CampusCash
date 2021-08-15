@@ -82,6 +82,15 @@ void send_cash() {
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
+            //Create cashTransRecoTable if it doesnt exist yet
+            if (tableExists("cashTransRecoTable") == false) {
+                string queryCriarTable = "CREATE TABLE cashTransRecoTable(transactionCount INT KEY AUTO_INCREMENT, senderEmail VARCHAR(255) NOT NULL, receiverEmail VARCHAR(255) NOT NULL, amountSent DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2), transDateTime VARCHAR(255) NOT NULL)";
+                const char* qCriarTable = queryCriarTable.c_str();
+                qstateTransactionRec = mysql_query(conn, qCriarTable);
+                if (qstateTransactionRec)
+                    cout << "Query failed: " << mysql_error(conn) << "\n";
+            }
+
             //Inserting values into cashTransRecoTable
             string amount_toSendString=to_string(amount_toSend), get_transactionFeeString=to_string(get_transactionFee());
             string queryEmail12amountSent = "INSERT INTO cashTransRecoTable (senderEmail, amountSent, receiverEmail, feeApplied, transDateTime) VALUES ('" + student1.get_email() + "', '" + amount_toSendString + "', '" + receiversEmail + "', '" + get_transactionFeeString + "', '" + getCurrentDateTime() + "')";
