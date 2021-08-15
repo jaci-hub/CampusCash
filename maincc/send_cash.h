@@ -6,6 +6,7 @@
 #include "file_com_pragmaonce_mysql.h"
 #include "getTransactionFee.h"
 #include "getCurrentDateTime.h"
+#include "tableExists.h"
 using namespace std;
 
 int qstateTransaction;
@@ -86,8 +87,8 @@ void send_cash() {
             if (tableExists("cashTransRecoTable") == false) {
                 string queryCriarTable = "CREATE TABLE cashTransRecoTable(transactionCount INT KEY AUTO_INCREMENT, senderEmail VARCHAR(255) NOT NULL, receiverEmail VARCHAR(255) NOT NULL, amountSent DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2), transDateTime VARCHAR(255) NOT NULL)";
                 const char* qCriarTable = queryCriarTable.c_str();
-                qstateTransactionRec = mysql_query(conn, qCriarTable);
-                if (qstateTransactionRec)
+                qstateTransaction = mysql_query(conn, qCriarTable);
+                if (qstateTransaction)
                     cout << "Query failed: " << mysql_error(conn) << "\n";
             }
 

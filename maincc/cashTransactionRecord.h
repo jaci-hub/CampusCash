@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include "file_com_pragmaonce_mysql.h"
+#include "tableExists.h"
 using namespace std;
 
 int qstateTransactionRec;
