@@ -158,7 +158,9 @@ void menuPlanManagement() {
 
         cout << "*" << dayName << "* " << monthName << " " << dayChosen << ", " << ano << "\n";
 
-        listaDosMeals:
+    listaDosMeals:
+        string mesGoto = mes, anoGoto = ano;
+        menuTableInUse = mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mesGoto + anoGoto; //this line and the previous one, fixed option '1' in else if(mealChosen == "5"), after otherMenuPlanManagement() is done!!!
         //listing the meals from the menuTableInUse
         listarCoisas("mealID", "meal", menuTableInUse);
 
@@ -258,12 +260,13 @@ void menuPlanManagement() {
                     goto menuPlanManagementEnd;
             }
         }
+
         else if(mealChosen == "5") {
             otherMenuPlanManagement(); //from otherMenuPlanManagement.h
 
-            //back to... FIX THIS PART!!!!
+            //back to...
             cout << "\n";
-            cout << "1- Back to meals\n"; //WHY wont these 1,2,3 work????????????
+            cout << "1- Back to meals\n";
             cout << "2- Back to days\n";
             cout << "3- Back to type of meal\n";
             cout << "4- EXIT Dining\n";

@@ -47,6 +47,7 @@ void otherMenuPlanManagement() {
 
 		//heading to Items table
 		if (isdigit(categoryOption[0]) != 0) {
+			listaDosItems:
 			string categoryName;
 			//Setting categoryName
 			categoryName = getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption);
@@ -73,6 +74,7 @@ void otherMenuPlanManagement() {
 				cin.ignore();
 				getline(cin, newItemName);
 				addCoisaToTable(newItemName, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //ADDED
+				goto listaDosItems;
 			}
 
 			//remove item
@@ -91,6 +93,8 @@ void otherMenuPlanManagement() {
 
 				//Now removing the item
 				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //REMOVED
+			
+				goto listaDosItems;
 			}
 
 			else if (itemOption == "b")
@@ -119,6 +123,8 @@ void otherMenuPlanManagement() {
 
 			//Add ItemsTableName to the MCIrecordTable
 			addCoisaToTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
+
+			goto listaDasCategories;
 		}
 
 		//remove category
@@ -143,6 +149,11 @@ void otherMenuPlanManagement() {
 			categoryTobeRem = formatName(categoryTobeRem);
 
 			dropTable(categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
+
+			//Remove ItemsTableName from the MCIrecordTable
+			removeCoisaFromTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
+
+			goto listaDasCategories;
 		}
 
 		//end funcao

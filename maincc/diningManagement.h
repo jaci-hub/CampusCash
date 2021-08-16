@@ -24,6 +24,7 @@ void diningManagement() {
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
+		listaDasFoodBuildings:
 		//Create foodBuildingsTable if it doesnt exist yet
 		if (tableExists("foodBuildingsTable") == false) {
 			string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT)";
@@ -81,6 +82,8 @@ void diningManagement() {
 				if (qstateManagement)
 					cout << "Query failed: " << mysql_error(conn) << "\n";
 			}
+
+			goto listaDasFoodBuildings;
 		}
 
 		//remove
@@ -169,6 +172,8 @@ void diningManagement() {
 				qstateRem = mysql_query(conn, qRemItemsTables);
 				if (qstateRem)
 					cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			goto listaDasFoodBuildings;
 		}
 
 		else if(optionEscolhida == "b")
