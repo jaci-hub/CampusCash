@@ -261,7 +261,7 @@ void menuPlanManagement() {
         else if(mealChosen == "5") {
             otherMenuPlanManagement(); //from otherMenuPlanManagement.h
 
-            //back to...
+            //back to... FIX THIS PART!!!!
             cout << "\n";
             cout << "1- Back to meals\n"; //WHY wont these 1,2,3 work????????????
             cout << "2- Back to days\n";
