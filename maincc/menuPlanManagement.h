@@ -69,7 +69,7 @@ void menuPlanManagement() {
         cin >> ano;
 
         //Cant select dates before today
-        if (stoi(mes) < stoi(getCurrentMonth()) || stoi(ano) < stoi(getCurrentYear())) {
+        if (stoi(mes) < stoi(getCurrentMonth()) && stoi(ano) <= stoi(getCurrentYear())) {
             cout << "**Cant select past dates!\n";
             goto mesAndAno;
         }
