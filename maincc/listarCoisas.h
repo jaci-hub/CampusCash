@@ -31,4 +31,5 @@ void listarCoisas(string IDcolumn, string NameColumn, string nameOfTable) {
         }
         else cout << "Query failed: " << mysql_error(conn) << "\n";
     }
+    else puts("Connection to DataBase has failed");
 }
