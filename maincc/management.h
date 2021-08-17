@@ -4,6 +4,7 @@
 #include "diningManagement.h"
 #include "deliveryManagement.h"
 #include "feesManagement.h"
+#include "mealsTimePeriodManagement.h"
 using namespace std;
 
 int managementPIN, managementOption;
@@ -24,7 +25,7 @@ void management() {
 
 		//Meals time period
 		if (managementOption == 0) {
-			//mealsTimePeriodManagement();
+			mealsTimePeriodManagement();
 		}
 
 		//Dining
