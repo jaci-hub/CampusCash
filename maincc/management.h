@@ -3,6 +3,7 @@
 #include <string>
 #include "diningManagement.h"
 #include "deliveryManagement.h"
+#include "feesManagement.h"
 using namespace std;
 
 int managementPIN, managementOption;
@@ -43,7 +44,7 @@ void management() {
 
 		//Fees
 		else if (managementOption == 4) {
-			//feesManagement();
+			feesManagement();
 		}
 	}
 	else { 

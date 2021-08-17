@@ -3,10 +3,12 @@
 #include <string>
 #include "criar_orderFood.h"
 #include "delivery.h"
+#include "feesManagement.h"
+using namespace std;
 
 double orderPaymentFee() {
     if(on_off==1)
-        return .05 * order1.get_foodOrderTotal(); //charge 5% if delivering ON campus
+        return .05 * order1.get_foodOrderTotal(); 
 
-    else return .1 * order1.get_foodOrderTotal(); //charge 10% if delivering OFF campus [probably should vary with distance!!!]
+    else return .1 * order1.get_foodOrderTotal(); 
 }

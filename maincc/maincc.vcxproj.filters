@@ -137,5 +137,8 @@
     <ClInclude Include="dropTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="feesManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
