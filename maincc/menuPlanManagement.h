@@ -248,7 +248,7 @@ void menuPlanManagement() {
                 cout << "Please, enter an option: ";
                 cin >> optionFinalmente;
 
-                if (optionFinalmente == "0") //IMPORTANT: e a DateTime ainda nao passou
+                if (optionFinalmente == "0") //IMPORTANT: it has to be before the start time of the selected meal
                     goto updateMeal;
                 else if (optionFinalmente == "1")
                     goto listaDosMeals;
