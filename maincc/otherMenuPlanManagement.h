@@ -68,7 +68,7 @@ void otherMenuPlanManagement() {
 			cin >> itemOption;
 
 			//add item
-			if (itemOption == "a") { //WHY THIS DONT GO BACK TO THE RIGHT PLACE WHEN I PRESS EITHER1,2 OR 3??? AFTER INSERTING THE ITEM
+			if (itemOption == "a") { 
 				cout << "* Name: ";
 				string newItemName;
 				cin.ignore();
