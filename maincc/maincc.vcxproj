@@ -189,6 +189,7 @@
     <ClInclude Include="loggedInAsSchoolMenu.h" />
     <ClInclude Include="send_cash.h" />
     <ClInclude Include="tableExists.h" />
+    <ClInclude Include="timeConverter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

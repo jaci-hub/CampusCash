@@ -78,7 +78,7 @@ void mealsTimePeriodManagement() {
 				}
 				else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-				cout << "** " << mealName << " time **\n";
+				cout << "** " << mealName << " Time Period**\n";
 				cout << "*Start: " << startTime << "\n";
 				cout << "*End: " << endTime << "\n\n";
 				cout << "1- Update Start time\n";
