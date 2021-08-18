@@ -146,5 +146,8 @@
     <ClInclude Include="timeConverter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="pricesManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

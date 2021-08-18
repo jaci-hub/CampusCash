@@ -5,6 +5,7 @@
 #include "deliveryManagement.h"
 #include "feesManagement.h"
 #include "mealsTimePeriodManagement.h"
+#include "pricesManagement.h"
 using namespace std;
 
 int managementPIN, managementOption;
@@ -40,7 +41,7 @@ void management() {
 
 		//Prices
 		else if (managementOption == 3) {
-			//pricesManagement();
+			pricesManagement();
 		}
 
 		//Fees
