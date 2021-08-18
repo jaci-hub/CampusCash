@@ -82,7 +82,7 @@ void diningManagement() {
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//INSERTING VALUES into mealsTimeAndPrice
-			string queryInserirValues = "INSERT INTO " + newBuildingName + "MealsTimeAndPrice(mealID, meal) VALUES ('1', 'Breakfast'), ('2', 'Brunch'), ('3', 'Lunch'), ('4', 'Dinner')";
+			string queryInserirValues = "INSERT INTO " + newBuildingName + "MealsTimeAndPrice(mealID, meal, startTime, endTime, price) VALUES ('1', 'Breakfast', 'none', 'none', 0), ('2', 'Brunch', 'none', 'none', 0), ('3', 'Lunch', 'none', 'none', 0), ('4', 'Dinner', 'none', 'none', 0)";
 			const char* qInserirValues = queryInserirValues.c_str();
 			qstateManagement = mysql_query(conn, qInserirValues);
 			if (qstateManagement)

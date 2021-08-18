@@ -38,7 +38,7 @@ void cashTransactionRecord() {
             if (!qstateTransactionRec) {
                 res = mysql_store_result(conn);
                 while (row = mysql_fetch_row(res)) {
-                    cout << row[0] <<" sent $" <<row[1]<<" to "<< row[2] <<"." <<" ("<< row[3] <<")" << "\n";
+                    cout << row[0] <<" sent $" <<row[1]<<" to "<< row[2] <<" ("<< row[3] <<")" << "\n";
                 }
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";

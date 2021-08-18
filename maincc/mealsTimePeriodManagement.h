@@ -32,10 +32,8 @@ void mealsTimePeriodManagement() {
 			string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", casaSelected);
 			buildingName = formatName(buildingName);
 			cout << "* Select meal \n";
-			cout << "1- Breakfast\n";
-			cout << "2- Brunch\n";
-			cout << "3- Lunch\n";
-			cout << "4- Diner\n";
+			//listing the meals in the MealsTimeAndPrice
+			listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string mealSelected;
@@ -43,41 +41,15 @@ void mealsTimePeriodManagement() {
 
 			if (isdigit(mealSelected[0]) != 0) {
 				selectedMeal:
-				string mealName;
-				if (mealSelected == "1")
-					mealName = "Breakfast";
-				else if (mealSelected == "2") 
-					mealName = "Brunch";
-				else if (mealSelected == "3") 
-					mealName = "Lunch";
-				else if (mealSelected == "4") 
-					mealName = "Diner";
+				string mealName = getName_fromTable(buildingName + "MealsTimeAndPrice", "meal", "mealID", mealSelected);
 
 				//***Display Start and End times//
 				//start time
-				string startTime;
-				string queryGettingStartTime = "SELECT startTime FROM " + buildingName + "MealsTimeAndPrice WHERE meal = '" + mealName + "'";
-				const char* qGettingStartTime = queryGettingStartTime.c_str();
-				qstatemealsTimePeriodManagement = mysql_query(conn, qGettingStartTime);
-				if (!qstatemealsTimePeriodManagement) {
-					res = mysql_store_result(conn);
-					row = mysql_fetch_row(res);
-					startTime = row[0];
-				}
-				else cout << "Query failed: " << mysql_error(conn) << "\n";
+				string startTime = getName_fromTable(buildingName + "MealsTimeAndPrice", "startTime", "meal", mealName);
 
 				//end time
-				string endTime;
-				string queryGettingEndTime = "SELECT endTime FROM " + buildingName + "MealsTimeAndPrice WHERE meal = '" + mealName + "'";
-				const char* qGettingEndTime = queryGettingEndTime.c_str();
-				qstatemealsTimePeriodManagement = mysql_query(conn, qGettingEndTime);
-				if (!qstatemealsTimePeriodManagement) {
-					res = mysql_store_result(conn);
-					row = mysql_fetch_row(res);
-					endTime = row[0];
-				}
-				else cout << "Query failed: " << mysql_error(conn) << "\n";
-
+				string endTime = getName_fromTable(buildingName + "MealsTimeAndPrice", "endTime", "meal", mealName);
+				
 				cout << "** " << mealName << " Time Period**\n";
 				cout << "*Start: " << startTime << "\n";
 				cout << "*End: " << endTime << "\n\n";
