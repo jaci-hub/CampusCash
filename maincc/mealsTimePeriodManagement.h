@@ -18,7 +18,7 @@ void mealsTimePeriodManagement() {
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
-		theBuildings:
+	theBuildings:
 		cout << "* Select a building \n";
 		//listing the buildings in the foodBuildingsTable
 		listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
