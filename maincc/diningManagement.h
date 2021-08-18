@@ -68,9 +68,23 @@ void diningManagement() {
 			//take out all spaces and lower-case all letters
 			newBuildingName = formatName(newBuildingName);
 
-			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable" + "(studentEmail VARCHAR(255) NOT NULL, mealType VARCHAR(255) NOT NULL, the_food VARCHAR(255), the_drink VARCHAR(255), the_sides VARCHAR(255), otherFood VARCHAR(255), orderID INT KEY AUTO_INCREMENT, onOffCampus VARCHAR(10) NOT NULL, houseRoom VARCHAR(255) NOT NULL, totalAmount DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2) NOT NULL, transDateTime VARCHAR(255) NOT NULL)";
+			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable(studentEmail VARCHAR(255) NOT NULL, mealType VARCHAR(255) NOT NULL, the_food VARCHAR(255), the_drink VARCHAR(255), the_sides VARCHAR(255), otherFood VARCHAR(255), orderID INT KEY AUTO_INCREMENT, onOffCampus VARCHAR(10) NOT NULL, houseRoom VARCHAR(255) NOT NULL, totalAmount DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2) NOT NULL, transDateTime VARCHAR(255) NOT NULL)";
 			const char* qAddOrders = queryAddOrders.c_str();
 			qstateManagement = mysql_query(conn, qAddOrders);
+			if (qstateManagement)
+				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//***criar mealsTimeAndPrice table***//
+			string querymealsTimeAndPrice = "CREATE TABLE " + newBuildingName + "MealsTimeAndPrice(mealID VARCHAR(255), meal VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255), price DOUBLE(5,2))";
+			const char* qmealsTimeAndPrice = querymealsTimeAndPrice.c_str();
+			qstateManagement = mysql_query(conn, qmealsTimeAndPrice);
+			if (qstateManagement)
+				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//INSERTING VALUES into mealsTimeAndPrice
+			string queryInserirValues = "INSERT INTO " + newBuildingName + "MealsTimeAndPrice(mealID, meal) VALUES ('1', 'Breakfast'), ('2', 'Brunch'), ('3', 'Lunch'), ('4', 'Dinner')";
+			const char* qInserirValues = queryInserirValues.c_str();
+			qstateManagement = mysql_query(conn, qInserirValues);
 			if (qstateManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
@@ -110,6 +124,9 @@ void diningManagement() {
 			NameTobeRem = formatName(NameTobeRem);
 
 			dropTable(NameTobeRem + "OrdersTable"); //TABLE DROPPED
+
+			//***dropping the mealsTimeAndPrice table da removed building***//
+			dropTable(NameTobeRem + "MealsTimeAndPrice"); //TABLE DROPPED
 
 				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 			//Drop "MenuPlanTable"

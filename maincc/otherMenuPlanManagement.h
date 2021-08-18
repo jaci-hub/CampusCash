@@ -74,6 +74,17 @@ void otherMenuPlanManagement() {
 				cin.ignore();
 				getline(cin, newItemName);
 				addCoisaToTable(newItemName, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //ADDED
+				
+				cout << "* Price($): ";
+				double price;
+				cin >> price;
+				string priceString=to_string(price);
+				string queryAdd = "INSERT INTO " + categoryName + allinOne_class.get_buildingName() + "ItemsTable(price) VALUE(" + priceString + ")";
+				const char* qAdd = queryAdd.c_str();
+				qstateAdd = mysql_query(conn, qAdd);
+				if (qstateAdd)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
+
 				goto listaDosItems;
 			}
 
@@ -115,7 +126,7 @@ void otherMenuPlanManagement() {
 
 			ItemsTableName = newCategoryName + allinOne_class.get_buildingName() + "ItemsTable";
 
-			string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE)";
+			string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE, price DOUBLE(5,2))";
 			const char* qNewItemsTable = queryNewItemsTable.c_str();
 			qstateOtherMenuPlanManagement = mysql_query(conn, qNewItemsTable);
 			if (qstateOtherMenuPlanManagement)

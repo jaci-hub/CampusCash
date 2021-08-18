@@ -94,7 +94,7 @@ void menuPlanManagement() {
         
         //CRIACAO DA MENU PLAN TABLE FOR THE MONTH if it doesnt already exists
         if (tableExists(menuTableInUse) == false) {
-            string queryCriarTable = "CREATE TABLE " + menuTableInUse + "(mealID VARCHAR(255) NOT NULL, meal VARCHAR(255) NOT NULL, mealPrice DOUBLE(5, 2), mealStartTime VARCHAR(255), mealEndTime VARCHAR(255)) ";
+            string queryCriarTable = "CREATE TABLE " + menuTableInUse + "(mealID VARCHAR(255) NOT NULL, meal VARCHAR(255) NOT NULL) ";
             const char* qCriarTable = queryCriarTable.c_str();
             qstateMenuPlanManagement = mysql_query(conn, qCriarTable);
             if (qstateMenuPlanManagement)
