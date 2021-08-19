@@ -31,6 +31,7 @@ void menuPlanManagement() {
         cout << "1- MeatEater\n";
         cout << "2- Vegetarian\n";
         cout << "3- Vegan\n";
+        cout << "5- Other\n";
         cout << "4- Back\n";
         cout << "Please, enter an option: ";
         cin >> mealTypeID;
@@ -43,6 +44,11 @@ void menuPlanManagement() {
             mealType = "vegan";
         else if (mealTypeID == 4)
             goto menuPlanManagementEnd;
+        else if (mealTypeID == 5) {
+            otherMenuPlanManagement(); //from otherMenuPlanManagement.h
+
+            goto menuPlanManagementEnd;
+        }
 
         mesAndAno:
         //Display current month and year
