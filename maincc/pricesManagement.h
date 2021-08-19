@@ -30,8 +30,10 @@ void pricesManagement() {
 			string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", escolha);
 			buildingName = formatName(buildingName);
 			cout << "* Select meal \n";
-			//listing the meals in the MealsTimeAndPrice
-			listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
+			if (tableExists(buildingName + "MealsTimeAndPrice") == true) {
+				//listing the meals in the MealsTimeAndPrice
+				listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
+			}
 			cout << "5- Other\n";
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";

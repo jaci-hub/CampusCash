@@ -97,6 +97,22 @@ void menuPlanManagement() {
 
         //set o nome da new menuTableInUse
         menuTableInUse = mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
+
+        //***criar mealsTimeAndPrice table***//
+        if (tableExists(allinOne_class.get_buildingName() + "MealsTimeAndPrice") == false) {
+            string querymealsTimeAndPrice = "CREATE TABLE " + allinOne_class.get_buildingName() + "MealsTimeAndPrice(mealID VARCHAR(255), meal VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255), price DOUBLE(5,2))";
+            const char* qmealsTimeAndPrice = querymealsTimeAndPrice.c_str();
+            qstateMenuPlanManagement = mysql_query(conn, qmealsTimeAndPrice);
+            if (qstateMenuPlanManagement)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
+
+            //INSERTING VALUES into mealsTimeAndPrice
+            string queryInserirValues = "INSERT INTO " + allinOne_class.get_buildingName() + "MealsTimeAndPrice(mealID, meal, startTime, endTime, price) VALUES ('1', 'Breakfast', 'none', 'none', 0), ('2', 'Brunch', 'none', 'none', 0), ('3', 'Lunch', 'none', 'none', 0), ('4', 'Dinner', 'none', 'none', 0)";
+            const char* qInserirValues = queryInserirValues.c_str();
+            qstateMenuPlanManagement = mysql_query(conn, qInserirValues);
+            if (qstateMenuPlanManagement)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
+        }
         
         //CRIACAO DA MENU PLAN TABLE FOR THE MONTH if it doesnt already exists
         if (tableExists(menuTableInUse) == false) {
