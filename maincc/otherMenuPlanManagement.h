@@ -87,7 +87,7 @@ void otherMenuPlanManagement() {
 
 				goto listaDosItems;
 			}
-
+			
 			//remove item
 			else if (itemOption == "r") {
 				cout << "* Select item to be removed\n";
