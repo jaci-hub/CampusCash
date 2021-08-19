@@ -34,8 +34,11 @@ void otherMenuPlanManagement() {
 		}
 		
 		cout << "* Select a category \n";
-		//listing the categories in the CategoryTableName
-		listarCoisas("categoryID", "categoryName", CategoryTableName);
+		if (tableExists(CategoryTableName)) {
+			//listing the categories in the CategoryTableName
+			listarCoisas("categoryID", "categoryName", CategoryTableName);
+		}
+		else cout << "No categories!\n";
 
 		//adding/removing a category options
 		cout << "a- Add\n";
@@ -54,10 +57,14 @@ void otherMenuPlanManagement() {
 
 			//take out all spaces and lower-case all letters
 			categoryName = formatName(categoryName);
+			ItemsTableName = categoryName + allinOne_class.get_buildingName() + "ItemsTable";
 
-			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + ": \n";
-			//listing categoryName table selected
-			listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
+			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + "\n";
+			if (tableExists(ItemsTableName)==true) {
+				//listing categoryName table selected
+				listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
+			}
+			else cout << "No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) << "!\n";
 
 			//adding/removing an item options
 			cout << "a- Add\n";
@@ -69,6 +76,21 @@ void otherMenuPlanManagement() {
 
 			//add item
 			if (itemOption == "a") { 
+				//***create Itemstable for categoryname if it doesnt exist yet
+				//take out all spaces and lower-case all letters
+				categoryName = formatName(categoryName);
+
+				if (tableExists(ItemsTableName) == false) {
+					string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE, price DOUBLE(5,2))";
+					const char* qNewItemsTable = queryNewItemsTable.c_str();
+					qstateOtherMenuPlanManagement = mysql_query(conn, qNewItemsTable);
+					if (qstateOtherMenuPlanManagement)
+						cout << "Query failed: " << mysql_error(conn) << "\n";
+
+					//Add ItemsTableName to the MCIrecordTable
+					addCoisaToTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
+				} 
+
 				cout << "* Name: ";
 				string newItemName;
 				cin.ignore();
@@ -119,21 +141,6 @@ void otherMenuPlanManagement() {
 			cin.ignore();
 			getline(cin, newCategoryName);
 			addCoisaToTable(newCategoryName, "categoryName", CategoryTableName); //ADDED
-
-				//***create Itemstable for newcategoryname
-			//take out all spaces and lower-case all letters
-			newCategoryName = formatName(newCategoryName);
-
-			ItemsTableName = newCategoryName + allinOne_class.get_buildingName() + "ItemsTable";
-
-			string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE, price DOUBLE(5,2))";
-			const char* qNewItemsTable = queryNewItemsTable.c_str();
-			qstateOtherMenuPlanManagement = mysql_query(conn, qNewItemsTable);
-			if (qstateOtherMenuPlanManagement)
-				cout << "Query failed: " << mysql_error(conn) << "\n";
-
-			//Add ItemsTableName to the MCIrecordTable
-			addCoisaToTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
 
 			goto listaDasCategories;
 		}

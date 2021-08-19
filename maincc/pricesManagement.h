@@ -30,10 +30,8 @@ void pricesManagement() {
 			string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", escolha);
 			buildingName = formatName(buildingName);
 			cout << "* Select meal \n";
-			if (tableExists(buildingName + "MealsTimeAndPrice") == true) {
-				//listing the meals in the MealsTimeAndPrice
-				listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
-			}
+			//listing the meals in the MealsTimeAndPrice
+			listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
 			cout << "5- Other\n";
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
@@ -41,7 +39,7 @@ void pricesManagement() {
 			cin >> mealSelected;
 
 			if (stoi(mealSelected) >= 1 && stoi(mealSelected) <= 4) {
-				selectedMeal:
+			selectedMeal:
 				string mealName = getName_fromTable(buildingName + "MealsTimeAndPrice", "meal", "mealID", mealSelected);
 
 				//***Display meal price//
@@ -106,7 +104,7 @@ void pricesManagement() {
 							theID = stoi(row[0]);
 							theName = row[1];
 							theprice = stod(row[3]);
-							cout << theID << "- " << theName << ": $" <<theprice << "\n";
+							cout << theID << "- " << theName << ": $" << theprice << "\n";
 						}
 					}
 					else cout << "Query failed: " << mysql_error(conn) << "\n";

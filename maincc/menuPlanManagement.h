@@ -25,13 +25,12 @@ void menuPlanManagement() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        listaDosMealType:
+    listaDosMealType:
         int mealTypeID;
         cout << "* Select an option\n";
         cout << "1- MeatEater\n";
         cout << "2- Vegetarian\n";
         cout << "3- Vegan\n";
-        cout << "5- Other\n";
         cout << "4- Back\n";
         cout << "Please, enter an option: ";
         cin >> mealTypeID;
@@ -44,13 +43,8 @@ void menuPlanManagement() {
             mealType = "vegan";
         else if (mealTypeID == 4)
             goto menuPlanManagementEnd;
-        else if (mealTypeID == 5) {
-            otherMenuPlanManagement(); //from otherMenuPlanManagement.h
 
-            goto menuPlanManagementEnd;
-        }
-
-        mesAndAno:
+    mesAndAno:
         //Display current month and year
         string mes, ano;
         cout << "* Select a month\n";
@@ -98,22 +92,6 @@ void menuPlanManagement() {
         //set o nome da new menuTableInUse
         menuTableInUse = mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
 
-        //***criar mealsTimeAndPrice table***//
-        if (tableExists(allinOne_class.get_buildingName() + "MealsTimeAndPrice") == false) {
-            string querymealsTimeAndPrice = "CREATE TABLE " + allinOne_class.get_buildingName() + "MealsTimeAndPrice(mealID VARCHAR(255), meal VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255), price DOUBLE(5,2))";
-            const char* qmealsTimeAndPrice = querymealsTimeAndPrice.c_str();
-            qstateMenuPlanManagement = mysql_query(conn, qmealsTimeAndPrice);
-            if (qstateMenuPlanManagement)
-                cout << "Query failed: " << mysql_error(conn) << "\n";
-
-            //INSERTING VALUES into mealsTimeAndPrice
-            string queryInserirValues = "INSERT INTO " + allinOne_class.get_buildingName() + "MealsTimeAndPrice(mealID, meal, startTime, endTime, price) VALUES ('1', 'Breakfast', 'none', 'none', 0), ('2', 'Brunch', 'none', 'none', 0), ('3', 'Lunch', 'none', 'none', 0), ('4', 'Dinner', 'none', 'none', 0)";
-            const char* qInserirValues = queryInserirValues.c_str();
-            qstateMenuPlanManagement = mysql_query(conn, qInserirValues);
-            if (qstateMenuPlanManagement)
-                cout << "Query failed: " << mysql_error(conn) << "\n";
-        }
-        
         //CRIACAO DA MENU PLAN TABLE FOR THE MONTH if it doesnt already exists
         if (tableExists(menuTableInUse) == false) {
             string queryCriarTable = "CREATE TABLE " + menuTableInUse + "(mealID VARCHAR(255) NOT NULL, meal VARCHAR(255) NOT NULL) ";
@@ -149,12 +127,12 @@ void menuPlanManagement() {
             addCoisaToTable(menuTableInUse, "MenuPlanTables", "MCIrecordTable"); //ADDED
         }
 
-        listaDosDias:
+    listaDosDias:
         //display the days
         string dayChosen;
         cout << "* Select day\n";
         int i;
-        for ( i = 1; i <= stoi(getLastDay(mes, ano)); i++)
+        for (i = 1; i <= stoi(getLastDay(mes, ano)); i++)
             cout << i << "- " << i << "\n";
         cout << to_string(i) << "- Back\n";
         cout << "Please, enter an option: ";
@@ -196,7 +174,7 @@ void menuPlanManagement() {
 
         if (mealChosen == "1" || mealChosen == "2" || mealChosen == "3" || mealChosen == "4") {
             //Select the dayChosen and mealChosen spot
-            string spotValue; 
+            string spotValue;
             string querymealID = "SELECT Day" + dayChosen + " FROM " + menuTableInUse + " WHERE mealID = '" + mealChosen + "'";
             const char* qmealID = querymealID.c_str();
             qstateMenuPlanManagement = mysql_query(conn, qmealID);
@@ -283,7 +261,7 @@ void menuPlanManagement() {
             }
         }
 
-        else if(mealChosen == "5") {
+        else if (mealChosen == "5") {
             otherMenuPlanManagement(); //from otherMenuPlanManagement.h
 
             //back to...
@@ -311,5 +289,5 @@ void menuPlanManagement() {
     else puts("Connection to DataBase has failed");
 
 menuPlanManagementEnd:
-cout << "";
+    cout << "";
 }
