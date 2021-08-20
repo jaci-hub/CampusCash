@@ -97,7 +97,6 @@ void otherMenuPlanManagement() {
 				string newItemName;
 				cin.ignore();
 				getline(cin, newItemName);
-				//addCoisaToTable(newItemName, "itemName", ItemsTableName); //ADDED
 				
 				cout << "* Price: ";
 				double price;
@@ -168,10 +167,10 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			dropTable(ItemsTableName); //TABLE DROPPED
+			dropTable(allinOne_class.mealType + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 
 			//Remove ItemsTableName from the MCIrecordTable
-			removeCoisaFromTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //REMOVED
+			removeCoisaFromTable(allinOne_class.mealType + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable", "ItemsTables", "MCIrecordTable"); //REMOVED
 
 			goto listaDasCategories;
 		}

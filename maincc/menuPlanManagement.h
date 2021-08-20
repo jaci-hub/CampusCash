@@ -164,9 +164,9 @@ void menuPlanManagement() {
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
+        listaDosMeals:
             cout << "*" << dayName << "* " << monthName << " " << dayChosen << ", " << ano << "\n";
 
-        listaDosMeals:
             //listing the meals from the menuTableInUse
             listarCoisas("mealID", "meal", menuTableInUse);
 
