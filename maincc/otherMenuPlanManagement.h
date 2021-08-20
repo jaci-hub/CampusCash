@@ -24,7 +24,7 @@ void otherMenuPlanManagement() {
 		CategoryTableName = allinOne_class.mealType + allinOne_class.get_buildingName() + "CategoryTable";
 
 		if (tableExists(CategoryTableName) == false) {
-			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(255) UNIQUE) ";
+			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(300) UNIQUE) ";
 			const char* qOtherCategoryTable = queryOtherCategoryTable.c_str();
 			qstateOtherMenuPlanManagement = mysql_query(conn, qOtherCategoryTable);
 			if (qstateOtherMenuPlanManagement)
@@ -83,7 +83,7 @@ void otherMenuPlanManagement() {
 				categoryName = formatName(categoryName);
 
 				if (tableExists(ItemsTableName) == false) {
-					string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(255) UNIQUE, price DOUBLE(5,2))";
+					string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(300) UNIQUE, price DOUBLE(5,2))";
 					const char* qNewItemsTable = queryNewItemsTable.c_str();
 					qstateOtherMenuPlanManagement = mysql_query(conn, qNewItemsTable);
 					if (qstateOtherMenuPlanManagement)
@@ -97,13 +97,13 @@ void otherMenuPlanManagement() {
 				string newItemName;
 				cin.ignore();
 				getline(cin, newItemName);
-				addCoisaToTable(newItemName, "itemName", ItemsTableName); //ADDED
+				//addCoisaToTable(newItemName, "itemName", ItemsTableName); //ADDED
 				
-				cout << "* Price($): ";
+				cout << "* Price: ";
 				double price;
 				cin >> price;
-				string priceString=to_string(price);
-				string queryAdd = "INSERT INTO " + ItemsTableName + "(price) VALUE(" + priceString + ")";
+				string priceString = to_string(price);
+				string queryAdd = "INSERT INTO " + ItemsTableName + "(itemName, price) VALUE('" + newItemName + "', " + priceString + ")";
 				const char* qAdd = queryAdd.c_str();
 				qstateAdd = mysql_query(conn, qAdd);
 				if (qstateAdd)

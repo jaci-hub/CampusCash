@@ -125,8 +125,8 @@ void menuPlanManagement() {
             //display the days
             string dayChosen;
             cout << "* Select day\n";
-            int i;
-            for (i = 1; i <= stoi(getLastDay(mes, ano)); i++)
+            int i, lastDay = stoi(getLastDay(mes, ano));
+            for (i = 1; i <= lastDay; i++)
                 cout << i << "- " << i << "\n";
             cout << to_string(i) << "- Back\n";
             cout << "Please, enter an option: ";
@@ -137,7 +137,7 @@ void menuPlanManagement() {
                 cout << "**Cant select today or past days!\n";
                 goto listaDosDias;
             }
-            else {//INSERT CHOSEN DAY into menuTableInUse
+            else {//INSERT CHOSEN DAY into menuTableInUse IF IT DOESNT EXIST YET
                 string queryInserirDays = "ALTER TABLE " + menuTableInUse + " ADD Day" + dayChosen + " VARCHAR(255)";
                 const char* qInserirDays = queryInserirDays.c_str();
                 qstateMenuPlanManagement = mysql_query(conn, qInserirDays);
@@ -167,12 +167,9 @@ void menuPlanManagement() {
             cout << "*" << dayName << "* " << monthName << " " << dayChosen << ", " << ano << "\n";
 
         listaDosMeals:
-            //string mesGoto = mes, anoGoto = ano;
-            //menuTableInUse = allinOne_class.mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mesGoto + anoGoto;
             //listing the meals from the menuTableInUse
             listarCoisas("mealID", "meal", menuTableInUse);
 
-            //other option
             cout << "5- Back\n";
 
             string mealChosen;
