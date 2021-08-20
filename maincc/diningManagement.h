@@ -74,20 +74,6 @@ void diningManagement() {
 			if (qstateManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			//***criar mealsTimeAndPrice table***//
-			string querymealsTimeAndPrice = "CREATE TABLE " + newBuildingName + "MealsTimeAndPrice(mealID VARCHAR(255), meal VARCHAR(255), startTime VARCHAR(255), endTime VARCHAR(255), price DOUBLE(5,2))";
-			const char* qmealsTimeAndPrice = querymealsTimeAndPrice.c_str();
-			qstateManagement = mysql_query(conn, qmealsTimeAndPrice);
-			if (qstateManagement)
-				cout << "Query failed: " << mysql_error(conn) << "\n";
-
-			//INSERTING VALUES into mealsTimeAndPrice
-			string queryInserirValues = "INSERT INTO " + newBuildingName + "MealsTimeAndPrice(mealID, meal, startTime, endTime, price) VALUES ('1', 'Breakfast', 'none', 'none', 0), ('2', 'Brunch', 'none', 'none', 0), ('3', 'Lunch', 'none', 'none', 0), ('4', 'Dinner', 'none', 'none', 0)";
-			const char* qInserirValues = queryInserirValues.c_str();
-			qstateManagement = mysql_query(conn, qInserirValues);
-			if (qstateManagement)
-				cout << "Query failed: " << mysql_error(conn) << "\n";
-
 			//***criar MCI - MenuPlan, Category and Items - record table***//
 			if (tableExists("MCIrecordTable") == false) {
 				string queryMCI = "CREATE TABLE MCIrecordTable(MenuPlanTables VARCHAR(255), CategoryTables VARCHAR(255), ItemsTables VARCHAR(255))";
@@ -125,8 +111,10 @@ void diningManagement() {
 
 			dropTable(NameTobeRem + "OrdersTable"); //TABLE DROPPED
 
-			//***dropping the mealsTimeAndPrice table da removed building***//
-			dropTable(NameTobeRem + "MealsTimeAndPrice"); //TABLE DROPPED
+			if (tableExists(NameTobeRem + "MealsTimeAndPrice") == true) {
+				//***dropping the mealsTimeAndPrice table da removed building***//
+				dropTable(NameTobeRem + "MealsTimeAndPrice"); //TABLE DROPPED
+			}
 
 				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 			//Drop "MenuPlanTable"
@@ -143,7 +131,7 @@ void diningManagement() {
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Drop "CategoryTable"
-			string queryDropCategoryTable = "SELECT * FROM MCIrecordTable WHERE CategoryTables = '" + NameTobeRem + "CategoryTable'";
+			string queryDropCategoryTable = "SELECT * FROM MCIrecordTable WHERE CategoryTables LIKE '%" + NameTobeRem + "CategoryTable%'";
 			const char* qDropCategoryTable = queryDropCategoryTable.c_str();
 			qstateMenuPlanManagement = mysql_query(conn, qDropCategoryTable);
 			if (!qstateMenuPlanManagement) {

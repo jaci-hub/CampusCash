@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "menuPlanManagement.h"
 #include "dropTable.h"
 using namespace std;
 
@@ -20,7 +21,7 @@ void otherMenuPlanManagement() {
 	if (conn) {
 	listaDasCategories:
 		//criar CategoryTableName if it doesnt exist yet
-		CategoryTableName = allinOne_class.get_buildingName() + "CategoryTable";
+		CategoryTableName = allinOne_class.mealType + allinOne_class.get_buildingName() + "CategoryTable";
 
 		if (tableExists(CategoryTableName) == false) {
 			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(255) UNIQUE) ";
@@ -50,19 +51,20 @@ void otherMenuPlanManagement() {
 
 		//heading to Items table
 		if (isdigit(categoryOption[0]) != 0) {
-			listaDosItems:
+		listaDosItems:
 			string categoryName;
 			//Setting categoryName
 			categoryName = getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption);
 
 			//take out all spaces and lower-case all letters
 			categoryName = formatName(categoryName);
-			ItemsTableName = categoryName + allinOne_class.get_buildingName() + "ItemsTable";
+			//naming the items table
+			ItemsTableName = allinOne_class.mealType + categoryName + allinOne_class.get_buildingName() + "ItemsTable";
 
 			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + "\n";
 			if (tableExists(ItemsTableName)==true) {
 				//listing categoryName table selected
-				listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
+				listarCoisas("itemID", "itemName", ItemsTableName);
 			}
 			else cout << "No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) << "!\n";
 
@@ -95,13 +97,13 @@ void otherMenuPlanManagement() {
 				string newItemName;
 				cin.ignore();
 				getline(cin, newItemName);
-				addCoisaToTable(newItemName, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //ADDED
+				addCoisaToTable(newItemName, "itemName", ItemsTableName); //ADDED
 				
 				cout << "* Price($): ";
 				double price;
 				cin >> price;
 				string priceString=to_string(price);
-				string queryAdd = "INSERT INTO " + categoryName + allinOne_class.get_buildingName() + "ItemsTable(price) VALUE(" + priceString + ")";
+				string queryAdd = "INSERT INTO " + ItemsTableName + "(price) VALUE(" + priceString + ")";
 				const char* qAdd = queryAdd.c_str();
 				qstateAdd = mysql_query(conn, qAdd);
 				if (qstateAdd)
@@ -114,7 +116,7 @@ void otherMenuPlanManagement() {
 			else if (itemOption == "r") {
 				cout << "* Select item to be removed\n";
 				//listing items from itemsTable
-				listarCoisas("itemID", "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable");
+				listarCoisas("itemID", "itemName", ItemsTableName);
 
 				cout << "Please, enter an option: ";
 				int IDtobeRem;
@@ -122,10 +124,10 @@ void otherMenuPlanManagement() {
 				string ItemTobeRem, IDtobeRemString = to_string(IDtobeRem);
 
 				//Getting the item name first
-				ItemTobeRem = getName_fromTable(categoryName + allinOne_class.get_buildingName() + "ItemsTable", "itemName", "itemID", IDtobeRemString);
+				ItemTobeRem = getName_fromTable(ItemsTableName, "itemName", "itemID", IDtobeRemString);
 
 				//Now removing the item
-				removeCoisaFromTable(ItemTobeRem, "itemName", categoryName + allinOne_class.get_buildingName() + "ItemsTable"); //REMOVED
+				removeCoisaFromTable(ItemTobeRem, "itemName", ItemsTableName); //REMOVED
 			
 				goto listaDosItems;
 			}
@@ -166,10 +168,10 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			dropTable(categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
+			dropTable(ItemsTableName); //TABLE DROPPED
 
 			//Remove ItemsTableName from the MCIrecordTable
-			removeCoisaFromTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
+			removeCoisaFromTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //REMOVED
 
 			goto listaDasCategories;
 		}
