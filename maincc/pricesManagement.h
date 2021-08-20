@@ -54,7 +54,7 @@ void pricesManagement() {
 				cin >> option;
 				if (option == "1") {
 					//update price
-					cout << "Price($): ";
+					cout << "Price: ";
 					double newPrice;
 					cin >> newPrice;
 					string newPriceString = to_string(newPrice);

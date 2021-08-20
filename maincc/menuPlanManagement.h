@@ -211,7 +211,7 @@ void menuPlanManagement() {
                 //if it is NULL, update to Name of meal and ingredients
                 if (spotValue == "none") {
                 updateMeal:
-                    cout << "* Name of dish: ";
+                    cout << "* Name of the dish: ";
                     cin.ignore();
                     getline(cin, nameofDish);
                     cout << "* Ingredients: ";
