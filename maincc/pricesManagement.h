@@ -79,7 +79,7 @@ void pricesManagement() {
 				else if (option == 'b')
 					goto theMeals;
 			}
-			//other- THIS IS LONG!!
+			//other
 			else if (mealSelected == "5") {
 			theDiets:
 				cout << "* Select a diet\n";
