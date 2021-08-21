@@ -188,7 +188,7 @@ void pricesManagement() {
 						goto theMeals;
 				}
 				//Back to theBuildings
-				else if (mealSelected == "b")
+				else if (mealSelected == "b") //WHY IS THIS NOT WORKING???
 					goto theBuildings;
 		}
 		else if (escolha == "e")
