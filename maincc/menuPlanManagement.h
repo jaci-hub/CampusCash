@@ -10,6 +10,7 @@
 #include "getLastDay.h"
 #include "diningManagement.h"
 #include "otherMenuPlanManagement.h"
+#include "columnExists.h"
 using namespace std;
 
 int qstateMenuPlanManagement;
@@ -80,6 +81,12 @@ void menuPlanManagement() {
             //Now removing the item
             removeCoisaFromTable(ItemTobeRem, "dietName", allinOne_class.get_buildingName() + "DietTable"); //REMOVED
 
+            //drop that diet menu plan table
+            dropTable(menuTableInUse);
+
+            //remove that diet menu plan table from MCIDrecordTable
+            removeCoisaFromTable(menuTableInUse, "MenuPlanTables", "MCIDrecordTable");
+
             goto listaDasDiets;
         }
         else if (dietOption == "b") {
@@ -137,9 +144,7 @@ void menuPlanManagement() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             cout << "**Menu Plan**\n";
-            cout << monthName << ", " << ano << "\n\n";
-
-            cout << "* Just a moment...\n\n";
+            cout << monthName << ", " << ano << "\n";
 
             //set o nome da new menuTableInUse
             menuTableInUse = allinOne_class.diet + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
@@ -159,8 +164,8 @@ void menuPlanManagement() {
                 if (qstateMenuPlanManagement)
                     cout << "Query failed: " << mysql_error(conn) << "\n";
 
-                //Add menuTableInUse to the MCIrecordTable
-                addCoisaToTable(menuTableInUse, "MenuPlanTables", "MCIrecordTable"); //ADDED
+                //Add menuTableInUse to the MCIDrecordTable
+                addCoisaToTable(menuTableInUse, "MenuPlanTables", "MCIDrecordTable"); //ADDED
             }
 
         listaDosDias:
@@ -179,7 +184,8 @@ void menuPlanManagement() {
                 cout << "**Cant select today or past days!\n";
                 goto listaDosDias;
             }
-            else {//INSERT CHOSEN DAY into menuTableInUse IF IT DOESNT EXIST YET
+            //INSERT CHOSEN DAY into menuTableInUse IF IT DOESNT EXIST YET
+            else if(columnExists("Day" + dayChosen, menuTableInUse) == false) {
                 string queryInserirDays = "ALTER TABLE " + menuTableInUse + " ADD Day" + dayChosen + " VARCHAR(255)";
                 const char* qInserirDays = queryInserirDays.c_str();
                 qstateMenuPlanManagement = mysql_query(conn, qInserirDays);
@@ -267,7 +273,7 @@ void menuPlanManagement() {
                     if (qstateMenuPlanManagement)
                         cout << "Query failed: " << mysql_error(conn) << "\n";
 
-                    cout << "** Success!\n";
+                    cout << "*Dish added!\n";
 
                     //back to select meal or back to menu
                     cout << "\n";
