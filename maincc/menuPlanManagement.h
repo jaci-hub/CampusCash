@@ -37,7 +37,7 @@ void menuPlanManagement() {
             addCoisaToTable(allinOne_class.get_buildingName() + "DietTable", "DietTables", "MCIDrecordTable"); //ADDED
         }
     listaDasDiets:
-        string dietOption, dietName;
+        string dietOption;
         cout << "* Select a diet\n";
         //listar as diets from allinOne_class.get_buildingName() + "DietTable"
         if (tableExists(allinOne_class.get_buildingName() + "DietTable") == true)
@@ -49,10 +49,9 @@ void menuPlanManagement() {
         cout << "b- Back\n";
         cout << "Please, enter an option: ";
         cin >> dietOption;
-        if (isdigit(dietOption[0]) != 0) {
-            dietName = getName_fromTable(allinOne_class.get_buildingName() + "DietTable", "dietName", "dietID", dietOption);
-            allinOne_class.diet = dietName;
-        }
+        if (isdigit(dietOption[0]) != 0)
+            allinOne_class.diet = getName_fromTable(allinOne_class.get_buildingName() + "DietTable", "dietName", "dietID", dietOption);
+        
         else if (dietOption == "a") {
             //add diet to allinOne_class.get_buildingName() + "DietTable")
             cout << "* Name: ";
