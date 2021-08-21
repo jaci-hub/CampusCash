@@ -21,17 +21,17 @@ void otherMenuPlanManagement() {
 	if (conn) {
 	listaDasCategories:
 		//criar CategoryTableName if it doesnt exist yet
-		CategoryTableName = allinOne_class.mealType + allinOne_class.get_buildingName() + "CategoryTable";
+		CategoryTableName = allinOne_class.get_diet() + allinOne_class.get_buildingName() + "CategoryTable";
 
 		if (tableExists(CategoryTableName) == false) {
-			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(300) UNIQUE) ";
+			string queryOtherCategoryTable = "CREATE TABLE " + CategoryTableName + "(categoryID INT KEY AUTO_INCREMENT, categoryName VARCHAR(250) UNIQUE) ";
 			const char* qOtherCategoryTable = queryOtherCategoryTable.c_str();
 			qstateOtherMenuPlanManagement = mysql_query(conn, qOtherCategoryTable);
 			if (qstateOtherMenuPlanManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			//Add CategoryTableName to the MCIrecordTable
-			addCoisaToTable(CategoryTableName, "CategoryTables", "MCIrecordTable"); //ADDED
+			//Add CategoryTableName to the MCIDrecordTable
+			addCoisaToTable(CategoryTableName, "CategoryTables", "MCIDrecordTable"); //ADDED
 		}
 		
 		cout << "* Select a category \n";
@@ -39,7 +39,7 @@ void otherMenuPlanManagement() {
 			//listing the categories in the CategoryTableName
 			listarCoisas("categoryID", "categoryName", CategoryTableName);
 		}
-		else cout << "No categories!\n";
+		else cout << "* No category!\n";
 
 		//adding/removing a category options
 		cout << "a- Add\n";
@@ -59,14 +59,14 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryName = formatName(categoryName);
 			//naming the items table
-			ItemsTableName = allinOne_class.mealType + categoryName + allinOne_class.get_buildingName() + "ItemsTable";
+			ItemsTableName = allinOne_class.get_diet() + categoryName + allinOne_class.get_buildingName() + "ItemsTable";
 
 			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + "\n";
 			if (tableExists(ItemsTableName)==true) {
 				//listing categoryName table selected
 				listarCoisas("itemID", "itemName", ItemsTableName);
 			}
-			else cout << "No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) << "!\n";
+			else cout << "* No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) << "!\n";
 
 			//adding/removing an item options
 			cout << "a- Add\n";
@@ -80,7 +80,7 @@ void otherMenuPlanManagement() {
 			if (itemOption == "a") { 
 				//***create Itemstable for categoryname if it doesnt exist yet
 				//take out all spaces and lower-case all letters
-				categoryName = formatName(categoryName);
+				//categoryName = formatName(categoryName);
 
 				if (tableExists(ItemsTableName) == false) {
 					string queryNewItemsTable = "CREATE TABLE " + ItemsTableName + "(itemID INT KEY AUTO_INCREMENT, itemName VARCHAR(300) UNIQUE, price DOUBLE(5,2))";
@@ -89,8 +89,8 @@ void otherMenuPlanManagement() {
 					if (qstateOtherMenuPlanManagement)
 						cout << "Query failed: " << mysql_error(conn) << "\n";
 
-					//Add ItemsTableName to the MCIrecordTable
-					addCoisaToTable(ItemsTableName, "ItemsTables", "MCIrecordTable"); //ADDED
+					//Add ItemsTableName to the MCIDrecordTable
+					addCoisaToTable(ItemsTableName, "ItemsTables", "MCIDrecordTable"); //ADDED
 				} 
 
 				cout << "* Name: ";
@@ -167,10 +167,10 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			dropTable(allinOne_class.mealType + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
+			dropTable(allinOne_class.get_diet() + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 
-			//Remove ItemsTableName from the MCIrecordTable
-			removeCoisaFromTable(allinOne_class.mealType + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable", "ItemsTables", "MCIrecordTable"); //REMOVED
+			//Remove ItemsTableName from the MCIDrecordTable
+			removeCoisaFromTable(allinOne_class.get_diet() + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable", "ItemsTables", "MCIDrecordTable"); //REMOVED
 
 			goto listaDasCategories;
 		}

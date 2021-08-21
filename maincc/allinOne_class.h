@@ -4,20 +4,20 @@
 using namespace std;
 
 class AllinOne_class {
-	string buildingName, mealType;
+	string buildingName, diet;
 
 public:
 	AllinOne_class() {
 		buildingName = this->buildingName;
-		mealType = this->mealType;
+		diet = this->diet;
 	}
 
 	string get_buildingName() {
 		return buildingName;
 	}
 
-	string get_mealType() {
-		return mealType;
+	string get_diet() {
+		return diet;
 	}
 
 	friend void diningManagement();

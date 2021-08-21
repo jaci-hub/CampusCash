@@ -69,12 +69,14 @@ void pricesManagement() {
 				else if (option == "b")
 					goto theMeals;
 			}
+			//other
 			else if (mealSelected == "5") {
 			listaDasCategorias:
 				//display building category table
 				cout << "* Select a category \n";
+				//if tableExists
 				//listing the categories in the CategoryTableName
-				listarCoisas("categoryID", "categoryName", buildingName + "CategoryTable");
+				//listarCoisas("categoryID", "categoryName", mealtype here!!! buildingName + "CategoryTable");
 
 				cout << "b- Back\n";
 				cout << "Please, enter an option: ";

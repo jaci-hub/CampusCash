@@ -74,11 +74,11 @@ void diningManagement() {
 			if (qstateManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			//***criar MCI - MenuPlan, Category and Items - record table***//
-			if (tableExists("MCIrecordTable") == false) {
-				string queryMCI = "CREATE TABLE MCIrecordTable(MenuPlanTables VARCHAR(255), CategoryTables VARCHAR(255), ItemsTables VARCHAR(255))";
-				const char* qMCI = queryMCI.c_str();
-				qstateManagement = mysql_query(conn, qMCI);
+			//***criar MCID - MenuPlan, Category, Items and Diet - record table***//
+			if (tableExists("MCIDrecordTable") == false) {
+				string queryMCID = "CREATE TABLE MCIDrecordTable(MenuPlanTables VARCHAR(255), CategoryTables VARCHAR(255), ItemsTables VARCHAR(255), DietTables VARCHAR(255))";
+				const char* qMCID = queryMCID.c_str();
+				qstateManagement = mysql_query(conn, qMCID);
 				if (qstateManagement)
 					cout << "Query failed: " << mysql_error(conn) << "\n";
 			}
@@ -118,7 +118,7 @@ void diningManagement() {
 
 				//ALSO DROP ALL THE OTHER TABLES RELATED TO THE REMOVED BUILDING
 			//Drop "MenuPlanTable"
-			string queryDropMenuPlanTable = "SELECT * FROM MCIrecordTable WHERE MenuPlanTables LIKE '%" + NameTobeRem + "MenuPlanTable" + "%'";
+			string queryDropMenuPlanTable = "SELECT * FROM MCIDrecordTable WHERE MenuPlanTables LIKE '%" + NameTobeRem + "MenuPlanTable" + "%'";
 			const char* qDropMenuPlanTable = queryDropMenuPlanTable.c_str();
 			qstateMenuPlanManagement = mysql_query(conn, qDropMenuPlanTable);
 			if (!qstateMenuPlanManagement) {
@@ -131,7 +131,7 @@ void diningManagement() {
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Drop "CategoryTable"
-			string queryDropCategoryTable = "SELECT * FROM MCIrecordTable WHERE CategoryTables LIKE '%" + NameTobeRem + "CategoryTable%'";
+			string queryDropCategoryTable = "SELECT * FROM MCIDrecordTable WHERE CategoryTables LIKE '%" + NameTobeRem + "CategoryTable%'";
 			const char* qDropCategoryTable = queryDropCategoryTable.c_str();
 			qstateMenuPlanManagement = mysql_query(conn, qDropCategoryTable);
 			if (!qstateMenuPlanManagement) {
@@ -144,7 +144,7 @@ void diningManagement() {
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Drop "ItemsTable"
-			string queryDropItemsTable = "SELECT * FROM MCIrecordTable WHERE ItemsTables LIKE '%" + NameTobeRem + "ItemsTable" + "%'";
+			string queryDropItemsTable = "SELECT * FROM MCIDrecordTable WHERE ItemsTables LIKE '%" + NameTobeRem + "ItemsTable" + "%'";
 			const char* qDropItemsTable = queryDropItemsTable.c_str();
 			qstateMenuPlanManagement = mysql_query(conn, qDropItemsTable);
 			if (!qstateMenuPlanManagement) {
@@ -156,25 +156,45 @@ void diningManagement() {
 			}
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			//***Removing all records related to the table from MCIrecordTable
+			//Drop "DietTable"
+			string queryDropDietTable = "SELECT * FROM MCIDrecordTable WHERE DietTables LIKE '%" + NameTobeRem + "DietTable" + "%'";
+			const char* qDropDietTable = queryDropDietTable.c_str();
+			qstateMenuPlanManagement = mysql_query(conn, qDropDietTable);
+			if (!qstateMenuPlanManagement) {
+				res = mysql_store_result(conn);
+				while (row = mysql_fetch_row(res)) {
+					if (tableExists(row[3]))
+						dropTable(row[3]);
+				}
+			}
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//***Removing all records related to the table from MCIDrecordTable
 		//MenuPlanTables
-			string queryRemMenuPlanTables = "DELETE FROM MCIrecordTable WHERE MenuPlanTables LIKE '%" + NameTobeRem + "%'";
+			string queryRemMenuPlanTables = "DELETE FROM MCIDrecordTable WHERE MenuPlanTables LIKE '%" + NameTobeRem + "%'";
 			const char* qRemMenuPlanTables = queryRemMenuPlanTables.c_str();
 			qstateRem = mysql_query(conn, qRemMenuPlanTables);
 			if (qstateRem)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//CategoryTables
-			string queryRemCategoryTables = "DELETE FROM MCIrecordTable WHERE CategoryTables LIKE '%" + NameTobeRem + "%'";
+			string queryRemCategoryTables = "DELETE FROM MCIDrecordTable WHERE CategoryTables LIKE '%" + NameTobeRem + "%'";
 			const char* qRemCategoryTables = queryRemCategoryTables.c_str();
 			qstateRem = mysql_query(conn, qRemCategoryTables);
 			if (qstateRem)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//ItemsTables
-			string queryRemItemsTables = "DELETE FROM MCIrecordTable WHERE ItemsTables LIKE '%" + NameTobeRem + "%'";
+			string queryRemItemsTables = "DELETE FROM MCIDrecordTable WHERE ItemsTables LIKE '%" + NameTobeRem + "%'";
 			const char* qRemItemsTables = queryRemItemsTables.c_str();
 			qstateRem = mysql_query(conn, qRemItemsTables);
+			if (qstateRem)
+				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//DietTables
+			string queryRemDietTables = "DELETE FROM MCIDrecordTable WHERE DietTables LIKE '%" + NameTobeRem + "%'";
+			const char* qRemDietTables = queryRemDietTables.c_str();
+			qstateRem = mysql_query(conn, qRemDietTables);
 			if (qstateRem)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 

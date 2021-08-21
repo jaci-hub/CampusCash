@@ -25,24 +25,66 @@ void menuPlanManagement() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-    listaDosMealType:
-        int mealTypeID;
-        cout << "* Select an option\n";
-        cout << "1- Meat eater\n";
-        cout << "2- Vegetarian\n";
-        cout << "3- Vegan\n";
-        cout << "4- Back\n";
-        cout << "Please, enter an option: ";
-        cin >> mealTypeID;
+        if (tableExists(allinOne_class.get_buildingName() + "DietTable") == false) {
+            string queryDietTable = "CREATE TABLE " + allinOne_class.get_buildingName() + "DietTable(dietID INT KEY AUTO_INCREMENT, dietName VARCHAR(300) UNIQUE) ";
+            const char* qDietTable = queryDietTable.c_str();
+            qstateMenuPlanManagement = mysql_query(conn, qDietTable);
+            if (qstateMenuPlanManagement)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
 
-        if (mealTypeID == 1)
-            allinOne_class.mealType = "Meat eater";
-        else if (mealTypeID == 2)
-            allinOne_class.mealType = "vegetarian";
-        else if (mealTypeID == 3)
-            allinOne_class.mealType = "vegan";
-        else if (mealTypeID == 4)
+            //Add diet table to the MCIDrecordTable
+            addCoisaToTable(allinOne_class.get_buildingName() + "DietTable", "DietTables", "MCIDrecordTable"); //ADDED
+        }
+    listaDasDiets:
+        string dietOption, dietName;
+        cout << "* Select a diet\n";
+        //listar as diets from allinOne_class.get_buildingName() + "DietTable"
+        if (tableExists(allinOne_class.get_buildingName() + "DietTable") == true)
+            listarCoisas("dietID", "dietName", allinOne_class.get_buildingName() + "DietTable");
+        else cout << "* No diet!\n";
+
+        cout << "a- Add\n";
+        cout << "r- Remove\n";
+        cout << "b- Back\n";
+        cout << "Please, enter an option: ";
+        cin >> dietOption;
+        if (isdigit(dietOption[0]) != 0) {
+            dietName = getName_fromTable(allinOne_class.get_buildingName() + "DietTable", "dietName", "dietID", dietOption);
+            allinOne_class.diet = dietName;
+        }
+        else if (dietOption == "a") {
+            //add diet to allinOne_class.get_buildingName() + "DietTable")
+            cout << "* Name: ";
+            string newDietName;
+            cin.ignore();
+            getline(cin, newDietName);
+
+            addCoisaToTable(newDietName, "dietName", allinOne_class.get_buildingName() + "DietTable"); //ADDED
+
+            goto listaDasDiets;
+        }
+        else if (dietOption == "r") {
+            //remove diet from allinOne_class.get_buildingName() + "DietTable")
+            cout << "* Select diet to be removed\n";
+            //listing diets from DietTable
+            listarCoisas("dietID", "dietName", allinOne_class.get_buildingName() + "DietTable");
+
+            cout << "Please, enter an option: ";
+            int IDtobeRem;
+            cin >> IDtobeRem;
+            string ItemTobeRem, IDtobeRemString = to_string(IDtobeRem);
+
+            //Getting the diet name first
+            ItemTobeRem = getName_fromTable(allinOne_class.get_buildingName() + "DietTable", "dietName", "dietID", IDtobeRemString);
+
+            //Now removing the item
+            removeCoisaFromTable(ItemTobeRem, "dietName", allinOne_class.get_buildingName() + "DietTable"); //REMOVED
+
+            goto listaDasDiets;
+        }
+        else if (dietOption == "b") {
             goto menuPlanManagementEnd;
+        }
 
         cout << "* Select an option\n";
         cout << "1- Plan Menu\n";
@@ -74,7 +116,7 @@ void menuPlanManagement() {
             cout << "Please, enter an option: ";
             cin >> mes;
             if (mes == "13")
-                goto listaDosMealType;
+                goto listaDasDiets;
             cout << "* Year: ";
             cin >> ano;
 
@@ -100,7 +142,7 @@ void menuPlanManagement() {
             cout << "* Just a moment...\n\n";
 
             //set o nome da new menuTableInUse
-            menuTableInUse = allinOne_class.mealType + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
+            menuTableInUse = allinOne_class.diet + allinOne_class.get_buildingName() + "MenuPlanTable" + mes + ano;
 
             //CRIACAO DA MENU PLAN TABLE FOR THE MONTH if it doesnt already exists
             if (tableExists(menuTableInUse) == false) {
@@ -231,7 +273,7 @@ void menuPlanManagement() {
                     cout << "\n";
                     cout << "1- Back to meals\n";
                     cout << "2- Back to days\n";
-                    cout << "3- Back to type of meal\n";
+                    cout << "3- Back to diets\n";
                     cout << "4- EXIT Dining\n";
                     cout << "Please, enter an option: ";
                     cin >> optionFinalmente;
@@ -241,7 +283,7 @@ void menuPlanManagement() {
                     else if (optionFinalmente == 2)
                         goto listaDosDias;
                     else if (optionFinalmente == 3)
-                        goto listaDosMealType;
+                        goto listaDasDiets;
                     else if (optionFinalmente == 4)
                         goto menuPlanManagementEnd;
                 }
@@ -264,7 +306,7 @@ void menuPlanManagement() {
                     cout << "0- Update\n";
                     cout << "1- Back to meals\n";
                     cout << "2- Back to days\n";
-                    cout << "3- Back to type of meal\n";
+                    cout << "3- Back to diets\n";
                     cout << "4- EXIT Dining\n";
                     cout << "Please, enter an option: ";
                     cin >> optionFinalmente;
@@ -276,7 +318,7 @@ void menuPlanManagement() {
                     else if (optionFinalmente == 2)
                         goto listaDosDias;
                     else if (optionFinalmente == 3)
-                        goto listaDosMealType;
+                        goto listaDasDiets;
                     else if (optionFinalmente == 4)
                         goto menuPlanManagementEnd;
                 }
@@ -291,18 +333,18 @@ void menuPlanManagement() {
             //back to...
             int lastChoice;
             cout << "\n";
-            cout << "1- Back to type of meal\n";
+            cout << "1- Back to diets\n";
             cout << "2- EXIT Dining\n";
             cout << "Please, enter an option: ";
             cin >> lastChoice;
 
             if (lastChoice == 1)
-                goto listaDosMealType;
+                goto listaDasDiets;
             else if (lastChoice == 2)
                 goto menuPlanManagementEnd;
         }
         else if (menuOtherOption == 3)
-            goto listaDosMealType;
+            goto listaDasDiets;
     }
     else puts("Connection to DataBase has failed");
 
