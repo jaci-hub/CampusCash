@@ -100,7 +100,7 @@ void show_orders_byFoodBuilding() {
 
                 //Cancel all orders and refund students
                 else if (ordersOption == 2) {
-                    //clear queue and refund
+                    //clear queue and refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
                 }
 
                 if (ordersOption == 3)
