@@ -89,7 +89,7 @@ void show_orders_byFoodBuilding() {
 
                 cout << "1- Next\n";
                 cout << "2- Cancel Orders\n";
-                cout << "3- Back to main Menu\n"; //THIS IS IN THE if-statement in main()
+                cout << "3- EXIT\n";
                 cout << "Please, enter an option: ";
                 cin >> ordersOption;
 
@@ -102,8 +102,15 @@ void show_orders_byFoodBuilding() {
                 else if (ordersOption == 2) {
                     //clear queue and refund
                 }
+
+                if (ordersOption == 3)
+                    goto show_orders_byFoodBuildingEnd;
             }
         }
     }
     else puts("Connection to DataBase has failed");
+
+    //end funcao
+show_orders_byFoodBuildingEnd:
+    cout << "";
 }

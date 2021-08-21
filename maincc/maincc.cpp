@@ -36,8 +36,6 @@ int main() {
         //Go to Show orders
         if (menuChoice == 1) {
             show_orders_byFoodBuilding();
-            if (ordersOption == 3)
-                goto backToStaffMenu;
             
             cout << "\n";
             //ask if staff would like to go to menu or log out
