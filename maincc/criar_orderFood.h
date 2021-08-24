@@ -109,8 +109,5 @@ void order_food() {
 		order_total();
 	}
 
-	else {
-		//system("clear");
-		goto selectPlace;
-	}
+	else goto selectPlace;
 }

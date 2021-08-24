@@ -49,8 +49,10 @@ void menuPlanManagement() {
         cout << "b- Back\n";
         cout << "Please, enter an option: ";
         cin >> dietOption;
-        if (isdigit(dietOption[0]) != 0)
+        if (isdigit(dietOption[0]) != 0) {
             allinOne_class.diet = getName_fromTable(allinOne_class.get_buildingName() + "DietTable", "dietName", "dietID", dietOption);
+            allinOne_class.diet = formatName(allinOne_class.diet);
+        }
         
         else if (dietOption == "a") {
             //add diet to allinOne_class.get_buildingName() + "DietTable")
@@ -81,10 +83,40 @@ void menuPlanManagement() {
             removeCoisaFromTable(ItemTobeRem, "dietName", allinOne_class.get_buildingName() + "DietTable"); //REMOVED
 
             //drop that diet menu plan table
-            dropTable(menuTableInUse);
+            if(tableExists(menuTableInUse)==true)
+                dropTable(menuTableInUse);
+
+            ItemTobeRem = formatName(ItemTobeRem);
+
+            //drop that diet category table
+            if (tableExists(ItemTobeRem + allinOne_class.get_buildingName() + "CategoryTable") == true)
+                dropTable(ItemTobeRem + allinOne_class.get_buildingName() + "CategoryTable");
+
+            //drop that diet items table
+            string queryDropItemsTable = "SELECT * FROM MCIDrecordTable WHERE ItemsTables LIKE '%" + ItemTobeRem + allinOne_class.get_buildingName() + "ItemsTable" + "%'";
+            const char* qDropItemsTable = queryDropItemsTable.c_str();
+            qstateMenuPlanManagement = mysql_query(conn, qDropItemsTable);
+            if (!qstateMenuPlanManagement) {
+                res = mysql_store_result(conn);
+                while (row = mysql_fetch_row(res)) {
+                    if (tableExists(row[2]))
+                        dropTable(row[2]);
+                }
+            }
+            else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //remove that diet menu plan table from MCIDrecordTable
-            removeCoisaFromTable(menuTableInUse, "MenuPlanTables", "MCIDrecordTable");
+            removeCoisaFromTable(menuTableInUse, "MenuPlanTables", "MCIDrecordTable"); //REMOVED
+
+            //remove that diet category table from MCIDrecordTable
+            removeCoisaFromTable(ItemTobeRem + allinOne_class.get_buildingName() + "CategoryTable", "CategoryTables", "MCIDrecordTable"); //REMOVED
+
+            //remove that diet item table from MCIDrecordTable
+            string queryRemItemsTables = "DELETE FROM MCIDrecordTable WHERE ItemsTables LIKE '%" + ItemTobeRem + allinOne_class.get_buildingName() + "ItemsTable" + "%'";
+            const char* qRemItemsTables = queryRemItemsTables.c_str();
+            qstateRem = mysql_query(conn, qRemItemsTables);
+            if (qstateRem)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
 
             goto listaDasDiets;
         }
@@ -150,7 +182,7 @@ void menuPlanManagement() {
 
             //CRIACAO DA MENU PLAN TABLE FOR THE MONTH if it doesnt already exists
             if (tableExists(menuTableInUse) == false) {
-                string queryCriarTable = "CREATE TABLE " + menuTableInUse + "(mealID VARCHAR(255) NOT NULL, meal VARCHAR(255) NOT NULL) ";
+                string queryCriarTable = "CREATE TABLE " + menuTableInUse + "(mealID VARCHAR(255) NOT NULL, meal VARCHAR(255) NOT NULL)";
                 const char* qCriarTable = queryCriarTable.c_str();
                 qstateMenuPlanManagement = mysql_query(conn, qCriarTable);
                 if (qstateMenuPlanManagement)

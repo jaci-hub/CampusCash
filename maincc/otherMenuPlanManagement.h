@@ -59,7 +59,7 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryName = formatName(categoryName);
 			//naming the items table
-			ItemsTableName = allinOne_class.get_diet() + categoryName + allinOne_class.get_buildingName() + "ItemsTable";
+			ItemsTableName = categoryName + allinOne_class.get_diet() + allinOne_class.get_buildingName() + "ItemsTable";
 
 			cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption) + "\n";
 			if (tableExists(ItemsTableName)==true) {
@@ -167,10 +167,10 @@ void otherMenuPlanManagement() {
 			//take out all spaces and lower-case all letters
 			categoryTobeRem = formatName(categoryTobeRem);
 
-			dropTable(allinOne_class.get_diet() + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
+			dropTable(categoryTobeRem + allinOne_class.get_diet() + allinOne_class.get_buildingName() + "ItemsTable"); //TABLE DROPPED
 
 			//Remove ItemsTableName from the MCIDrecordTable
-			removeCoisaFromTable(allinOne_class.get_diet() + categoryTobeRem + allinOne_class.get_buildingName() + "ItemsTable", "ItemsTables", "MCIDrecordTable"); //REMOVED
+			removeCoisaFromTable(categoryTobeRem + allinOne_class.get_diet() + allinOne_class.get_buildingName() + "ItemsTable", "ItemsTables", "MCIDrecordTable"); //REMOVED
 
 			goto listaDasCategories;
 		}
