@@ -155,8 +155,21 @@ void menuPlanManagement() {
             cin >> mes;
             if (mes == "13")
                 goto listaDasDiets;
-            cout << "* Year: ";
-            cin >> ano;
+            selectYear:
+            cout << "* Select a year\n";
+            int currentYear = stoi(getCurrentYear()), yearChoice;
+            cout << "0- " << currentYear << "\n";
+            cout << "1- " << currentYear + 1 << "\n";
+            cout << "Please, enter an option: ";
+            cin >> yearChoice;
+            if (yearChoice == 0)
+                ano = to_string(currentYear);
+            else if (yearChoice == 1)
+                ano = to_string(currentYear + 1);
+            else { 
+                cout << "Invalid!\n";
+                goto selectYear; 
+            }
 
             //Cant select dates before today
             if (stoi(mes) < stoi(getCurrentMonth()) && stoi(ano) <= stoi(getCurrentYear())) {
