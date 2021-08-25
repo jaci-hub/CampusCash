@@ -95,6 +95,9 @@ void pricesManagement() {
 				if (isdigit(dietOption[0]) != 0) {
 					dietName = getName_fromTable(buildingName + "DietTable", "dietName", "dietID", dietOption);
 
+					//take out all spaces and lower-case all letters
+					dietName = formatName(dietName);
+
 				listaDasCategorias:
 					//display building category table
 					cout << "* Select a category \n";
@@ -123,7 +126,7 @@ void pricesManagement() {
 						int theID;
 						string theName;
 						double theprice;
-						string queryListarIDnamePrice = "SELECT itemID, itemName, price FROM " + dietName + categoryName + buildingName + "ItemsTable";
+						string queryListarIDnamePrice = "SELECT itemID, itemName, price FROM " + categoryName + dietName + buildingName + "ItemsTable";
 						const char* qListarIDnamePrice = queryListarIDnamePrice.c_str();
 						qstatepricesManagement = mysql_query(conn, qListarIDnamePrice);
 						if (!qstatepricesManagement) {
@@ -132,12 +135,12 @@ void pricesManagement() {
 								theID = stoi(row[0]);
 								theName = row[1];
 								theprice = stod(row[2]);
-								cout << theID << "- " << theName << ": $" << theprice << "\n\n";
+								cout << theID << "- " << theName << ": $" << theprice << "\n";
 							}
 						}
 						else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-						cout << "u- Update price of an item\n";
+						cout << "\nu- Update price of an item\n";
 						cout << "b- Back to categories\n";
 						cout << "Please, enter an option: ";
 						string itemOption;
@@ -150,7 +153,7 @@ void pricesManagement() {
 							int theID;
 							string theName;
 							double theprice;
-							string queryListarIDnamePrice = "SELECT itemID, itemName, price FROM " + dietName + categoryName + buildingName + "ItemsTable";
+							string queryListarIDnamePrice = "SELECT itemID, itemName, price FROM " + categoryName + dietName + buildingName + "ItemsTable";
 							const char* qListarIDnamePrice = queryListarIDnamePrice.c_str();
 							qstatepricesManagement = mysql_query(conn, qListarIDnamePrice);
 							if (!qstatepricesManagement) {
@@ -168,13 +171,13 @@ void pricesManagement() {
 							int itemChosen;
 							cin >> itemChosen;
 							string itemChosenString = to_string(itemChosen), itemChosenName;
-							itemChosenName = getName_fromTable(dietName + categoryName + buildingName + "ItemsTable", "itemName", "itemID", itemChosenString);
+							itemChosenName = getName_fromTable(categoryName + dietName + buildingName + "ItemsTable", "itemName", "itemID", itemChosenString);
 
 							cout << "Price: ";
 							double newprice;
 							cin >> newprice;
 							string newpriceString = to_string(newprice);
-							string queryPriceUpdate = "UPDATE " + dietName + categoryName + buildingName + "ItemsTable SET price = " + newpriceString + "WHERE itemName = '" + itemChosenName + "'";
+							string queryPriceUpdate = "UPDATE " + categoryName + dietName + buildingName + "ItemsTable SET price = " + newpriceString + "WHERE itemName = '" + itemChosenName + "'";
 							const char* qPriceUpdate = queryPriceUpdate.c_str();
 							qstatepricesManagement = mysql_query(conn, qPriceUpdate);
 							if (qstatepricesManagement)
