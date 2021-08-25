@@ -18,7 +18,7 @@ void criar_sender() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        //simulation of log in into the cofi platform 
+        //simulation of log in into the schools platform 
         cout << "*** Campus Cash (CC) ***" << "\n";
         //ckecking the sender's email
     trySenEmailagain:

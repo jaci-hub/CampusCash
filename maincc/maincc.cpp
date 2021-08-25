@@ -2,6 +2,7 @@
 #include <iomanip>
 #include <string>
 #include "criar_sender.h"
+#include "criarStaff.h"
 #include "criar_receiver.h"
 #include "send_cash.h"
 #include "loggedInAsStudentMenu.h"
@@ -24,19 +25,19 @@ int main() {
 
     //*****log in as school*****
     if (selection == 1) {
-        //criar_school_staff();
-        // 
+    staffLogin:
+        //criar o staff/fazer log in as a staff
+        criarStaff();
+
         backToStaffMenu:
         cout << "*** Campus Cash (CC) ***" << "\n";
-        //cout << "** Welcome " << staff.get_name() << " **" << "\n";
-
         //show menu
         schoolOptionMenu(); //from SchoolStudentOptionLoginMenu.h
 
         //Go to Show orders
         if (menuChoice == 1) {
             show_orders_byFoodBuilding();
-            
+
             cout << "\n";
             //ask if staff would like to go to menu or log out
             cout << "1- Back to main Menu\n";
@@ -73,7 +74,7 @@ int main() {
         }
 
         //Go to management
-        else if (menuChoice == 3) { 
+        else if (menuChoice == 3) {
             management(); //asks for password/PIN
             if (managementOption == 5)
                 goto backToStaffMenu;
@@ -92,12 +93,13 @@ int main() {
 
         //Log Out
         else if (menuChoice == 4)
-            cout << "\n" << "Thank you!" << "\n";
+            goto staffLogin;
 
     }
 
     //******log in as student******
     else if (selection == 2) {
+        studentLogin:
         //criar o sender/fazer log in as a student
         criar_sender();
         //system("clear");
@@ -149,7 +151,7 @@ int main() {
 
         //OPTION 3- Log out
         else if (option == 3)
-            cout << "\n" << "Thank you!" << "\n";
+            goto studentLogin;
     }
 
     //EXIT

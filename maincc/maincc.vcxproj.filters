@@ -152,5 +152,8 @@
     <ClInclude Include="columnExists.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="criarStaff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

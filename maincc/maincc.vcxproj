@@ -155,6 +155,7 @@
     <ClInclude Include="classQueue.h" />
     <ClInclude Include="classSender.h" />
     <ClInclude Include="columnExists.h" />
+    <ClInclude Include="criarStaff.h" />
     <ClInclude Include="criar_receiver.h" />
     <ClInclude Include="criar_sender.h" />
     <ClInclude Include="delivery.h" />
