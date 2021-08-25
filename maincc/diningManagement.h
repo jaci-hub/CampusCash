@@ -36,7 +36,9 @@ void diningManagement() {
 
 		cout << "* Select a building \n";
 		//listing the buildings in the foodBuildingsTable
-		listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
+		if (tableExists("foodBuildingsTable") == true)
+			listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
+		else cout << "* No building!\n";
 
 		//adding/removing a building options
 		cout << "a- Add\n";

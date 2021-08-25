@@ -6,13 +6,14 @@ using namespace std;
 //***class OrderFood***
 class OrderFood {
 	private:
-		int selectedPlace, the_food, the_drink, the_sides, otherFood, paymentMethod;
+		string selectedPlace, selectedDiet, the_meal, the_drink, the_sides, otherFood, paymentMethod;
 		double foodOrderTotal;
 
 	public:
 		OrderFood() {
 			selectedPlace = this->selectedPlace;
-			the_food = this->the_food;
+			selectedDiet = this->selectedDiet;
+			the_meal = this->the_meal;
 			the_drink = this->the_drink;
 			the_sides = this->the_sides;
 			otherFood = this->otherFood;
@@ -20,23 +21,23 @@ class OrderFood {
 			foodOrderTotal = this->foodOrderTotal;
 		}
 
-		int get_selectedPlace() {
+		string get_selectedPlace() {
 			return selectedPlace;
 		}
 
-		int get_the_food() {
-			return the_food;
+		string get_the_food() {
+			return the_meal;
 		}
 
-		int get_the_drink() {
+		string get_the_drink() {
 			return the_drink;
 		}
 
-		int get_the_sides() {
+		string get_the_sides() {
 			return the_sides;
 		}
 
-		int get_otherFood() {
+		string get_otherFood() {
 			return otherFood;
 		}
 
