@@ -1,72 +1,113 @@
 #pragma once
 #include <iostream>
 #include <string>
-#include "file_com_pragmaonce_mysql.h"
 #include "classOrderFood.h"
 #include "orderTotal.h"
-#include "formatName.h"
 #include "loggedInAsStudentMenu.h"
-#include "getName_fromTable.h"
-#include "listarCoisas.h"
 using namespace std;
 
 void order_food() {
-	selectPlace:
+selectPlace:
 	cout << "*** Order from \n";
-	//listing the buildings in the foodBuildingsTable
-	if (tableExists("foodBuildingsTable") == true)
-		listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
-	else cout << "* No building!\n";
-	cout << "b-Back\n";
+	cout << "1- Simplot Cafe\n";
+	cout << "2- McCain\n";
 	cout << "Please, enter an option: ";
-	string buildingChoice;
-	cin >> buildingChoice;
-	//heading to diets
-	if (isdigit(buildingChoice[0]) != 0) {
-		//Setting buildingName
-		order1.selectedPlace = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", buildingChoice);
-		//take out all spaces and lower-case all letters
-		order1.selectedPlace = formatName(order1.selectedPlace);
+	cin >> order1.selectedPlace;
 
-		selectDiet:
-		cout << "*** Select diet \n";
-		//listar diets
-
-		cout << "b-Back\n";
+	//Cafe Option
+	if (order1.selectedPlace == 1) {
+		cout << "*** What would you like to order today? \n";
+		cout << "0- None\n";
+		cout << "1- Breakfast\n";
+		cout << "2- Brunch \n";
+		cout << "3- Lunch\n";
+		cout << "4- Dinner\n";
 		cout << "Please, enter an option: ";
-		string dietChoice;
-		cin >> dietChoice;
-		if (isdigit(dietChoice[0]) != 0) {
-			order1.selectedDiet = getName_fromTable();
-			//formatName??
-
-		selectMeal:
-			//Getting the meal
-			if (order1.selectedPlace == 2) {
-				cout << "*** What would you like to order today? \n";
-				//list meals
-
-				cout << "b-Back\n";
+		cin >> order1.the_food;
+		//Getting Drinks
+		if (order1.the_food >= 0 && order1.the_food <= 4) {
+			cout << "*** Drinks?\n";
+			cout << "0- None\n";
+			cout << "1- Coke \n";
+			cout << "2- Mountain Dew\n";
+			cout << "3- Sprite\n";
+			cout << "Please, enter an option: ";
+			cin >> order1.the_drink;
+			//Getting Sides
+			if (order1.the_drink >= 0 && order1.the_drink <= 3) {
+				cout << "*** Sides?\n";
+				cout << "0- None\n";
+				cout << "1- Fruit \n";
+				cout << "2- Brownnie\n";
+				cout << "3- Cake\n";
 				cout << "Please, enter an option: ";
-				cin >> order1.the_meal;
-
-			selectPaymentMethod:
-				// 	ASK IF STUDENT WANTS TO PAY WITH mealPlanBalance OR Coyote Cash
-				cout << "**Pay with: \n";
-				cout << "1- Meals\n";
-				cout << "2- Coyote Cash\n";
+				cin >> order1.the_sides;
+			}
+			//Getting other Food
+			if (order1.the_sides >= 0 && order1.the_sides <= 3) {
+				cout << "*** Other Food\n";
+				cout << "0- None\n";
+				cout << "1- Fruit \n";
+				cout << "2- Brownnie\n";
+				cout << "3- Cake\n";
 				cout << "Please, enter an option: ";
-				cin >> order1.paymentMethod;
-
-				order_total();
+				cin >> order1.otherFood;
+			}
 		}
-		else if (dietChoice == "b")
-			goto selectPlace;
+
+		order_total();
 	}
 
-	else if (buildingChoice == "b")
-		goto order_foodEnd;
+	//McCain Option
+	//Getting the food
+	else if (order1.selectedPlace == 2) {
+		cout << "*** What would you like to order today? \n";
+		cout << "0- None\n";
+		cout << "1- Burger\n";
+		cout << "2- Sandwich\n";
+		cout << "3- The Dean\n";
+		cout << "Please, enter an option: ";
+		cin >> order1.the_food;
+		//Getting the drink
+		if (order1.the_food >= 0 && order1.the_food <= 3) {
+			cout << "*** Drinks?\n";
+			cout << "0- None\n";
+			cout << "1- Coke \n";
+			cout << "2- Mountain Dew\n";
+			cout << "3- Sprite\n";
+			cout << "Please, enter an option: ";
+			cin >> order1.the_drink;
+			//Getting the sides
+			if (order1.the_drink >= 0 && order1.the_drink <= 3) {
+				cout << "*** Sides?\n";
+				cout << "0- None\n";
+				cout << "1- Fruit \n";
+				cout << "2- Brownnie\n";
+				cout << "3- Cake\n";
+				cout << "Please, enter an option: ";
+				cin >> order1.the_sides;
+			}
+			//Getting other Food
+			if (order1.the_sides >= 0 && order1.the_sides <= 3) {
+				cout << "*** Other Food\n";
+				cout << "0- None\n";
+				cout << "1- Fruit \n";
+				cout << "2- Brownnie\n";
+				cout << "3- Cake\n";
+				cout << "Please, enter an option: ";
+				cin >> order1.otherFood;
+			}
+		}
 
-order_foodEnd:
-	cout << "";
+		// 	ASK IF STUDENT WANTS TO PAY WITH mealPlanBalance OR Coyote Cash
+		cout << "**Pay with: \n";
+		cout << "1- Meals\n";
+		cout << "2- Coyote Cash\n";
+		cout << "Please, enter an option: ";
+		cin >> order1.paymentMethod;
+
+		order_total();
+	}
+
+	else goto selectPlace;
 }

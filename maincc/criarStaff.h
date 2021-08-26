@@ -20,7 +20,7 @@ void criarStaff() {
         //simulation of log in into the schools platform 
         cout << "*** Campus Cash (CC) ***" << "\n";
         //ckecking the staff's email
-        loginHere:
+    loginHere:
         string staffEmail, staffPassword;
         cout << "*** Log in ***" << "\n";
         cout << "e-mail: ";

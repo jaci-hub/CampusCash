@@ -5,45 +5,44 @@ using namespace std;
 
 //***class OrderFood***
 class OrderFood {
-	private:
-		string selectedPlace, selectedDiet, the_meal, the_drink, the_sides, otherFood, paymentMethod;
-		double foodOrderTotal;
+private:
+	int selectedPlace, the_food, the_drink, the_sides, otherFood, paymentMethod;
+	double foodOrderTotal;
 
-	public:
-		OrderFood() {
-			selectedPlace = this->selectedPlace;
-			selectedDiet = this->selectedDiet;
-			the_meal = this->the_meal;
-			the_drink = this->the_drink;
-			the_sides = this->the_sides;
-			otherFood = this->otherFood;
-			paymentMethod = this->paymentMethod;
-			foodOrderTotal = this->foodOrderTotal;
-		}
+public:
+	OrderFood() {
+		selectedPlace = this->selectedPlace;
+		the_food = this->the_food;
+		the_drink = this->the_drink;
+		the_sides = this->the_sides;
+		otherFood = this->otherFood;
+		paymentMethod = this->paymentMethod;
+		foodOrderTotal = this->foodOrderTotal;
+	}
 
-		string get_selectedPlace() {
-			return selectedPlace;
-		}
+	int get_selectedPlace() {
+		return selectedPlace;
+	}
 
-		string get_the_food() {
-			return the_meal;
-		}
+	int get_the_food() {
+		return the_food;
+	}
 
-		string get_the_drink() {
-			return the_drink;
-		}
+	int get_the_drink() {
+		return the_drink;
+	}
 
-		string get_the_sides() {
-			return the_sides;
-		}
+	int get_the_sides() {
+		return the_sides;
+	}
 
-		string get_otherFood() {
-			return otherFood;
-		}
+	int get_otherFood() {
+		return otherFood;
+	}
 
-		double get_foodOrderTotal() {
-			return foodOrderTotal;
-		}
+	double get_foodOrderTotal() {
+		return foodOrderTotal;
+	}
 
 	friend void order_food();
 	friend void order_total();

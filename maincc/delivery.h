@@ -6,7 +6,7 @@ using namespace std;
 //THIS APP CAN EVEN BE AN ALTERNATIVE WAY FOR STUDENTS TO REGISTER FOR THE TYPE OF MEAL PLAN THEY WANT FOR A PARTICULAR YEAR/SEMESTER
 
 //***Opcoes de delivery***
- int on_off, hall, room;
+int on_off, hall, room;
 string offCampusAddress;
 void delivery() {
     cout << "*** Where do you want your food delivered?" << "\n";
