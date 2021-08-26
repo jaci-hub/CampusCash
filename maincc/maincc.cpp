@@ -46,7 +46,7 @@ int main() {
             string reoption;
             cin >> reoption;
             if (reoption != "1")
-                cout << "\n" << "Thank you!" << "\n";
+                goto staffLogin;
             else goto backToStaffMenu;
         }
 
@@ -68,7 +68,7 @@ int main() {
                 string reoption;
                 cin >> reoption;
                 if (reoption != "1")
-                    cout << "\n" << "Thank you!" << "\n";
+                    goto staffLogin;
                 else goto backToStaffMenu;
             }
         }
@@ -87,7 +87,7 @@ int main() {
             string reoption;
             cin >> reoption;
             if (reoption != "1")
-                cout << "\n" << "Thank you!" << "\n";
+                goto staffLogin;
             else goto backToStaffMenu;
         }
 
@@ -127,7 +127,7 @@ int main() {
             string reoption;
             cin >> reoption;
             if (reoption != "1")
-                cout << "\n" << "Thank you!" << "\n";
+                goto studentLogin;
             else goto backToMenu;
         }
 
@@ -145,7 +145,7 @@ int main() {
             string reoption;
             cin >> reoption;
             if (reoption != "1")
-                cout << "\n" << "Thank you!" << "\n";
+                goto studentLogin;
             else goto backToMenu;
         }
 
