@@ -8,6 +8,8 @@ class OrderFood {
 private:
 	//food
 	string selectedBuilding, selectedDiet, selectedMeal, selectedSideOne, selectedSideTwo, selectedSideThree;
+	//sides price
+	double selectedSideOnePrice, selectedSideTwoPrice, selectedSideThreePrice;
 	//delivery
 	string selectedOnOffCampus, selectedDorm, selectedRoom;
 	//payment
@@ -24,6 +26,10 @@ public:
 		selectedSideOne = this->selectedSideOne;
 		selectedSideTwo = this->selectedSideTwo;
 		selectedSideThree = this->selectedSideThree;
+		//sides price
+		selectedSideOnePrice = this->selectedSideOnePrice;
+		selectedSideTwoPrice = this->selectedSideTwoPrice;
+		selectedSideThreePrice = this->selectedSideThreePrice;
 		//delivery
 		selectedOnOffCampus = this->selectedOnOffCampus;
 		selectedDorm = this->selectedDorm;
@@ -58,6 +64,19 @@ public:
 		return selectedSideThree;
 	}
 
+	//sides price
+	double get_selectedSideOnePrice() {
+		return selectedSideOnePrice;
+	}
+
+	double get_selectedSideTwoPrice() {
+		return selectedSideTwoPrice;
+	}
+
+	double get_selectedSideThreePrice() {
+		return selectedSideThreePrice;
+	}
+	
 	//delivery
 	string get_selectedOnOffCampus() {
 		return selectedOnOffCampus;

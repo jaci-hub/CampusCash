@@ -142,8 +142,10 @@ void order_food() {
                         cout << "Please, enter an option: ";
                         string itemOption;
                         cin >> itemOption;
-                        if (isdigit(itemOption[0]) != 0)
+                        if (isdigit(itemOption[0]) != 0) {
                             myOrder.selectedSideOne = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
+                            myOrder.selectedSideOnePrice = stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                        }
                         else if (itemOption == "b")
                             goto categoryListInitial;
                     }
@@ -202,8 +204,10 @@ void order_food() {
                         cout << "Please, enter an option: ";
                         string itemOption;
                         cin >> itemOption;
-                        if (isdigit(itemOption[0]) != 0)
+                        if (isdigit(itemOption[0]) != 0) {
                             myOrder.selectedSideTwo = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
+                            myOrder.selectedSideTwoPrice = stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                        }
                         else if (itemOption == "b")
                             goto categoryList;
 
@@ -248,8 +252,10 @@ void order_food() {
                             cout << "Please, enter an option: ";
                             string itemOption;
                             cin >> itemOption;
-                            if (isdigit(itemOption[0]) != 0)
+                            if (isdigit(itemOption[0]) != 0) {
                                 myOrder.selectedSideThree = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
+                                myOrder.selectedSideThreePrice = stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                            }
                             else if (itemOption == "b")
                                 goto categoryListReduced;
                         }
