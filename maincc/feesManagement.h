@@ -19,14 +19,14 @@ void feesManagement() {
 		inicio:
 		//Create feesTable if it doesnt exist already 
 		if (tableExists("feesTable") == false) {
-			string queryCreateFeesTable = "CREATE TABLE feesTable(feeName VARCHAR(255) NOT NULL UNIQUE, percentageFee DOUBLE(5, 2) NOT NULL)";
+			string queryCreateFeesTable = "CREATE TABLE feesTable(feeName VARCHAR(255) NOT NULL UNIQUE, PercentageFee DOUBLE(5, 2) NOT NULL)";
 			const char* qCreateFeesTable = queryCreateFeesTable.c_str();
 			qstateFeeManagement = mysql_query(conn, qCreateFeesTable);
 			if (qstateFeeManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Inserting Variables
-			string queryInsertValuesFeesTable = "INSERT INTO feesTable(feeName, percentageFee) VALUES('TransactionFee', 0), ('OnCampusDeliveryFee', 0), ('OffCampusDeliveryFee', 0)";
+			string queryInsertValuesFeesTable = "INSERT INTO feesTable(feeName, PercentageFee) VALUES('Transaction Fee', 0), ('ON campus Delivery Fee', 0), ('OFF campus Delivery Fee', 0)";
 			const char* qInsertValuesFeesTable = queryInsertValuesFeesTable.c_str();
 			qstateFeeManagement = mysql_query(conn, qInsertValuesFeesTable);
 			if (qstateFeeManagement)
@@ -44,7 +44,7 @@ void feesManagement() {
 			theTransactionFee:
 			//get Transaction fee from DB and display it
 			string TransactionFee, TransactionFeeOption;
-			string queryGettingTransactionFee = "SELECT percentageFee FROM feesTable WHERE feeName = 'TransactionFee'";
+			string queryGettingTransactionFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'Transaction Fee'";
 			const char* qGettingTransactionFee = queryGettingTransactionFee.c_str();
 			qstateFeeManagement = mysql_query(conn, qGettingTransactionFee);
 			if (!qstateFeeManagement) {
@@ -66,7 +66,7 @@ void feesManagement() {
 				cin >> newTransactionFee;
 
 				//UPDATE TransactionFee in DB
-				string queryUpdateTransactionFee = "UPDATE feesTable SET percentageFee = " + newTransactionFee + " WHERE feeName = 'TransactionFee'";
+				string queryUpdateTransactionFee = "UPDATE feesTable SET PercentageFee = " + newTransactionFee + " WHERE feeName = 'Transaction Fee'";
 				const char* qUpdateTransactionFee = queryUpdateTransactionFee.c_str();
 				qstateFeeManagement = mysql_query(conn, qUpdateTransactionFee);
 				if (qstateFeeManagement) 
@@ -83,7 +83,7 @@ void feesManagement() {
 		theOnOffCampusDeliveryFee:
 			//get ON campus delivery fee from DB and display it
 			string onCampusDeliveryFee;
-			string queryGettingonCampusDeliveryFee = "SELECT percentageFee FROM feesTable WHERE feeName = 'OnCampusDeliveryFee'";
+			string queryGettingonCampusDeliveryFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'ON campus Delivery Fee'";
 			const char* qGettingonCampusDeliveryFee = queryGettingonCampusDeliveryFee.c_str();
 			qstateFeeManagement = mysql_query(conn, qGettingonCampusDeliveryFee);
 			if (!qstateFeeManagement) {
@@ -94,7 +94,7 @@ void feesManagement() {
 
 			//get OFF campus delivery fee from DB and display it
 			string offCampusDeliveryFee;
-			string queryGettingoffCampusDeliveryFee = "SELECT percentageFee FROM feesTable WHERE feeName = 'OffCampusDeliveryFee'";
+			string queryGettingoffCampusDeliveryFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'OFF campus Delivery Fee'";
 			const char* qGettingoffCampusDeliveryFee = queryGettingoffCampusDeliveryFee.c_str();
 			qstateFeeManagement = mysql_query(conn, qGettingoffCampusDeliveryFee);
 			if (!qstateFeeManagement) {
@@ -119,7 +119,7 @@ void feesManagement() {
 				cin >> newonCampusDeliveryFee;
 
 				//UPDATE onCampusDeliveryFee in DB
-				string queryUpdateonCampusDeliveryFee = "UPDATE feesTable SET percentageFee = " + newonCampusDeliveryFee + " WHERE feeName = 'OnCampusDeliveryFee'";
+				string queryUpdateonCampusDeliveryFee = "UPDATE feesTable SET PercentageFee = " + newonCampusDeliveryFee + " WHERE feeName = 'ON campus Delivery Fee'";
 				const char* qUpdateonCampusDeliveryFee = queryUpdateonCampusDeliveryFee.c_str();
 				qstateFeeManagement = mysql_query(conn, qUpdateonCampusDeliveryFee);
 				if (qstateFeeManagement)
@@ -134,7 +134,7 @@ void feesManagement() {
 				cin >> newoffCampusDeliveryFee;
 
 				//UPDATE offCampusDeliveryFee in DB
-				string queryUpdateoffCampusDeliveryFee = "UPDATE feesTable SET percentageFee = " + newoffCampusDeliveryFee + " WHERE feeName = 'OffCampusDeliveryFee'";
+				string queryUpdateoffCampusDeliveryFee = "UPDATE feesTable SET PercentageFee = " + newoffCampusDeliveryFee + " WHERE feeName = 'OFF campus Delivery Fee'";
 				const char* qUpdateoffCampusDeliveryFee = queryUpdateoffCampusDeliveryFee.c_str();
 				qstateFeeManagement = mysql_query(conn, qUpdateoffCampusDeliveryFee);
 				if (qstateFeeManagement)

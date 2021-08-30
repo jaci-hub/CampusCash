@@ -78,7 +78,6 @@ public:
 
 	friend void order_food();
 	friend void delivery();
-	friend void order_total();
 	friend void orderFood_payment();
 };
 

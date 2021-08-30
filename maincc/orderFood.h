@@ -3,7 +3,6 @@
 #include <string>
 #include "classOrderFood.h"
 #include "delivery.h"
-#include "orderTotal.h"
 #include "loggedInAsStudentMenu.h"
 #include "listarCoisas.h"
 #include "formatName.h"
@@ -91,7 +90,7 @@ void order_food() {
                 cout << "Please, enter an option: ";
                 string mealSelecionado;
                 cin >> mealSelecionado;
-
+                myOrder.foodOrderTotal = 0; //reset it every time the user wants to order more!
                 string categoryOption0, categoryOption1, categoryOption2;
                 if (mealSelecionado == "b")
                     goto DietsList;

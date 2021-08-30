@@ -59,9 +59,6 @@
     <ClInclude Include="classOrderFood.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="orderTotal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="show_orders_byFoodBuilding.h">
       <Filter>Header Files</Filter>
     </ClInclude>

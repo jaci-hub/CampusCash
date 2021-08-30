@@ -17,7 +17,7 @@ double get_transactionFee() {
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
-		string queryGettingTransactionFee = "SELECT percentageFee FROM feesTable WHERE feeName = 'TransactionFee'";
+		string queryGettingTransactionFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'Transaction Fee'";
 		const char* qGettingTransactionFee = queryGettingTransactionFee.c_str();
 		qstateget_transactionFee = mysql_query(conn, qGettingTransactionFee);
 		if (!qstateget_transactionFee) {

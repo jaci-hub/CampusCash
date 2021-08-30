@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 #include "file_com_pragmaonce_mysql.h"
-#include "orderTotal.h"
+#include "orderFood_payment.h"
 #include "formatName.h"
 #include "getName_fromTable.h"
 #include "listarCoisas.h"
@@ -29,7 +29,7 @@ void delivery() {
     cout << "** Select a dorm\n";
     dormsList:
     //listar dorms
-    onOffCampus = formatName(onOffCampus);
+    onOffCampus = formatName(onOffCampus); //Didnt format myOrder.selectedOnOffCampus, because it will be diplayed in orders!
     string onOffCampusDormsTableName = onOffCampus + "DormsTable";
     if (tableExists(onOffCampusDormsTableName)==true)
         listarCoisas("dormID", "dormName", onOffCampusDormsTableName);
@@ -67,6 +67,6 @@ void delivery() {
     else if (dormOption == "b")
         goto onOffCampus;
 
-    order_total();
+    orderFood_payment();
 }
 //*******

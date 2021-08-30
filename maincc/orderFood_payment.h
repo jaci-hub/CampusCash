@@ -20,7 +20,11 @@ void orderFood_payment() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        
+        cout << "* Subtotal: $" << myOrder.get_foodOrderTotal() << "\n";
+        cout << "* Delivery Fee: $" << orderPaymentFee() << "\n";
+        cout << "** TOTAL: $" << myOrder.get_foodOrderTotal() + orderPaymentFee() << "\n";
+
+        //paymentMethod(); ???
     }
     else puts("Connection to DataBase has failed");
 }
