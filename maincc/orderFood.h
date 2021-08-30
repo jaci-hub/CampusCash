@@ -144,7 +144,7 @@ void order_food() {
                         cin >> itemOption;
                         if (isdigit(itemOption[0]) != 0) {
                             myOrder.selectedSideOne = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
-                            myOrder.selectedSideOnePrice = stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                            myOrder.foodOrderTotal += stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
                         }
                         else if (itemOption == "b")
                             goto categoryListInitial;
@@ -158,6 +158,8 @@ void order_food() {
                 }
                 else if (isdigit(mealSelecionado[0]) != 0) {
                     myOrder.selectedMeal = getName_fromTable(menuTable, "meal", "mealID", mealSelecionado);
+                    //setting the price of the meal
+                    myOrder.foodOrderTotal += stod(getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "price", "mealID", mealSelecionado));
                     categoryList:
                     //listar categorias 1st time
                     string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
@@ -206,7 +208,7 @@ void order_food() {
                         cin >> itemOption;
                         if (isdigit(itemOption[0]) != 0) {
                             myOrder.selectedSideTwo = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
-                            myOrder.selectedSideTwoPrice = stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                            myOrder.foodOrderTotal += stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
                         }
                         else if (itemOption == "b")
                             goto categoryList;
@@ -254,7 +256,7 @@ void order_food() {
                             cin >> itemOption;
                             if (isdigit(itemOption[0]) != 0) {
                                 myOrder.selectedSideThree = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
-                                myOrder.selectedSideThreePrice = stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                                myOrder.foodOrderTotal += stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
                             }
                             else if (itemOption == "b")
                                 goto categoryListReduced;
