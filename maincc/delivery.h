@@ -5,7 +5,7 @@
 using namespace std;
 
 void delivery() {
-
+    cout << "Delivery not started yet!!\n";
 
 deliveryEnd:
     cout << "\n";

@@ -54,6 +54,7 @@ void order_food() {
             cout << "Please, enter an option: ";
             cin >> dietOption;
             if (isdigit(dietOption[0]) != 0) {
+                MealsList:
                 myOrder.selectedDiet = getName_fromTable(myOrder.selectedBuilding + "DietTable", "dietName", "dietID", dietOption);
                 myOrder.selectedDiet = formatName(myOrder.selectedDiet);
 
@@ -79,7 +80,7 @@ void order_food() {
                         if (dishAndIngredients != "none") {
                             cout << mealID << "- " << mealName << ": $" << price << "\n";
                             cout << startTime << " - " << endTime << "\n";
-                            cout << dishAndIngredients << "\n\n";
+                            cout << dishAndIngredients << "\n";
                         }
                     }
                 }
@@ -94,11 +95,108 @@ void order_food() {
                 if (mealSelecionado == "b")
                     goto DietsList;
                 else if (isdigit(mealSelecionado[0]) != 0) {
-                    //listar categorias 2x
+                    categoryList:
+                    myOrder.selectedMeal = getName_fromTable(menuTable, "meal", "mealID", mealSelecionado);
+                    //listar categorias 1st time
+                    string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
+                    cout << "* Select a category \n";
+                    if (tableExists(CategoryTableName)) {
+                        //listing the categories in the CategoryTableName
+                        listarCoisas("categoryID", "categoryName", CategoryTableName);
+                    }
+                    else cout << "* No category!\n";
+                    cout << "n- None\n";
+                    cout << "b- Back\n";
+                    cout << "Please, enter an option: ";
+                    string categoryOption1;
+                    cin >> categoryOption1;
+                    if (isdigit(categoryOption1[0]) != 0) {
+                        //listar os items na selected category
+                        string categoryName = getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption1);
+
+                        //take out all spaces and lower-case all letters
+                        categoryName = formatName(categoryName);
+
+                        //naming the items table
+                        string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
+                        cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption1) + "\n";
+                        if (tableExists(ItemsTableName) == true) {
+                            //listing categoryName table selected
+                            listarCoisas("itemID", "itemName", ItemsTableName);
+                        }
+                        else cout << "* No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption1) << "!\n";
+                        cout << "b- Back\n";
+                        cout << "Please, enter an option: ";
+                        string itemOption;
+                        cin >> itemOption;
+                        if (isdigit(itemOption[0]) != 0)
+                            myOrder.selectedSideOne = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
+                        else if (itemOption == "b")
+                            goto categoryList;
+
+                        categoryListReduced:
+                        //listar categorias 2nd time (without the previously selected)
+                        cout << "* Select a category \n";
+                        int theID;
+                        string theName;
+                        string queryListarIDname = "SELECT categoryID, categoryName FROM " + CategoryTableName;
+                        const char* qListarIDname = queryListarIDname.c_str();
+                        qstateOrderFood = mysql_query(conn, qListarIDname);
+                        if (!qstateOrderFood) {
+                            res = mysql_store_result(conn);
+                            while (row = mysql_fetch_row(res)) {
+                                theID = stoi(row[0]);
+                                theName = row[1];
+                                if(to_string(theID) != categoryOption1) //without the previously selected!
+                                    cout << theID << "- " << theName << "\n";
+                            }
+                        }
+                        else cout << "Query failed: " << mysql_error(conn) << "\n";
+                        cout << "n- None\n";
+                        cout << "b- Back\n";
+                        cout << "Please, enter an option: ";
+                        string categoryOption2;
+                        cin >> categoryOption2;
+                        if (isdigit(categoryOption2[0]) != 0) {
+                            //listar os items na selected category
+                            string categoryName = getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption2);
+
+                            //take out all spaces and lower-case all letters
+                            categoryName = formatName(categoryName);
+
+                            //naming the items table
+                            string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
+                            cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption2) + "\n";
+                            if (tableExists(ItemsTableName) == true) {
+                                //listing categoryName table selected
+                                listarCoisas("itemID", "itemName", ItemsTableName);
+                            }
+                            else cout << "* No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption2) << "!\n";
+                            cout << "b- Back\n";
+                            cout << "Please, enter an option: ";
+                            string itemOption;
+                            cin >> itemOption;
+                            if (isdigit(itemOption[0]) != 0)
+                                myOrder.selectedSideTwo = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
+                            else if (itemOption == "b")
+                                goto categoryListReduced;
+                        }
+                        else if (categoryOption2 == "n")
+                            goto deliveryPart;
+                        else if (categoryOption2 == "b")
+                            goto categoryList;
+                    }
+                    else if (categoryOption1 == "n")
+                        goto deliveryPart;
+                    else if (categoryOption1 == "b")
+                        goto MealsList;
                 }
                 else if (mealSelecionado == "5") {
-                    //listar categorias 3x
+                    myOrder.selectedMeal = "Other";
+                    
                 }
+            deliveryPart:
+                delivery();
             }
             else if (dietOption == "b")
                 goto foodBuildingsList;
