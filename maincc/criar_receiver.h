@@ -18,7 +18,7 @@ void criar_receiver() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        cout << "*** Send to ***" << "\n"; //PREVENT SENDER FROM SENDING TO THEMSELVES
+        cout << "*** Send to ***" << "\n"; 
         //ckecking the receiver's email
     tryRecEmailagain:
         string check_email;
@@ -32,7 +32,7 @@ void criar_receiver() {
         if (!qstateReceiver) {
             res = mysql_store_result(conn);
             while (row = mysql_fetch_row(res)) {
-                if (check_email == row[1] && check_email != student1.get_email()) { 
+                if (check_email == row[1] && check_email != student1.get_email()) { //PREVENT SENDER FROM SENDING TO THEMSELVES
                     check_email_val = true;
                     break;
                 }

@@ -6,38 +6,38 @@ using namespace std;
 //***class OrderFood***
 class OrderFood {
 private:
-	int selectedPlace, the_food, the_drink, the_sides, otherFood, paymentMethod;
+	string selectedBuilding, selectedMeal, selectedSideOne, selectedSideTwo, selectedSideThree, paymentMethod;
 	double foodOrderTotal;
 
 public:
 	OrderFood() {
-		selectedPlace = this->selectedPlace;
-		the_food = this->the_food;
-		the_drink = this->the_drink;
-		the_sides = this->the_sides;
-		otherFood = this->otherFood;
+		selectedBuilding = this->selectedBuilding;
+		selectedMeal = this->selectedMeal;
+		selectedSideOne = this->selectedSideOne;
+		selectedSideTwo = this->selectedSideTwo;
+		selectedSideThree = this->selectedSideThree;
 		paymentMethod = this->paymentMethod;
 		foodOrderTotal = this->foodOrderTotal;
 	}
 
-	int get_selectedPlace() {
-		return selectedPlace;
+	string get_selectedBuilding() {
+		return selectedBuilding;
 	}
 
-	int get_the_food() {
-		return the_food;
+	string get_selectedMeal() {
+		return selectedMeal;
 	}
 
-	int get_the_drink() {
-		return the_drink;
+	string get_selectedSideOne() {
+		return selectedSideOne;
 	}
 
-	int get_the_sides() {
-		return the_sides;
+	string get_selectedSideTwo() {
+		return selectedSideTwo;
 	}
 
-	int get_otherFood() {
-		return otherFood;
+	string get_selectedSideThree() {
+		return selectedSideThree;
 	}
 
 	double get_foodOrderTotal() {

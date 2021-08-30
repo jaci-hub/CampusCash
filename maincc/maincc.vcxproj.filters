@@ -41,7 +41,7 @@
     <ClInclude Include="generalLogin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="criar_orderFood.h">
+    <ClInclude Include="orderFood.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="getTransactionFee.h">

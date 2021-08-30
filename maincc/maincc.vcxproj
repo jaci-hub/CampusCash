@@ -184,7 +184,7 @@
     <ClInclude Include="getTransactionFee.h" />
     <ClInclude Include="management.h" />
     <ClInclude Include="loggedInAsStudentMenu.h" />
-    <ClInclude Include="criar_orderFood.h" />
+    <ClInclude Include="orderFood.h" />
     <ClInclude Include="orderFood_payment.h" />
     <ClInclude Include="orderPaymentFee.h" />
     <ClInclude Include="orderTotal.h" />

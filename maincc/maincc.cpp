@@ -8,7 +8,7 @@
 #include "loggedInAsStudentMenu.h"
 #include "loggedInAsSchoolMenu.h"
 #include "generalLogIn.h"
-#include "criar_orderFood.h"
+#include "orderFood.h"
 #include "delivery.h"
 #include "orderFood_payment.h"
 #include "show_orders_byFoodBuilding.h"
@@ -106,8 +106,7 @@ int main() {
 
         backToMenu:
         cout << "*** Campus Cash (CC) ***" << "\n";
-        cout << "** Welcome " << student1.get_name() << " **" << "\n";
-        cout << "\n";
+        cout << "** Welcome " << student1.get_name() << " **" << "\n\n";
         cout << "* Meals Balance: " << student1.get_mealPlanBalance() << "\n";
         cout << "* Coyote Cash : $" << fixed << setprecision(2) << student1.get_balance() << "\n\n";
         
