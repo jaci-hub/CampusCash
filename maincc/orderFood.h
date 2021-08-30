@@ -8,7 +8,12 @@
 #include "listarCoisas.h"
 #include "formatName.h"
 #include "getName_fromTable.h"
+#include "getCurrentDay.h"
+#include "getCurrentMonth.h"
+#include "getCurrentYear.h"
 using namespace std;
+
+int qstateOrderFood;
 
 void order_food() {
     //Stablishing the connection to mysql database
@@ -53,7 +58,47 @@ void order_food() {
                 myOrder.selectedDiet = formatName(myOrder.selectedDiet);
 
                 //Display menu
-                
+                string dayToday = "30" /*getCurrentDay()*/, mes = getCurrentMonth(), ano = getCurrentYear();
+                string menuTable = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "MenuPlanTable" + mes + ano;
+                string timesAndPriceTableName = myOrder.get_selectedBuilding() + "MealsTimeAndPrice";
+                string mealID, mealName, dishAndIngredients, price, startTime, endTime;
+                string querySelectAllSix = "SELECT " + menuTable + ".mealID, " + menuTable + ".meal, " + menuTable + ".Day" + dayToday + ", " + timesAndPriceTableName + ".price, " + timesAndPriceTableName + ".startTime, " + timesAndPriceTableName + ".endTime FROM " + menuTable + " INNER JOIN " + timesAndPriceTableName + " ON " + menuTable + ".mealID = " + timesAndPriceTableName + ".mealID";
+                const char* qSelectAllSix = querySelectAllSix.c_str();
+                qstateOrderFood = mysql_query(conn, qSelectAllSix);
+                if (!qstateOrderFood) {
+                    res = mysql_store_result(conn);
+                    while (row = mysql_fetch_row(res)) {
+                        mealID = row[0];
+                        mealName = row[1];
+                        dishAndIngredients = row[2];
+                        price = row[3];
+                        startTime = row[4];
+                        endTime = row[5];
+
+                        //only display if there is dish-ingredients
+                        if (dishAndIngredients != "none") {
+                            cout << mealID << "- " << mealName << ": $" << price << "\n";
+                            cout << startTime << " - " << endTime << "\n";
+                            cout << dishAndIngredients << "\n\n";
+                        }
+                    }
+                }
+                else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+                cout << "5- Other\n";
+                cout << "b- Back\n";
+                cout << "Please, enter an option: ";
+                string mealSelecionado;
+                cin >> mealSelecionado;
+
+                if (mealSelecionado == "b")
+                    goto DietsList;
+                else if (isdigit(mealSelecionado[0]) != 0) {
+                    //listar categorias 2x
+                }
+                else if (mealSelecionado == "5") {
+                    //listar categorias 3x
+                }
             }
             else if (dietOption == "b")
                 goto foodBuildingsList;
