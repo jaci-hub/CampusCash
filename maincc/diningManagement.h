@@ -70,7 +70,7 @@ void diningManagement() {
 			//take out all spaces and lower-case all letters
 			newBuildingName = formatName(newBuildingName);
 
-			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable(studentEmail VARCHAR(255) NOT NULL, mealType VARCHAR(255) NOT NULL, the_food VARCHAR(255), the_drink VARCHAR(255), the_sides VARCHAR(255), otherFood VARCHAR(255), orderID INT KEY AUTO_INCREMENT, onOffCampus VARCHAR(10) NOT NULL, houseRoom VARCHAR(255) NOT NULL, totalAmount DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2) NOT NULL, transDateTime VARCHAR(255) NOT NULL)";
+			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable(orderID INT KEY AUTO_INCREMENT, studentEmail VARCHAR(255) NOT NULL, diet VARCHAR(255) NOT NULL, meal VARCHAR(255), sideOne VARCHAR(255), sideTwo VARCHAR(255), sideThree VARCHAR(255), onOffCampus VARCHAR(10) NOT NULL, dorm VARCHAR(255) NOT NULL, roomNumber VARCHAR(10) NOT NULL, totalAmount DOUBLE(5, 2) NOT NULL, feeApplied DOUBLE(5, 2) NOT NULL, orderDateTime VARCHAR(255) NOT NULL)";
 			const char* qAddOrders = queryAddOrders.c_str();
 			qstateManagement = mysql_query(conn, qAddOrders);
 			if (qstateManagement)

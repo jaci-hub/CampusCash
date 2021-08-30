@@ -59,7 +59,7 @@ void order_food() {
                 myOrder.selectedDiet = formatName(myOrder.selectedDiet);
 
                 //Display menu
-                string dayToday = "30" /*getCurrentDay()*/, mes = getCurrentMonth(), ano = getCurrentYear();
+                string dayToday = "31" /*getCurrentDay()*/, mes = getCurrentMonth(), ano = getCurrentYear();
                 string menuTable = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "MenuPlanTable" + mes + ano;
                 string timesAndPriceTableName = myOrder.get_selectedBuilding() + "MealsTimeAndPrice";
                 string mealID, mealName, dishAndIngredients, price, startTime, endTime;

@@ -53,57 +53,65 @@ void show_orders_byFoodBuilding() {
                 cout << "* Select building \n";
                 //listing the buildings in the foodBuildingsTable
                 listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
-
-                int foodBuildingChoice;
+                cout << "e- EXIT\n";
+                string foodBuildingChoice;
                 cout << "Please, enter an option: ";
                 cin >> foodBuildingChoice;
+                if (isdigit(foodBuildingChoice[0]) != 0) {
+                    //Getting the food buildings name
+                    string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", foodBuildingChoice);
 
-                string buildingName, foodBuildingChoiceString = to_string(foodBuildingChoice);
+                    //take out all spaces and lower-case all letters
+                    buildingName = formatName(buildingName);
 
-                //Getting the food buildings name
-                buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", foodBuildingChoiceString);
+                    //************ASK FOR PIN HERE TO GET TO SEE THE BUILDINGS ORDERS????????
 
-                //take out all spaces and lower-case all letters
-                buildingName = formatName(buildingName);
-
-                //************ASK FOR PIN HERE TO GET TO SEE THE BUILDINGS ORDERS????????
-
-                //Getting the orders from that building //IMPLEMENT QUEUE HERE!!!
-                string queryFoodBuildingOrders = "SELECT * FROM " + buildingName + "OrdersTable";
-                const char* qFoodBuildingOrders = queryFoodBuildingOrders.c_str();
-                qstateShowOrders = mysql_query(conn, qFoodBuildingOrders);
-                cout << "* Orders *\n\n";
-                if (!qstateShowOrders) {
-                    res = mysql_store_result(conn);
-                    while (row = mysql_fetch_row(res)) {
-                        cout << "Email: " << row[0] << "\n";
-                        cout << "Meal type: " << row[1] << "\n";
-                        cout << "Food: " << row[2] << "\n";
-                        cout << "Drink: " << row[3] << "\n";
-                        cout << "Sides: " << row[4] << "\n";
-                        cout << "Other: " << row[5] << "\n";
-                        cout << "House-Room: " << row[8] << "\n\n";
+                    //Getting the orders from that building //IMPLEMENT QUEUE HERE!!!
+                    string queryFoodBuildingOrders = "SELECT * FROM " + buildingName + "OrdersTable";
+                    const char* qFoodBuildingOrders = queryFoodBuildingOrders.c_str();
+                    qstateShowOrders = mysql_query(conn, qFoodBuildingOrders);
+                    cout << "* Orders *\n\n";
+                    if (!qstateShowOrders) {
+                        res = mysql_store_result(conn);
+                        while (row = mysql_fetch_row(res)) {
+                            cout << "Order #" << row[0] << "\n";
+                            cout << "Email: " << row[1] << "\n";
+                            cout << "Diet: " << row[2] << "\n";
+                            cout << "Meal: " << row[3] << "\n";
+                            cout << "Side One: " << row[4] << "\n";
+                            cout << "Side Two: " << row[5] << "\n";
+                            cout << "Side Three: " << row[6] << "\n";
+                            cout << "ON/OFF campus: " << row[7] << "\n";
+                            cout << "Dorm: " << row[8] << "\n\n";
+                            cout << "Room: " << row[9] << "\n\n";
+                            cout << "Total: " << row[10] << "\n";
+                            cout << "Fee: " << row[11] << "\n";
+                            cout << "DateTime: " << row[12] << "\n";
+                            cout << "***\n";
+                        }
                     }
+                    else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+                    cout << "1- Next\n";
+                    cout << "2- Cancel Orders\n";
+                    cout << "3- EXIT\n";
+                    cout << "Please, enter an option: ";
+                    cin >> ordersOption;
+
+                    //Next in line
+                    if (ordersOption == 1) {
+                        //enqueue the next in line and dequeue the first in line after "your food is on the way!" message has been sent
+                    }
+
+                    //Cancel all orders and refund students
+                    else if (ordersOption == 2) {
+                        //clear queue and refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
+                    }
+
+                    if (ordersOption == 3)
+                        goto show_orders_byFoodBuildingEnd;
                 }
-                else cout << "Query failed: " << mysql_error(conn) << "\n";
-
-                cout << "1- Next\n";
-                cout << "2- Cancel Orders\n";
-                cout << "3- EXIT\n";
-                cout << "Please, enter an option: ";
-                cin >> ordersOption;
-
-                //Next in line
-                if (ordersOption == 1) {
-                    //enqueue the next in line and dequeue the first in line after "your food is on the way!" message has been sent
-                }
-
-                //Cancel all orders and refund students
-                else if (ordersOption == 2) {
-                    //clear queue and refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
-                }
-
-                if (ordersOption == 3)
+                else if(foodBuildingChoice == "e")
                     goto show_orders_byFoodBuildingEnd;
             }
         }

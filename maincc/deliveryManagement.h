@@ -3,6 +3,7 @@
 #include <string>
 #include "dropTable.h"
 #include "formatName.h"
+#include "getName_fromTable.h"
 using namespace std;
 
 string onOffCampusDormsTableName, roomNumsTableName;
