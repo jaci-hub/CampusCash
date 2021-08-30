@@ -31,7 +31,9 @@ void delivery() {
     //listar dorms
     onOffCampus = formatName(onOffCampus);
     string onOffCampusDormsTableName = onOffCampus + "DormsTable";
-    listarCoisas("dormID", "dormName", onOffCampusDormsTableName);
+    if (tableExists(onOffCampusDormsTableName)==true)
+        listarCoisas("dormID", "dormName", onOffCampusDormsTableName);
+    else cout << "* No dorm!\n";
     cout << "b- Back\n";
     cout << "Please, enter an option: ";
     string dormOption;
@@ -49,7 +51,9 @@ void delivery() {
 
         cout << "* Rooms in " + getName_fromTable(onOffCampusDormsTableName, "dormName", "dormID", dormOption) + "\n";
         //listing dormName table selected
-        listarCoisas("roomNumID", "roomNumName", onOffCampus + dormName + "RoomNumsTable");
+        if (tableExists(onOffCampus + dormName + "RoomNumsTable") == true)
+            listarCoisas("roomNumID", "roomNumName", onOffCampus + dormName + "RoomNumsTable");
+        else cout << "* No room!\n";
         cout << "b- Back\n";
         cout << "Please, enter an option: ";
         string roomNumOption;
