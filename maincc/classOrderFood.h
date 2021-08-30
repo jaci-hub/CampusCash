@@ -6,12 +6,13 @@ using namespace std;
 //***class OrderFood***
 class OrderFood {
 private:
-	string selectedBuilding, selectedMeal, selectedSideOne, selectedSideTwo, selectedSideThree, paymentMethod;
+	string selectedBuilding, selectedDiet, selectedMeal, selectedSideOne, selectedSideTwo, selectedSideThree, paymentMethod;
 	double foodOrderTotal;
 
 public:
 	OrderFood() {
 		selectedBuilding = this->selectedBuilding;
+		selectedDiet = this->selectedDiet;
 		selectedMeal = this->selectedMeal;
 		selectedSideOne = this->selectedSideOne;
 		selectedSideTwo = this->selectedSideTwo;
@@ -22,6 +23,10 @@ public:
 
 	string get_selectedBuilding() {
 		return selectedBuilding;
+	}
+
+	string get_selectedDiet() {
+		return selectedDiet;
 	}
 
 	string get_selectedMeal() {
@@ -49,5 +54,5 @@ public:
 	friend void orderFood_payment();
 };
 
-OrderFood order1; //criacao da order1 type OrderFood
+OrderFood myOrder; //criacao da myOrder type OrderFood
 //*******

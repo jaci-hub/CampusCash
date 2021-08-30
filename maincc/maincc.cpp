@@ -116,8 +116,7 @@ int main() {
         //OPTION 1- Order Food
         if (option == 1) {
             order_food();
-            delivery();
-            orderFood_payment();
+
             cout << "\n";
             //ask if student would like to go to menu or log out
             cout << "1- Back to main Menu\n";
