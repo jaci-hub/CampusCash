@@ -9,7 +9,7 @@
 #include "diningManagement.h"
 using namespace std;
 
-int qstateShowOrders, ordersOption;
+int qstateShowOrders;
 
 void show_orders_byFoodBuilding() {
     //Stablishing the connection to mysql database
@@ -31,7 +31,7 @@ void show_orders_byFoodBuilding() {
             if (qstateShowOrders)
                 cout << "Query failed: " << mysql_error(conn) << "\n";
 
-            cout << "** No buildings yet!\n";
+            cout << "** No building!\n";
         }
 
         else if (tableExists("foodBuildingsTable") == true) {
@@ -46,7 +46,7 @@ void show_orders_byFoodBuilding() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             if (buildingsYet == false) {
-                cout << "** No buildings yet!!\n";
+                cout << "** No building!!\n";
             }
 
             else if (buildingsYet == true) {
@@ -82,33 +82,34 @@ void show_orders_byFoodBuilding() {
                             cout << "Side Two: " << row[5] << "\n";
                             cout << "Side Three: " << row[6] << "\n";
                             cout << "ON/OFF campus: " << row[7] << "\n";
-                            cout << "Dorm: " << row[8] << "\n\n";
-                            cout << "Room: " << row[9] << "\n\n";
-                            cout << "Total: " << row[10] << "\n";
-                            cout << "Fee: " << row[11] << "\n";
+                            cout << "Dorm: " << row[8] << "\n";
+                            cout << "Room: " << row[9] << "\n";
+                            cout << "Total: $" << row[10] << "\n";
+                            cout << "Fee: $" << row[11] << "\n";
                             cout << "DateTime: " << row[12] << "\n";
                             cout << "***\n";
                         }
                     }
                     else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-                    cout << "1- Next\n";
-                    cout << "2- Cancel Orders\n";
-                    cout << "3- EXIT\n";
+                    cout << "n- Next\n";
+                    cout << "c- Cancel Orders\n";
+                    cout << "e- EXIT\n";
                     cout << "Please, enter an option: ";
+                    string ordersOption;
                     cin >> ordersOption;
 
                     //Next in line
-                    if (ordersOption == 1) {
+                    if (ordersOption == "n") {
                         //enqueue the next in line and dequeue the first in line after "your food is on the way!" message has been sent
                     }
 
                     //Cancel all orders and refund students
-                    else if (ordersOption == 2) {
+                    else if (ordersOption == "c") {
                         //clear queue and refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
                     }
 
-                    if (ordersOption == 3)
+                    if (ordersOption == "e")
                         goto show_orders_byFoodBuildingEnd;
                 }
                 else if(foodBuildingChoice == "e")

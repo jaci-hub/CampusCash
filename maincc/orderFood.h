@@ -91,6 +91,9 @@ void order_food() {
                 string mealSelecionado;
                 cin >> mealSelecionado;
                 myOrder.foodOrderTotal = 0; //reset it every time the user wants to order more!
+                myOrder.selectedSideOne.clear();
+                myOrder.selectedSideTwo.clear();
+                myOrder.selectedSideThree.clear();
                 string categoryOption0, categoryOption1, categoryOption2;
                 if (mealSelecionado == "b")
                     goto DietsList;
