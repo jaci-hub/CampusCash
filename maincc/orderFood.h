@@ -62,29 +62,31 @@ void order_food() {
                 string menuTable = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "MenuPlanTable" + mes + ano;
                 string timesAndPriceTableName = myOrder.get_selectedBuilding() + "MealsTimeAndPrice";
                 string mealID, mealName, dishAndIngredients, price, startTime, endTime;
-                string querySelectAllSix = "SELECT " + menuTable + ".mealID, " + menuTable + ".meal, " + menuTable + ".Day" + dayToday + ", " + timesAndPriceTableName + ".price, " + timesAndPriceTableName + ".startTime, " + timesAndPriceTableName + ".endTime FROM " + menuTable + " INNER JOIN " + timesAndPriceTableName + " ON " + menuTable + ".mealID = " + timesAndPriceTableName + ".mealID";
-                const char* qSelectAllSix = querySelectAllSix.c_str();
-                qstateOrderFood = mysql_query(conn, qSelectAllSix);
-                if (!qstateOrderFood) {
-                    res = mysql_store_result(conn);
-                    while (row = mysql_fetch_row(res)) {
-                        mealID = row[0];
-                        mealName = row[1];
-                        dishAndIngredients = row[2];
-                        price = row[3];
-                        startTime = row[4];
-                        endTime = row[5];
 
-                        //only display if there is dish-ingredients
-                        if (dishAndIngredients != "none") {
-                            cout << mealID << "- " << mealName << ": $" << price << "\n";
-                            cout << startTime << " - " << endTime << "\n";
-                            cout << dishAndIngredients << "\n";
+                if (tableExists(menuTable) == true) {
+                    string querySelectAllSix = "SELECT " + menuTable + ".mealID, " + menuTable + ".meal, " + menuTable + ".Day" + dayToday + ", " + timesAndPriceTableName + ".price, " + timesAndPriceTableName + ".startTime, " + timesAndPriceTableName + ".endTime FROM " + menuTable + " INNER JOIN " + timesAndPriceTableName + " ON " + menuTable + ".mealID = " + timesAndPriceTableName + ".mealID";
+                    const char* qSelectAllSix = querySelectAllSix.c_str();
+                    qstateOrderFood = mysql_query(conn, qSelectAllSix);
+                    if (!qstateOrderFood) {
+                        res = mysql_store_result(conn);
+                        while (row = mysql_fetch_row(res)) {
+                            mealID = row[0];
+                            mealName = row[1];
+                            dishAndIngredients = row[2];
+                            price = row[3];
+                            startTime = row[4];
+                            endTime = row[5];
+
+                            //only display if there is dish-ingredients
+                            if (dishAndIngredients != "none") {
+                                cout << mealID << "- " << mealName << ": $" << price << "\n";
+                                cout << startTime << " - " << endTime << "\n";
+                                cout << dishAndIngredients << "\n";
+                            }
                         }
                     }
+                    else cout << "Query failed: " << mysql_error(conn) << "\n";
                 }
-                else cout << "Query failed: " << mysql_error(conn) << "\n";
-
                 cout << "5- Other\n";
                 cout << "b- Back\n";
                 cout << "Please, enter an option: ";

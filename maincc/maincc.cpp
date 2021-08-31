@@ -107,8 +107,8 @@ int main() {
         backToMenu:
         cout << "*** Campus Cash (CC) ***" << "\n";
         cout << "** Welcome " << student1.get_name() << " **" << "\n\n";
-        cout << "* Meals Balance: " << student1.get_mealPlanBalance() << "\n";
-        cout << "* Coyote Cash : $" << fixed << setprecision(2) << student1.get_balance() << "\n\n";
+        cout << "* Meals: " << student1.get_mealPlanBalance() << "\n";
+        cout << "* Cash: $" << fixed << setprecision(2) << student1.get_balance() << "\n\n";
         
         //Show Menu
         menu();

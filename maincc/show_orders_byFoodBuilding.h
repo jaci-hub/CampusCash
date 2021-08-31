@@ -7,6 +7,7 @@
 #include "getName_fromTable.h"
 #include "listarCoisas.h"
 #include "diningManagement.h"
+#include "classOrderFood.h"
 using namespace std;
 
 int qstateShowOrders;
@@ -58,6 +59,7 @@ void show_orders_byFoodBuilding() {
                 cout << "Please, enter an option: ";
                 cin >> foodBuildingChoice;
                 if (isdigit(foodBuildingChoice[0]) != 0) {
+                    showOrders:
                     //Getting the food buildings name
                     string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", foodBuildingChoice);
 
@@ -70,28 +72,32 @@ void show_orders_byFoodBuilding() {
                     string queryFoodBuildingOrders = "SELECT * FROM " + buildingName + "OrdersTable";
                     const char* qFoodBuildingOrders = queryFoodBuildingOrders.c_str();
                     qstateShowOrders = mysql_query(conn, qFoodBuildingOrders);
-                    cout << "* Orders *\n\n";
+                    cout << "* Orders *\n";
+                    bool next = false;
                     if (!qstateShowOrders) {
                         res = mysql_store_result(conn);
                         while (row = mysql_fetch_row(res)) {
-                            cout << "Order #" << row[0] << "\n";
-                            cout << "Email: " << row[1] << "\n";
-                            cout << "Diet: " << row[2] << "\n";
-                            cout << "Meal: " << row[3] << "\n";
-                            cout << "Side One: " << row[4] << "\n";
-                            cout << "Side Two: " << row[5] << "\n";
-                            cout << "Side Three: " << row[6] << "\n";
-                            cout << "ON/OFF campus: " << row[7] << "\n";
-                            cout << "Dorm: " << row[8] << "\n";
-                            cout << "Room: " << row[9] << "\n";
-                            cout << "Total: $" << row[10] << "\n";
-                            cout << "Fee: $" << row[11] << "\n";
-                            cout << "DateTime: " << row[12] << "\n";
-                            cout << "***\n";
+                            if (stoi(row[0]) > 0) {
+                                next = true;
+                                cout << "Order #" << row[0] << "\n";
+                                cout << "Email: " << row[1] << "\n";
+                                cout << "Diet: " << row[2] << "\n";
+                                cout << "Meal: " << row[3] << "\n";
+                                cout << "Side One: " << row[4] << "\n";
+                                cout << "Side Two: " << row[5] << "\n";
+                                cout << "Side Three: " << row[6] << "\n";
+                                cout << "ON/OFF campus: " << row[7] << "\n";
+                                cout << "Dorm: " << row[8] << "\n";
+                                cout << "Room: " << row[9] << "\n";
+                                cout << "Subtotal: $" << row[10] << "\n";
+                                cout << "Delivery Fee: $" << row[11] << "\n";
+                                cout << "DateTime: " << row[12] << "\n";
+                                cout << "***\n";
+                            }
                         }
                     }
                     else cout << "Query failed: " << mysql_error(conn) << "\n";
-
+                    
                     cout << "n- Next\n";
                     cout << "c- Cancel Orders\n";
                     cout << "e- EXIT\n";
@@ -100,13 +106,27 @@ void show_orders_byFoodBuilding() {
                     cin >> ordersOption;
 
                     //Next in line
-                    if (ordersOption == "n") {
-                        //enqueue the next in line and dequeue the first in line after "your food is on the way!" message has been sent
+                    if (ordersOption == "n" && next == true) {
+                        //UPDATE IN DB
+                        string queryUpdateOrderID = "UPDATE " + buildingName + "OrdersTable SET orderID = orderID - 1";
+                        const char* qUpdateOrderID = queryUpdateOrderID.c_str();
+                        qstateShowOrders = mysql_query(conn, qUpdateOrderID);
+                        if (qstateShowOrders)
+                            cout << "Query failed: " << mysql_error(conn) << "\n";
+
+                        goto showOrders;
+                    }
+
+                    else if (ordersOption == "n" && next == false) {
+                        cout << "No line!\n";
+                        goto showOrders;
                     }
 
                     //Cancel all orders and refund students
                     else if (ordersOption == "c") {
                         //clear queue and refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
+
+                        goto showOrders;
                     }
 
                     if (ordersOption == "e")

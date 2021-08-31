@@ -49,15 +49,12 @@ public:
             rear--;
         }
     }
-    void count() {
+    int count() {
         if (rear + 1 == 0)
-            cout << "There is no one in line\n";
+            return 0;
         else if (rear + 1 == 1)
-            cout << "There is one person in line\n";
-        else
-        {
-            cout << "There are " << rear + 1 << " people in line\n";
-        }
+            return 1;
+        else return rear + 1;
     }
     void display() {
         for (int i = 0; i < 10; i++) {
@@ -66,3 +63,5 @@ public:
         cout << "\n";
     }
 };
+
+Queue orderQueue;
