@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="addCoisaToTable.h" />
     <ClInclude Include="allinOne_class.h" />
+    <ClInclude Include="cancelOrder.h" />
     <ClInclude Include="cashTransactionRecord.h" />
     <ClInclude Include="classOrderFood.h" />
     <ClInclude Include="classSender.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="menuPlanManagement.h" />
     <ClInclude Include="otherMenuPlanManagement.h" />
     <ClInclude Include="pricesManagement.h" />
+    <ClInclude Include="receivedOrder.h" />
     <ClInclude Include="removeCoisaFromTable.h" />
     <ClInclude Include="show_orders_byFoodBuilding.h" />
     <ClInclude Include="file_com_pragmaonce_mysql.h" />

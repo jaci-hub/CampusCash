@@ -3,6 +3,8 @@
 #include <string>
 #include "classSender.h"
 #include "formatName.h"
+#include "cancelOrder.h"
+#include "receivedOrder.h"
 using namespace std;
 
 int qstateLoggedInAsStudentMenu;
@@ -58,11 +60,11 @@ void menu() {
                 res = mysql_store_result(conn);
                 row = mysql_fetch_row(res);
                 if (stoi(row[0]) <= 0) {
-                    cout << "** Your food is on the way! **\n";
+                    cout << "** Your order is on the way! **\n";
                     cout << "r- Received" << "\n";
                 }
                 else if (stoi(row[0]) == 1)
-                    cout << "** Your food is being prepared right now! **\n";
+                    cout << "** Your order is being prepared right now! **\n";
                 if (stoi(row[0]) > 1) {
                     cout << "** Line#: " << stoi(row[0]) << "\n";
                     cout << "c- Cancel order" << "\n";
@@ -75,14 +77,7 @@ void menu() {
         cout << "3- Log out" << "\n";
         cout << "Please, enter an option: ";
         cin >> option;
-        //if (option == "c")
-            //cancelOrder();
-        //else if (option == "r")
-            //receivedOrder(); //FINISH THESE
-        if (stoi(option) < 0 || stoi(option) > 3) {
-            //system("clear");
-            menu();
-        }
     }
+    else puts("Connection to DataBase has failed");
 }
 //*******

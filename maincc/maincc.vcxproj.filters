@@ -149,5 +149,11 @@
     <ClInclude Include="criarStaff.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="receivedOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cancelOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
