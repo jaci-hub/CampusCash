@@ -277,7 +277,12 @@ void order_food() {
                 }
                 
             deliveryPart:
-                delivery();
+                if(myOrder.get_foodOrderTotal() > 0)
+                    delivery();
+                else {
+                    cout << "* Invalid Order!\n";
+                    goto order_foodEnd;
+                }
             }
             else if (dietOption == "b")
                 goto foodBuildingsList;

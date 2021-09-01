@@ -57,8 +57,10 @@ void menu() {
             if (!qstateLoggedInAsStudentMenu) {
                 res = mysql_store_result(conn);
                 row = mysql_fetch_row(res);
-                if (stoi(row[0]) <= 0)
-                    cout << "** Your food is on the Way! **\n"; //REMOVE THIS WHEN FOOD IS DELIVERED!!
+                if (stoi(row[0]) <= 0) {
+                    cout << "** Your food is on the way! **\n";
+                    cout << "r- Received" << "\n";
+                }
                 else if (stoi(row[0]) == 1)
                     cout << "** Your food is being prepared right now! **\n";
                 if (stoi(row[0]) > 1) {
@@ -75,6 +77,8 @@ void menu() {
         cin >> option;
         //if (option == "c")
             //cancelOrder();
+        //else if (option == "r")
+            //receivedOrder();
         if (stoi(option) < 0 || stoi(option) > 3) {
             //system("clear");
             menu();
