@@ -71,9 +71,6 @@
     <ClInclude Include="loggedInAsSchoolMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="classQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="addCoisaToTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>

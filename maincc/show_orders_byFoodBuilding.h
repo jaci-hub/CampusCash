@@ -2,12 +2,11 @@
 #include <iostream>
 #include <string>
 #include "file_com_pragmaonce_mysql.h"
-#include "classQueue.h"
 #include "formatName.h"
 #include "getName_fromTable.h"
 #include "listarCoisas.h"
 #include "diningManagement.h"
-#include "classOrderFood.h"
+//#include "classOrderFood.h"
 using namespace std;
 
 int qstateShowOrders;

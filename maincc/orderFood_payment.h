@@ -6,7 +6,6 @@
 #include "orderPaymentFee.h"
 #include "getCurrentDateTime.h"
 #include "orderFood.h"
-#include "classQueue.h"
 using namespace std;
 
 int qstateFoodPayment;

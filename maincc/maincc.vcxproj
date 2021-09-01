@@ -152,7 +152,6 @@
     <ClInclude Include="allinOne_class.h" />
     <ClInclude Include="cashTransactionRecord.h" />
     <ClInclude Include="classOrderFood.h" />
-    <ClInclude Include="classQueue.h" />
     <ClInclude Include="classSender.h" />
     <ClInclude Include="columnExists.h" />
     <ClInclude Include="criarStaff.h" />

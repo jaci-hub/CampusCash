@@ -42,7 +42,7 @@ public:
     friend void criar_sender(); //so it can access the private name, so it is set in criar_sender()
     friend void send_cash(); //so it can access the private balance, so it is updated when transaction is made!
     friend void orderFood_payment(); //so it can access the private balance, so it is updated when order is made!
-    friend void show_orders_byFoodBuilding();
+    //friend void show_orders_byFoodBuilding();
 };
 
 Sender student1; //criacao do studante1 type Sender
