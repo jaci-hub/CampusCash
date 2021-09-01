@@ -114,7 +114,7 @@ int main() {
         menu();
 
         //OPTION 1- Order Food
-        if (option == 1) {
+        if (stoi(option) == 1) {
             order_food();
 
             cout << "\n";
@@ -130,7 +130,7 @@ int main() {
         }
 
         //OPTION 2- Send cash
-        else if (option == 2) {
+        else if (stoi(option) == 2) {
             //criar o receptor
             criar_receiver();
             //fazer envio
@@ -148,7 +148,7 @@ int main() {
         }
 
         //OPTION 3- Log out
-        else if (option == 3)
+        else if (stoi(option) == 3)
             goto studentLogin;
     }
 

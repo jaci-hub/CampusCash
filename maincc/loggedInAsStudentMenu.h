@@ -8,7 +8,7 @@ using namespace std;
 int qstateLoggedInAsStudentMenu;
 
 //***Opcoes do menu***
-unsigned int option;
+string option;
 void menu() {
     //Stablishing the connection to mysql database
     MYSQL* conn;
@@ -28,13 +28,29 @@ void menu() {
             res = mysql_store_result(conn);
             row = mysql_fetch_row(res);
             buildingOrderedFrom = row[0];
+
+            if(buildingOrderedFrom == "none")
+                cout << "1- Order food" << "\n";
         }
         else cout << "Query failed: " << mysql_error(conn) << "\n";
 
         buildingOrderedFrom = formatName(buildingOrderedFrom);
 
-        //select lineNumber from DB
+        bool thereIsOrder = false;
         if (tableExists(buildingOrderedFrom + "OrdersTable") == true) {
+            string queryCheckIfThereIsOrder = "SELECT orderID FROM " + buildingOrderedFrom + "OrdersTable WHERE studentEmail = '" + student1.get_email() + "'";
+            const char* qCheckIfThereIsOrder = queryCheckIfThereIsOrder.c_str();
+            qstateLoggedInAsStudentMenu = mysql_query(conn, qCheckIfThereIsOrder);
+            if (!qstateLoggedInAsStudentMenu) {
+                res = mysql_store_result(conn);
+                while (row = mysql_fetch_row(res))
+                    thereIsOrder = true;
+            }
+            else cout << "Query failed: " << mysql_error(conn) << "\n";
+        }
+
+        //select lineNumber from DB
+        if (tableExists(buildingOrderedFrom + "OrdersTable") == true && thereIsOrder == true) {
             string querySelectOrderID = "SELECT orderID FROM " + buildingOrderedFrom + "OrdersTable WHERE studentEmail = '" + student1.get_email() + "'";
             const char* qSelectOrderID = querySelectOrderID.c_str();
             qstateLoggedInAsStudentMenu = mysql_query(conn, qSelectOrderID);
@@ -47,18 +63,19 @@ void menu() {
                     cout << "** Your food is being prepared right now! **\n";
                 if (stoi(row[0]) > 1) {
                     cout << "** Line#: " << stoi(row[0]) << "\n";
-                    cout << "0- Cancel order" << "\n";
+                    cout << "c- Cancel order" << "\n";
                 }
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
         }
 
-        cout << "1- Order food" << "\n";
         cout << "2- Send cash" << "\n";
         cout << "3- Log out" << "\n";
         cout << "Please, enter an option: ";
         cin >> option;
-        if (option < 0 || option > 3) {
+        //if (option == "c")
+            //cancelOrder();
+        if (stoi(option) < 0 || stoi(option) > 3) {
             //system("clear");
             menu();
         }

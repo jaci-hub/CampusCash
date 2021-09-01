@@ -70,11 +70,13 @@ void criar_sender() {
             //SETTING THE OTHER VARIABLES FOR SENDER/STUDENT1
 
             //setting name
+            string theName;
             for (int i = 0; i < student1.email.size(); i++) {
                 if (student1.email[i] == '.') //specific to CofI email structure (firstname.lastname@...)
                     break;
-                student1.name += student1.email[i];
+                theName += student1.email[i];
             }
+            student1.name = theName;
             student1.name[0] = toupper(student1.name[0]);
 
             //setting ID
