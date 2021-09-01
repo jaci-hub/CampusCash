@@ -123,7 +123,7 @@ void show_orders_byFoodBuilding() {
 
                     //Cancel all orders and refund students
                     else if (ordersOption == "c") {
-                        //clear queue and refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
+                        //set everyones orderID less than the most negative number & set buildingorderedfrom = 'none' & refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
 
                         goto showOrders;
                     }

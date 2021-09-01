@@ -78,7 +78,7 @@ void menu() {
         //if (option == "c")
             //cancelOrder();
         //else if (option == "r")
-            //receivedOrder();
+            //receivedOrder(); //FINISH THESE
         if (stoi(option) < 0 || stoi(option) > 3) {
             //system("clear");
             menu();
