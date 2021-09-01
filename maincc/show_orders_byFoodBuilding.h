@@ -6,7 +6,8 @@
 #include "getName_fromTable.h"
 #include "listarCoisas.h"
 #include "diningManagement.h"
-//#include "classOrderFood.h"
+#include "cancelAllOrders.h"
+
 using namespace std;
 
 int qstateShowOrders;
@@ -90,7 +91,7 @@ void show_orders_byFoodBuilding() {
                                 cout << "Room: " << row[9] << "\n";
                                 cout << "Subtotal: $" << row[10] << "\n";
                                 cout << "Delivery Fee: $" << row[11] << "\n";
-                                cout << "DateTime: " << row[13] << "\n";
+                                cout << "DateTime: " << row[13] << "\n"; //row[12] is paymentMethod
                                 cout << "***\n";
                             }
                         }
@@ -98,7 +99,7 @@ void show_orders_byFoodBuilding() {
                     else cout << "Query failed: " << mysql_error(conn) << "\n";
                     
                     cout << "n- Next\n";
-                    cout << "c- Cancel Orders\n";
+                    cout << "c- Cancel All Orders\n";
                     cout << "e- EXIT\n";
                     cout << "Please, enter an option: ";
                     string ordersOption;
@@ -123,9 +124,18 @@ void show_orders_byFoodBuilding() {
 
                     //Cancel all orders and refund students
                     else if (ordersOption == "c") {
-                        //set everyones orderID less than the most negative number & set buildingorderedfrom = 'none' & refund students -- ask "ARE YOU SURE? THIS CANNOT BE UNDONE!"
-
-                        goto showOrders;
+                        cout << "** Are you sure? THIS CANNOT BE UNDONE!\n";
+                        cout << "1- YES\n";
+                        cout << "2- Back\n";
+                        cout << "Please, enter an option: ";
+                        int cancelamento;
+                        cin >> cancelamento;
+                        if (cancelamento == 1) {
+                            cancelAllOrders();
+                            goto showOrders;
+                        }
+                        if (cancelamento == 2)
+                            goto showOrders;
                     }
 
                     if (ordersOption == "e")
