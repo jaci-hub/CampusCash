@@ -21,7 +21,9 @@ void mealsTimePeriodManagement() {
 	theBuildings:
 		cout << "* Select a building \n";
 		//listing the buildings in the foodBuildingsTable
-		listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
+		if (tableExists("foodBuildingsTable") == true)
+			listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
+		else cout << "No building!\n";
 		cout << "e- EXIT\n";
 		cout << "Please, enter an option: ";
 		string casaSelected;
@@ -33,7 +35,9 @@ void mealsTimePeriodManagement() {
 			buildingName = formatName(buildingName);
 			cout << "* Select meal \n";
 			//listing the meals in the MealsTimeAndPrice
-			listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
+			if(tableExists(buildingName + "MealsTimeAndPrice")==true)
+				listarCoisas("mealID", "meal", buildingName + "MealsTimeAndPrice");
+			else cout << "No meal!\n";
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string mealSelected;

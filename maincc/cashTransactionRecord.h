@@ -32,7 +32,7 @@ void cashTransactionRecord() {
             }
 
             //Taking care of sender
-            string queryEmail12amount = "SELECT senderEmail, amountSent, receiverEmail, transDateTime, transactionCount FROM cashTransRecoTable";
+            string queryEmail12amount = "SELECT senderEmail, amountSent, receiverEmail, transDateTime, transactionCount, feeApplied FROM cashTransRecoTable";
             const char* qEmail12amount = queryEmail12amount.c_str();
             qstateTransactionRec = mysql_query(conn, qEmail12amount);
             if (!qstateTransactionRec) {
@@ -42,6 +42,7 @@ void cashTransactionRecord() {
                     cout << "Sender: " << row[0] << "\n";
                     cout << "Receiver: " << row[2] << "\n";
                     cout << "Amount: $" << row[1] << "\n";
+                    cout << "Fee: $" << row[5] << "\n";
                     cout << "DateTime: " << row[3] << "\n * \n";
                 }
             }

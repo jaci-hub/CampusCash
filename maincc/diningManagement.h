@@ -60,17 +60,22 @@ void diningManagement() {
 
 		//add
 		else if (optionEscolhida == "a") {
+			nomeDeNovo:
 			cout << "* Name: ";
 			string newBuildingName;
 			cin.ignore();
 			getline(cin, newBuildingName);
-			addCoisaToTable(newBuildingName, "foodBuildingName", "foodBuildingsTable"); //ADDED
+			if (newBuildingName == "None" || newBuildingName == "none") {//so it doesnt conflict with buildingOrderedFrom in studentDataTable when first initialized!
+				cout << "* Invalid!";
+				goto nomeDeNovo;
+			}
+			else addCoisaToTable(newBuildingName, "foodBuildingName", "foodBuildingsTable"); //ADDED
 
 				//***criar table of orders da new building***//
 			//take out all spaces and lower-case all letters
 			newBuildingName = formatName(newBuildingName);
 
-			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable(orderID INT KEY AUTO_INCREMENT, studentEmail VARCHAR(255) NOT NULL, diet VARCHAR(255) NOT NULL, meal VARCHAR(255), sideOne VARCHAR(255), sideTwo VARCHAR(255), sideThree VARCHAR(255), onOffCampus VARCHAR(10) NOT NULL, dorm VARCHAR(255) NOT NULL, roomNumber VARCHAR(10) NOT NULL, subTotal DOUBLE(5, 2) NOT NULL, deliveryFee DOUBLE(5, 2) NOT NULL, orderDateTime VARCHAR(255) NOT NULL)";
+			string queryAddOrders = "CREATE TABLE " + newBuildingName + "OrdersTable(orderID INT KEY AUTO_INCREMENT, studentEmail VARCHAR(255) NOT NULL, diet VARCHAR(255) NOT NULL, meal VARCHAR(255), sideOne VARCHAR(255), sideTwo VARCHAR(255), sideThree VARCHAR(255), onOffCampus VARCHAR(10) NOT NULL, dorm VARCHAR(255) NOT NULL, roomNumber VARCHAR(10) NOT NULL, subTotal DOUBLE(5, 2) NOT NULL, deliveryFee DOUBLE(5, 2) NOT NULL, paymentMethod VARCHAR(255) NOT NULL, orderDateTime VARCHAR(255) NOT NULL)";
 			const char* qAddOrders = queryAddOrders.c_str();
 			qstateManagement = mysql_query(conn, qAddOrders);
 			if (qstateManagement)

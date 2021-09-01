@@ -10,8 +10,6 @@ private:
 	string selectedBuilding, selectedDiet, selectedMeal, selectedSideOne, selectedSideTwo, selectedSideThree;
 	//delivery
 	string selectedOnOffCampus, selectedDorm, selectedRoom;
-	//payment
-	string paymentMethod;
 	//total
 	double foodOrderTotal;
 
@@ -28,8 +26,6 @@ public:
 		selectedOnOffCampus = this->selectedOnOffCampus;
 		selectedDorm = this->selectedDorm;
 		selectedRoom = this->selectedRoom;
-		//payment
-		paymentMethod = this->paymentMethod;
 		//total
 		foodOrderTotal = this->foodOrderTotal;
 	}

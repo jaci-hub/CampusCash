@@ -31,12 +31,12 @@ void orderFood_payment() {
         cout << "1- Meals\n";
         cout << "2- Cash\n";
         cout << "Please, enter an option: ";
-        string metodoDePagamento;
+        string metodoDePagamento, thePaymentMethod;
         cin >> metodoDePagamento;
         if (metodoDePagamento == "1")
-            myOrder.paymentMethod = "studentMeals";
+            thePaymentMethod = "studentMeals";
         else if (metodoDePagamento == "2")
-            myOrder.paymentMethod = "studentBalance";
+            thePaymentMethod = "studentBalance";
         else goto paymentMethod;
 
         //show the student line number IF the order is placed
@@ -63,7 +63,7 @@ void orderFood_payment() {
         cin >> orderChoice;
         if (orderChoice == "1") {
             //payment
-            string queryEmail1 = "SELECT " + myOrder.paymentMethod + " FROM studentdatatable WHERE studentEmail = '" + student1.get_email() + "'";
+            string queryEmail1 = "SELECT " + thePaymentMethod + " FROM studentdatatable WHERE studentEmail = '" + student1.get_email() + "'";
             const char* qEmail1 = queryEmail1.c_str();
             qstateFoodPayment = mysql_query(conn, qEmail1);
             if (!qstateFoodPayment) {
@@ -74,14 +74,14 @@ void orderFood_payment() {
                 double newValue = stod(oldValue);
 
                 //Cash
-                if (myOrder.paymentMethod == "studentBalance") {
+                if (thePaymentMethod == "studentBalance") {
                     newValue -= myOrder.get_foodOrderTotal() + orderPaymentFee();
 
                     //Update senders balance in the classSender
                     student1.balance = newValue;
                 }
                 //Meals
-                else if (myOrder.paymentMethod == "studentMeals") {
+                else if (thePaymentMethod == "studentMeals") {
                     newValue -= 1;
 
                     //Update senders balance in the classSender
@@ -90,7 +90,7 @@ void orderFood_payment() {
 
                 //Update senders balance in the DB
                 string newValueString = to_string(newValue);
-                string querynewValue = "UPDATE studentdatatable SET " + myOrder.paymentMethod + " = '" + newValueString + "' WHERE studentEmail = '" + student1.get_email() + "'";
+                string querynewValue = "UPDATE studentdatatable SET " + thePaymentMethod + " = '" + newValueString + "' WHERE studentEmail = '" + student1.get_email() + "'";
                 const char* qnewValue = querynewValue.c_str();
                 qstateFoodPayment = mysql_query(conn, qnewValue);
                 if (qstateFoodPayment)
@@ -99,7 +99,7 @@ void orderFood_payment() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //add order to FoodBuildingsOrdersTable
-            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, orderDateTime) VALUES(" + to_string(lineNumber + 1) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(orderPaymentFee()) + ", '" + getCurrentDateTime() + "')";
+            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(lineNumber + 1) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(orderPaymentFee()) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
             const char* qAddOrder = queryAddOrder.c_str();
             qstateFoodPayment = mysql_query(conn, qAddOrder);
             if (qstateFoodPayment)

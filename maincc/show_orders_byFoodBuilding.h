@@ -90,7 +90,7 @@ void show_orders_byFoodBuilding() {
                                 cout << "Room: " << row[9] << "\n";
                                 cout << "Subtotal: $" << row[10] << "\n";
                                 cout << "Delivery Fee: $" << row[11] << "\n";
-                                cout << "DateTime: " << row[12] << "\n";
+                                cout << "DateTime: " << row[13] << "\n";
                                 cout << "***\n";
                             }
                         }
