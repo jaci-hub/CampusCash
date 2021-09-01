@@ -3,8 +3,6 @@
 #include <string>
 #include "classSender.h"
 #include "formatName.h"
-#include "cancelOrder.h"
-#include "receivedOrder.h"
 using namespace std;
 
 int qstateLoggedInAsStudentMenu;

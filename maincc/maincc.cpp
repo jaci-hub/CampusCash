@@ -14,6 +14,8 @@
 #include "show_orders_byFoodBuilding.h"
 #include "cashTransactionRecord.h"
 #include "management.h"
+#include "cancelOrder.h"
+#include "receivedOrder.h"
 
 using namespace std;
 
