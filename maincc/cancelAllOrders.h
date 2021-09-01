@@ -20,11 +20,24 @@ void cancelAllOrders() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        //remove everyone whose orderID > 0 
+        int maxOrderID;
+        string studentEmail, buildingorderedfrom, paymentMethod;
+        //get the max orderID (to set the for-loop)
+                
         
-        //set buildingorderedfrom = 'none' 
+        for(int i = maxOrderID; i > 0; i--) {
+            //get studentEmail, buildingorderedfrom and paymentMethod
+            
+
+
+            //set buildingorderedfrom = 'none'
         
-        //refund students 
+
+        
+            //refund
+        }
+
+        //remove ALL orderID > 0 
     }
     else puts("Connection to DataBase has failed");
 }
