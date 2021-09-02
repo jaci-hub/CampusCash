@@ -35,7 +35,7 @@ void cancelAllOrders() {
         
         for(int i = maxOrderID; i > 0; i--) {
             //get studentEmail and paymentMethod
-            string querySelectEmailAndPaymentMethod = "SELECT studentEmail, paymentMethod FROM " + allinOne_class.get_buildingName() + "OrdersTable WHERE orderID = " + to_string(maxOrderID);
+            string querySelectEmailAndPaymentMethod = "SELECT studentEmail, paymentMethod FROM " + allinOne_class.get_buildingName() + "OrdersTable WHERE orderID = " + to_string(i);
             const char* qSelectEmailAndPaymentMethod = querySelectEmailAndPaymentMethod.c_str();
             qstateCancelAllOrders = mysql_query(conn, qSelectEmailAndPaymentMethod);
             if (!qstateCancelAllOrders) {
