@@ -212,6 +212,7 @@ int main() {
             //OPTION c - cancel Order
             else if (option == "c") {
                 cancelOrder();
+                
                 goto backToMenu;
             }
 

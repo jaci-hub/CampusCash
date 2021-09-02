@@ -3,6 +3,7 @@
 #include <string>
 #include "classSender.h"
 #include "formatName.h"
+#include "allinOne_class.h"
 using namespace std;
 
 int qstateLoggedInAsStudentMenu;
@@ -19,8 +20,7 @@ void menu() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        //Display message 'SORRY, YOUR ORDER HAS BEEN CANCELED!'
-        
+        //Display message 'YOUR ORDER HAS BEEN CANCELED!'
 
         //get buildingOrderedFrom first
         string buildingOrderedFrom;

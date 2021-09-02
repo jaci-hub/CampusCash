@@ -24,6 +24,7 @@ public:
 	friend void menuPlanManagement();
 	friend void otherMenuPlanManagement();
 	friend void show_orders_byFoodBuilding();
+	friend int main();
 };
 
 AllinOne_class allinOne_class;
