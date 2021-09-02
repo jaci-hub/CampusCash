@@ -20,7 +20,22 @@ void menu() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        //Display message 'SORRY, YOUR ORDER HAS BEEN CANCELED!'
+        //get canceledOrderMessage
+        string zeroOne;
+        string querySelectcanceledOrderMessage = "SELECT canceledOrderMessage FROM studentDataTable WHERE studentEmail = '" + student1.get_email() + "'";
+        const char* qSelectcanceledOrderMessage = querySelectcanceledOrderMessage.c_str();
+        qstateLoggedInAsStudentMenu = mysql_query(conn, qSelectcanceledOrderMessage);
+        if (!qstateLoggedInAsStudentMenu) {
+            res = mysql_store_result(conn);
+            row = mysql_fetch_row(res);
+            zeroOne = row[0];
+            if (zeroOne == "1") {
+                //Display message 'SORRY, YOUR ORDER HAS BEEN CANCELED!'
+                cout << "** SORRY, YOUR ORDER HAS BEEN CANCELED!\n";
+                cout << "o- Ok" << "\n";
+            }
+        }
+        else cout << "Query failed: " << mysql_error(conn) << "\n";
 
         //get buildingOrderedFrom first
         string buildingOrderedFrom;

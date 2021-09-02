@@ -93,6 +93,13 @@ void cancelOrderOne() {
                 cout << "Query failed: " << mysql_error(conn) << "\n";
         }
         else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+        //set canceledOrderMessage = '1'
+        string querycanceledOrderMessage = "UPDATE studentdatatable SET canceledOrderMessage = '1' WHERE studentEmail = '" + studentEmail + "'";
+        const char* qcanceledOrderMessage = querycanceledOrderMessage.c_str();
+        qstateCancelOrderOne = mysql_query(conn, qcanceledOrderMessage);
+        if (qstateCancelOrderOne)
+            cout << "Query failed: " << mysql_error(conn) << "\n";
     }
     else puts("Connection to DataBase has failed");
 }

@@ -92,6 +92,13 @@ void cancelAllOrders() {
                     cout << "Query failed: " << mysql_error(conn) << "\n";
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+            //set canceledOrderMessage = '1'
+            string querycanceledOrderMessage = "UPDATE studentdatatable SET canceledOrderMessage = '1' WHERE studentEmail = '" + studentEmail + "'";
+            const char* qcanceledOrderMessage = querycanceledOrderMessage.c_str();
+            qstateCancelAllOrders = mysql_query(conn, qcanceledOrderMessage);
+            if (qstateCancelAllOrders)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
         }
 
         //remove ALL orderID > 0 

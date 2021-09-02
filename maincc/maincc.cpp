@@ -173,6 +173,13 @@ int main() {
 
             //OPTION 1- Order Food
             if (option == "1") {
+                //set canceledOrderMessage = '0' first
+                string querycanceledOrderMessage0 = "UPDATE studentdatatable SET canceledOrderMessage = '0' WHERE studentEmail = '" + student1.get_email() + "'";
+                const char* qcanceledOrderMessage0 = querycanceledOrderMessage0.c_str();
+                qstateMain = mysql_query(conn, qcanceledOrderMessage0);
+                if (qstateMain)
+                    cout << "Query failed: " << mysql_error(conn) << "\n";
+
                 order_food();
 
                 cout << "\n";
@@ -219,6 +226,18 @@ int main() {
             //OPTION r - received Order
             else if (option == "r") {
                 receivedOrder();
+                goto backToMenu;
+            }
+
+            //OPTION o - Ok (Student understands that order was canceled)
+            else if (option == "o") {
+                //set canceledOrderMessage = '0'
+                string querycanceledOrderMessage = "UPDATE studentdatatable SET canceledOrderMessage = '0' WHERE studentEmail = '" + student1.get_email() + "'";
+                const char* qcanceledOrderMessage = querycanceledOrderMessage.c_str();
+                qstateMain = mysql_query(conn, qcanceledOrderMessage);
+                if (qstateMain)
+                    cout << "Query failed: " << mysql_error(conn) << "\n";
+
                 goto backToMenu;
             }
         }
