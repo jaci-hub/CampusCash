@@ -19,6 +19,9 @@ void menu() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
+        //Display message 'SORRY, YOUR ORDER HAS BEEN CANCELED!'
+        
+
         //get buildingOrderedFrom first
         string buildingOrderedFrom;
         string querySelectOrderID = "SELECT buildingOrderedFrom FROM studentDataTable WHERE studentEmail = '" + student1.get_email() + "'";

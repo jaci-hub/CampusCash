@@ -61,15 +61,15 @@ void show_orders_byFoodBuilding() {
                 if (isdigit(foodBuildingChoice[0]) != 0) {
                     showOrders:
                     //Getting the food buildings name
-                    string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", foodBuildingChoice);
+                    allinOne_class.buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", foodBuildingChoice);
 
                     //take out all spaces and lower-case all letters
-                    buildingName = formatName(buildingName);
+                    allinOne_class.buildingName = formatName(allinOne_class.buildingName);
 
                     //************ASK FOR PIN HERE TO GET TO SEE THE BUILDINGS ORDERS????????
 
                     //Getting the orders from that building //IMPLEMENT QUEUE HERE!!!
-                    string queryFoodBuildingOrders = "SELECT * FROM " + buildingName + "OrdersTable";
+                    string queryFoodBuildingOrders = "SELECT * FROM " + allinOne_class.get_buildingName() + "OrdersTable";
                     const char* qFoodBuildingOrders = queryFoodBuildingOrders.c_str();
                     qstateShowOrders = mysql_query(conn, qFoodBuildingOrders);
                     cout << "* Orders *\n";
@@ -108,7 +108,7 @@ void show_orders_byFoodBuilding() {
                     //Next in line
                     if (ordersOption == "n" && next == true) {
                         //UPDATE IN DB
-                        string queryUpdateOrderID = "UPDATE " + buildingName + "OrdersTable SET orderID = orderID - 1";
+                        string queryUpdateOrderID = "UPDATE " + allinOne_class.get_buildingName() + "OrdersTable SET orderID = orderID - 1";
                         const char* qUpdateOrderID = queryUpdateOrderID.c_str();
                         qstateShowOrders = mysql_query(conn, qUpdateOrderID);
                         if (qstateShowOrders)
@@ -118,12 +118,12 @@ void show_orders_byFoodBuilding() {
                     }
 
                     else if (ordersOption == "n" && next == false) {
-                        cout << "No line!\n";
+                        cout << "No order!\n";
                         goto showOrders;
                     }
 
                     //Cancel all orders and refund students
-                    else if (ordersOption == "c") {
+                    else if (ordersOption == "c" && next == true) {
                         cout << "** Are you sure? THIS CANNOT BE UNDONE!\n";
                         cout << "1- YES\n";
                         cout << "2- Back\n";
@@ -132,10 +132,16 @@ void show_orders_byFoodBuilding() {
                         cin >> cancelamento;
                         if (cancelamento == 1) {
                             cancelAllOrders();
+
                             goto showOrders;
                         }
                         if (cancelamento == 2)
                             goto showOrders;
+                    }
+
+                    else if (ordersOption == "c" && next == false) {
+                        cout << "No order!\n";
+                        goto showOrders;
                     }
 
                     if (ordersOption == "e")

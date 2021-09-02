@@ -43,6 +43,7 @@ public:
     friend void send_cash(); //so it can access the private balance, so it is updated when transaction is made!
     friend void orderFood_payment(); //so it can access the private balance, so it is updated when order is made!
     friend void cancelOrder(); //so it is possible to refund students
+    friend int main();
 };
 
 Sender student1; //criacao do studante1 type Sender

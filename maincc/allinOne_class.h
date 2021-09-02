@@ -23,6 +23,7 @@ public:
 	friend void diningManagement();
 	friend void menuPlanManagement();
 	friend void otherMenuPlanManagement();
+	friend void show_orders_byFoodBuilding();
 };
 
 AllinOne_class allinOne_class;

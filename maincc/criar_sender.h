@@ -27,7 +27,6 @@ void criar_sender() {
         cout << "*** Log in ***" << "\n";
         cout << "e-mail: ";
         cin >> check_email;
-        //cin.ignore(numeric_limits<streamsize>::max(), '\n');
         string queryEmail = "SELECT * FROM studentdatatable";
         const char* qEmail = queryEmail.c_str();
         qstateSender = mysql_query(conn, qEmail);
@@ -53,7 +52,6 @@ void criar_sender() {
             string check_password;
             cout << "password: ";
             cin >> check_password;
-            //cin.ignore(numeric_limits<streamsize>::max(), '\n');
             string queryPassword = "SELECT studentPassword FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
             const char* qPassword = queryPassword.c_str();
             qstateSender = mysql_query(conn, qPassword);
@@ -64,51 +62,6 @@ void criar_sender() {
                     cout << "password is incorrect!\n";
                     goto trySenPasswordagain;
                 }
-            }
-            else cout << "Query failed: " << mysql_error(conn) << "\n";
-
-            //SETTING THE OTHER VARIABLES FOR SENDER/STUDENT1
-
-            //setting name
-            string theName;
-            for (int i = 0; i < student1.email.size(); i++) {
-                if (student1.email[i] == '.') //specific to CofI email structure (firstname.lastname@...)
-                    break;
-                theName += student1.email[i];
-            }
-            student1.name = theName;
-            student1.name[0] = toupper(student1.name[0]);
-
-            //setting ID
-            string queryID = "SELECT studentID FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
-            const char* qID = queryID.c_str();
-            qstateSender = mysql_query(conn, qID);
-            if (!qstateSender) {
-                res = mysql_store_result(conn);
-                row = mysql_fetch_row(res);
-                student1.id = stoi(row[0]);
-            }
-            else cout << "Query failed: " << mysql_error(conn) << "\n";
-
-            //setting balance
-            string queryBalance = "SELECT studentBalance FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
-            const char* qBalance = queryBalance.c_str();
-            qstateSender = mysql_query(conn, qBalance);
-            if (!qstateSender) {
-                res = mysql_store_result(conn);
-                row = mysql_fetch_row(res);
-                student1.balance = stod(row[0]);
-            }
-            else cout << "Query failed: " << mysql_error(conn) << "\n";
-
-            //setting mealPlanBalance
-            string queryMeal = "SELECT studentMeals FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
-            const char* qMeal = queryMeal.c_str();
-            qstateSender = mysql_query(conn, qMeal);
-            if (!qstateSender) {
-                res = mysql_store_result(conn);
-                row = mysql_fetch_row(res);
-                student1.mealPlanBalance = stoi(row[0]);
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
         }
