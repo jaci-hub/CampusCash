@@ -158,5 +158,8 @@
     <ClInclude Include="cancelAllOrders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="cancelOrderOne.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

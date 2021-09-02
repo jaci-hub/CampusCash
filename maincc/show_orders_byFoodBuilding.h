@@ -7,6 +7,7 @@
 #include "listarCoisas.h"
 #include "diningManagement.h"
 #include "cancelAllOrders.h"
+#include "cancelOrderOne.h"
 
 using namespace std;
 
@@ -99,6 +100,7 @@ void show_orders_byFoodBuilding() {
                     else cout << "Query failed: " << mysql_error(conn) << "\n";
                     
                     cout << "n- Next\n";
+                    cout << "q- Cancel Order #1\n";
                     cout << "c- Cancel All Orders\n";
                     cout << "e- EXIT\n";
                     cout << "Please, enter an option: ";
@@ -118,6 +120,28 @@ void show_orders_byFoodBuilding() {
                     }
 
                     else if (ordersOption == "n" && next == false) {
+                        cout << "No order!\n";
+                        goto showOrders;
+                    }
+
+                    //Cancel order #1 and refund student
+                    else if (ordersOption == "q" && next == true) {
+                        cout << "** Are you sure? THIS CANNOT BE UNDONE!\n";
+                        cout << "1- YES\n";
+                        cout << "2- Back\n";
+                        cout << "Please, enter an option: ";
+                        int cancelamento;
+                        cin >> cancelamento;
+                        if (cancelamento == 1) {
+                            cancelOrderOne();
+
+                            goto showOrders;
+                        }
+                        if (cancelamento == 2)
+                            goto showOrders;
+                    }
+
+                    else if (ordersOption == "q" && next == false) {
                         cout << "No order!\n";
                         goto showOrders;
                     }
