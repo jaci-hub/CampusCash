@@ -150,13 +150,6 @@ int main() {
 
             //OPTION 1- Order Food
             if (option == "1") {
-                //set canceledOrderMessage = '0' first
-                string querycanceledOrderMessage0 = "UPDATE studentdatatable SET canceledOrderMessage = '0' WHERE studentEmail = '" + student1.get_email() + "'";
-                const char* qcanceledOrderMessage0 = querycanceledOrderMessage0.c_str();
-                qstateMain = mysql_query(conn, qcanceledOrderMessage0);
-                if (qstateMain)
-                    cout << "Query failed: " << mysql_error(conn) << "\n";
-
                 if(tableExists("feesTable")==true)
                     order_food();
                 else cout << "** Fee not set yet!\n";

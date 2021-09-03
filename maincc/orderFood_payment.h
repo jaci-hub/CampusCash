@@ -53,18 +53,20 @@ void orderFood_payment() {
         else cout << "Query failed: " << mysql_error(conn) << "\n";
 
         //show the student line number IF the order is placed
-        int lineNumber;
+        int lastOrder, lineNumber;
         if (countRows == 0)
             lineNumber = 1;
         else {
-            string querySelectOrderID = "SELECT orderID FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
+            string querySelectOrderID = "SELECT MAX(orderID) FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
             const char* qSelectOrderID = querySelectOrderID.c_str();
             qstateFoodPayment = mysql_query(conn, qSelectOrderID);
             if (!qstateFoodPayment) {
                 res = mysql_store_result(conn);
-                while (row = mysql_fetch_row(res)) {
-                    lineNumber = stoi(row[0]) + 1;
-                }
+                row = mysql_fetch_row(res);
+                lastOrder = stoi(row[0]);
+                if (lastOrder <= 0)
+                    lineNumber = 1;
+                else lineNumber = lastOrder + 1;
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
         }
@@ -138,6 +140,13 @@ void orderFood_payment() {
                 cout << "*** Campus Cash (CC) ***" << "\n";
                 cout << "* Line#: " << lineNumber << "\n";
             }
+
+            //set canceledOrderMessage = '0' first
+            string querycanceledOrderMessage0 = "UPDATE studentdatatable SET canceledOrderMessage = '0' WHERE studentEmail = '" + student1.get_email() + "'";
+            const char* qcanceledOrderMessage0 = querycanceledOrderMessage0.c_str();
+            qstateFoodPayment = mysql_query(conn, qcanceledOrderMessage0);
+            if (qstateFoodPayment)
+                cout << "Query failed: " << mysql_error(conn) << "\n";
         }
         else if (orderChoice == "2")
             goto orderFood_paymentEnd;
