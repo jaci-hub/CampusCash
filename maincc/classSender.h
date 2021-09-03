@@ -8,7 +8,7 @@ class Sender {
 private:
     double balance;
     string name, email, id; //left id as string and not int cuz it can have leading zeros
-     int mealPlanBalance;
+    int mealPlanBalance;
 
 public:
     Sender() {
@@ -40,6 +40,7 @@ public:
     }
 
     friend void criar_sender(); //so it can access the private name, so it is set in criar_sender()
+    friend void send_meal(); //so it can access the private mealPlanBalance, so it is updated when transaction is made!
     friend void send_cash(); //so it can access the private balance, so it is updated when transaction is made!
     friend void orderFood_payment(); //so it can access the private balance, so it is updated when order is made!
     friend void cancelOrder(); //so it is possible to refund students

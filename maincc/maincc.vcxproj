@@ -153,7 +153,6 @@
     <ClInclude Include="cancelAllOrders.h" />
     <ClInclude Include="cancelOrder.h" />
     <ClInclude Include="cancelOrderOne.h" />
-    <ClInclude Include="cashTransactionRecord.h" />
     <ClInclude Include="classOrderFood.h" />
     <ClInclude Include="classSender.h" />
     <ClInclude Include="columnExists.h" />
@@ -182,14 +181,14 @@
     <ClInclude Include="pricesManagement.h" />
     <ClInclude Include="receivedOrder.h" />
     <ClInclude Include="removeCoisaFromTable.h" />
-    <ClInclude Include="show_orders_byFoodBuilding.h" />
+    <ClInclude Include="send_meal.h" />
+    <ClInclude Include="show_orders.h" />
     <ClInclude Include="file_com_pragmaonce_mysql.h" />
-    <ClInclude Include="getTransactionFee.h" />
+    <ClInclude Include="getFee.h" />
     <ClInclude Include="management.h" />
     <ClInclude Include="loggedInAsStudentMenu.h" />
     <ClInclude Include="orderFood.h" />
     <ClInclude Include="orderFood_payment.h" />
-    <ClInclude Include="orderPaymentFee.h" />
     <ClInclude Include="generalLogin.h" />
     <ClInclude Include="loggedInAsSchoolMenu.h" />
     <ClInclude Include="send_cash.h" />

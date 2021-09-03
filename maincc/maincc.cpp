@@ -4,6 +4,7 @@
 #include "criar_sender.h"
 #include "criarStaff.h"
 #include "criar_receiver.h"
+#include "send_meal.h"
 #include "send_cash.h"
 #include "loggedInAsStudentMenu.h"
 #include "loggedInAsSchoolMenu.h"
@@ -11,8 +12,7 @@
 #include "orderFood.h"
 #include "delivery.h"
 #include "orderFood_payment.h"
-#include "show_orders_byFoodBuilding.h"
-#include "cashTransactionRecord.h"
+#include "show_orders.h"
 #include "management.h"
 #include "cancelOrder.h"
 #include "receivedOrder.h"
@@ -49,7 +49,7 @@ int main() {
 
             //Go to Show orders
             if (menuChoice == 1) {
-                show_orders_byFoodBuilding();
+                show_orders();
 
                 cout << "\n";
                 //ask if staff would like to go to menu or log out
@@ -63,31 +63,8 @@ int main() {
                 else goto backToStaffMenu;
             }
 
-            //Go to Cash Transaction Record
-            else if (menuChoice == 2) { //asks for password/PIN
-                string cashTransRecoPin;
-                cout << "PIN: ";
-                cin >> cashTransRecoPin;
-                if (cashTransRecoPin == "0123") {
-                    cout << "*** Campus Cash (CC) ***" << "\n";
-                    cout << "* Recent Transactions *" << "\n";
-                    cashTransactionRecord();
-
-                    cout << "\n";
-                    //ask if staff would like to go to menu or log out
-                    cout << "1- Back to main Menu\n";
-                    cout << "Any key- Log out\n";
-                    cout << "Please, enter an option: ";
-                    string reoption;
-                    cin >> reoption;
-                    if (reoption != "1")
-                        goto staffLogin;
-                    else goto backToStaffMenu;
-                }
-            }
-
             //Go to management
-            else if (menuChoice == 3) {
+            else if (menuChoice == 2) {
                 management(); //asks for password/PIN
                 if (managementOption == 5)
                     goto backToStaffMenu;
@@ -105,7 +82,7 @@ int main() {
             }
 
             //Log Out
-            else if (menuChoice == 4)
+            else if (menuChoice == 3)
                 goto staffLogin;
 
         }
@@ -180,7 +157,9 @@ int main() {
                 if (qstateMain)
                     cout << "Query failed: " << mysql_error(conn) << "\n";
 
-                order_food();
+                if(tableExists("feesTable")==true)
+                    order_food();
+                else cout << "** Fee not set yet!\n";
 
                 cout << "\n";
                 //ask if student would like to go to menu or log out
@@ -194,13 +173,39 @@ int main() {
                 else goto backToMenu;
             }
 
+            //OPTION m- Send meal
+            else if (option == "m") {
+                if (tableExists("feesTable") == true) {
+                    //criar o receptor
+                    criar_receiver();
+                    //fazer envio
+                    send_meal();
+                    cout << "\n";
+                }
+                else cout << "** Fee not set yet!\n";
+
+                //ask if student would like to go to menu or log out
+                cout << "1- Back to main Menu\n";
+                cout << "Any key- Log out\n";
+                cout << "Please, enter an option: ";
+                string reoption;
+                cin >> reoption;
+                if (reoption != "1")
+                    goto studentLogin;
+                else goto backToMenu;
+            }
+
             //OPTION 2- Send cash
             else if (option == "2") {
-                //criar o receptor
-                criar_receiver();
-                //fazer envio
-                send_cash();
-                cout << "\n";
+                if (tableExists("feesTable") == true) {
+                    //criar o receptor
+                    criar_receiver();
+                    //fazer envio
+                    send_cash();
+                    cout << "\n";
+                }
+                else cout << "** Fee not set yet!\n";
+
                 //ask if student would like to go to menu or log out
                 cout << "1- Back to main Menu\n";
                 cout << "Any key- Log out\n";

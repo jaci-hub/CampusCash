@@ -26,7 +26,7 @@ void feesManagement() {
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Inserting Variables
-			string queryInsertValuesFeesTable = "INSERT INTO feesTable(feeName, PercentageFee) VALUES('Transaction Fee', 0), ('ON campus Delivery Fee', 0), ('OFF campus Delivery Fee', 0)";
+			string queryInsertValuesFeesTable = "INSERT INTO feesTable(feeName, PercentageFee) VALUES('Meal Transaction Fee', 0), ('Cash Transaction Fee', 0), ('ON campus Delivery Fee', 0), ('OFF campus Delivery Fee', 0)";
 			const char* qInsertValuesFeesTable = queryInsertValuesFeesTable.c_str();
 			qstateFeeManagement = mysql_query(conn, qInsertValuesFeesTable);
 			if (qstateFeeManagement)
@@ -41,35 +41,64 @@ void feesManagement() {
 		cin >> feeOption;
 
 		if (feeOption == "1") {
-			theTransactionFee:
-			//get Transaction fee from DB and display it
-			string TransactionFee, TransactionFeeOption;
-			string queryGettingTransactionFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'Transaction Fee'";
-			const char* qGettingTransactionFee = queryGettingTransactionFee.c_str();
-			qstateFeeManagement = mysql_query(conn, qGettingTransactionFee);
+		theTransactionFee:
+			//get Meal transaction fee from DB and display it
+			string mealTransactionFee;
+			string queryGettingmealTransactionFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'Meal Transaction Fee'";
+			const char* qGettingmealTransactionFee = queryGettingmealTransactionFee.c_str();
+			qstateFeeManagement = mysql_query(conn, qGettingmealTransactionFee);
 			if (!qstateFeeManagement) {
 				res = mysql_store_result(conn);
 				row = mysql_fetch_row(res);
-				TransactionFee = row[0];
+				mealTransactionFee = row[0];
 			}
-			else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			cout << "** Transaction fee: " << TransactionFee <<"%\n\n";
-			cout << "1- Update\n";
+			//get Cash transaction fee from DB and display it
+			string cashTransactionFee;
+			string queryGettingcashTransactionFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'Cash Transaction Fee'";
+			const char* qGettingcashTransactionFee = queryGettingcashTransactionFee.c_str();
+			qstateFeeManagement = mysql_query(conn, qGettingcashTransactionFee);
+			if (!qstateFeeManagement) {
+				res = mysql_store_result(conn);
+				row = mysql_fetch_row(res);
+				cashTransactionFee = row[0];
+			}
+
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
+			cout << "** Meal Transaction Fee: " << mealTransactionFee << "%\n";
+			cout << "** Cash Transaction Fee: " << cashTransactionFee << "%\n\n";
+			cout << "1- Update Meal Transaction Fee\n";
+			cout << "2- Update Cash Transaction Fee\n";
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
+			string TransactionFeeOption;
 			cin >> TransactionFeeOption;
 
 			if (TransactionFeeOption == "1") {
-				string newTransactionFee;
+				string newmealTransactionFee;
 				cout << "Fee(%): ";
-				cin >> newTransactionFee;
+				cin >> newmealTransactionFee;
 
-				//UPDATE TransactionFee in DB
-				string queryUpdateTransactionFee = "UPDATE feesTable SET PercentageFee = " + newTransactionFee + " WHERE feeName = 'Transaction Fee'";
-				const char* qUpdateTransactionFee = queryUpdateTransactionFee.c_str();
-				qstateFeeManagement = mysql_query(conn, qUpdateTransactionFee);
-				if (qstateFeeManagement) 
+				//UPDATE Meal Transaction Fee in DB
+				string queryUpdatemealTransactionFee = "UPDATE feesTable SET PercentageFee = " + newmealTransactionFee + " WHERE feeName = 'Meal Transaction Fee'";
+				const char* qUpdatemealTransactionFee = queryUpdatemealTransactionFee.c_str();
+				qstateFeeManagement = mysql_query(conn, qUpdatemealTransactionFee);
+				if (qstateFeeManagement)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
+
+				goto theTransactionFee;
+			}
+
+			if (TransactionFeeOption == "2") {
+				string newcashTransactionFee;
+				cout << "Fee(%): ";
+				cin >> newcashTransactionFee;
+
+				//UPDATE Cash Transaction Fee in DB
+				string queryUpdatecashTransactionFee = "UPDATE feesTable SET PercentageFee = " + newcashTransactionFee + " WHERE feeName = 'Cash Transaction Fee'";
+				const char* qUpdatecashTransactionFee = queryUpdatecashTransactionFee.c_str();
+				qstateFeeManagement = mysql_query(conn, qUpdatecashTransactionFee);
+				if (qstateFeeManagement)
 					cout << "Query failed: " << mysql_error(conn) << "\n";
 
 				goto theTransactionFee;

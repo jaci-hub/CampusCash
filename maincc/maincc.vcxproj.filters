@@ -44,7 +44,7 @@
     <ClInclude Include="orderFood.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="getTransactionFee.h">
+    <ClInclude Include="getFee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="delivery.h">
@@ -53,16 +53,10 @@
     <ClInclude Include="orderFood_payment.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="orderPaymentFee.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="classOrderFood.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="show_orders_byFoodBuilding.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="cashTransactionRecord.h">
+    <ClInclude Include="show_orders.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="management.h">
@@ -156,6 +150,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="cancelOrderOne.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="send_meal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

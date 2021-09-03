@@ -23,7 +23,7 @@ public:
 	friend void diningManagement();
 	friend void menuPlanManagement();
 	friend void otherMenuPlanManagement();
-	friend void show_orders_byFoodBuilding();
+	friend void show_orders();
 	friend int main();
 };
 

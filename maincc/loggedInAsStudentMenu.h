@@ -89,6 +89,7 @@ void menu() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
         }
 
+        cout << "m- Send meal" << "\n";
         cout << "2- Send cash" << "\n";
         cout << "3- Log out" << "\n";
         cout << "Please, enter an option: ";

@@ -3,7 +3,7 @@
 #include <string>
 #include "criar_sender.h"
 #include "file_com_pragmaonce_mysql.h"
-#include "orderPaymentFee.h"
+#include "getFee.h"
 #include "getCurrentDateTime.h"
 #include "orderFood.h"
 using namespace std;
@@ -22,8 +22,8 @@ void orderFood_payment() {
 
     if (conn) {
         cout << "* Subtotal: $" << myOrder.get_foodOrderTotal() << "\n";
-        cout << "* Delivery Fee: $" << orderPaymentFee() << "\n";
-        cout << "** TOTAL: $" << myOrder.get_foodOrderTotal() + orderPaymentFee() << "\n";
+        cout << "* Delivery Fee: $" << myOrder.get_foodOrderTotal() * getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00 << "\n";
+        cout << "** TOTAL: $" << myOrder.get_foodOrderTotal() * (1.00 + getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) << "\n";
 
         //payment Method AVAILABLE AT SPECIFIED TIMES
         paymentMethod:
@@ -39,20 +39,37 @@ void orderFood_payment() {
             thePaymentMethod = "studentBalance";
         else goto paymentMethod;
 
-        //show the student line number IF the order is placed
-        int lineNumber;
-        string querySelectOrderID = "SELECT orderID FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
-        const char* qSelectOrderID = querySelectOrderID.c_str();
-        qstateFoodPayment = mysql_query(conn, qSelectOrderID);
+        int countRows;
+        string studentEmail, paymentMethod;
+        //get the countRows
+        string querySelectcountRows = "SELECT COUNT(*) FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
+        const char* qSelectcountRows = querySelectcountRows.c_str();
+        qstateFoodPayment = mysql_query(conn, qSelectcountRows);
         if (!qstateFoodPayment) {
             res = mysql_store_result(conn);
-            while (row = mysql_fetch_row(res)) {
-                lineNumber = stoi(row[0]);
-            }
+            row = mysql_fetch_row(res);
+            countRows = stoi(row[0]);
         }
         else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-        cout << "** You will be #" << lineNumber + 1 << " in line! **\n";
+        //show the student line number IF the order is placed
+        int lineNumber;
+        if (countRows == 0)
+            lineNumber = 1;
+        else {
+            string querySelectOrderID = "SELECT orderID FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
+            const char* qSelectOrderID = querySelectOrderID.c_str();
+            qstateFoodPayment = mysql_query(conn, qSelectOrderID);
+            if (!qstateFoodPayment) {
+                res = mysql_store_result(conn);
+                while (row = mysql_fetch_row(res)) {
+                    lineNumber = stoi(row[0]) + 1;
+                }
+            }
+            else cout << "Query failed: " << mysql_error(conn) << "\n";
+        }
+
+        cout << "** You will be #" << lineNumber << " in line! **\n";
 
         cout << "* Select an option\n";
         cout << "1- Place order\n";
@@ -75,7 +92,7 @@ void orderFood_payment() {
 
                 //Cash
                 if (thePaymentMethod == "studentBalance") {
-                    newValue -= myOrder.get_foodOrderTotal() + orderPaymentFee();
+                    newValue -= myOrder.get_foodOrderTotal() * (1.00 + getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00);
 
                     //Update senders balance in the classSender
                     student1.balance = newValue;
@@ -99,7 +116,7 @@ void orderFood_payment() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //add order to FoodBuildingsOrdersTable
-            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(lineNumber + 1) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(orderPaymentFee()) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
+            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(lineNumber) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(myOrder.get_foodOrderTotal() * getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
             const char* qAddOrder = queryAddOrder.c_str();
             qstateFoodPayment = mysql_query(conn, qAddOrder);
             if (qstateFoodPayment)
@@ -113,13 +130,13 @@ void orderFood_payment() {
                 cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //display message
-            if (lineNumber + 1 == 1) {
+            if (lineNumber == 1) {
                 cout << "*** Campus Cash (CC) ***" << "\n";
                 cout << "* Your order is being prepared right now!\n";
             }
-            else if (lineNumber + 1 > 1) {
+            else if (lineNumber > 1) {
                 cout << "*** Campus Cash (CC) ***" << "\n";
-                cout << "* Line#: " << lineNumber + 1 << "\n";
+                cout << "* Line#: " << lineNumber << "\n";
             }
         }
         else if (orderChoice == "2")
