@@ -31,7 +31,7 @@ int main() {
     conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
     if (conn) {
-        cout << "*** Campus Cash (CC) ***" << "\n";
+        cout << "*** Campus Cash (CCash) ***" << "\n";
 
         //log in as school or student menu
         generalLogIn();
@@ -65,7 +65,7 @@ int main() {
 
             //Go to management
             else if (menuChoice == 2) {
-                management(); //asks for password/PIN
+                management();
                 if (managementOption == 5)
                     goto backToStaffMenu;
 

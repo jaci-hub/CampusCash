@@ -8,13 +8,9 @@
 #include "pricesManagement.h"
 using namespace std;
 
-int managementPIN, managementOption;
+int managementOption;
 
 void management() {
-	//Ask for PIN cuz only limited staff can log in
-	cout << "PIN: ";
-	cin >> managementPIN;
-	if (managementPIN == 1234) {
 		cout << "0- Meals time period\n";
 		cout << "1- Dining\n";
 		cout << "2- Delivery\n";
@@ -48,9 +44,4 @@ void management() {
 		else if (managementOption == 4) {
 			feesManagement();
 		}
-	}
-	else { 
-		cout << "Invalid PIN\n";
-		management(); 
-	}
 }
