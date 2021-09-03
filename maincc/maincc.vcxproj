@@ -173,6 +173,8 @@
     <ClInclude Include="getCurrentSecond.h" />
     <ClInclude Include="getCurrentYear.h" />
     <ClInclude Include="getLastDay.h" />
+    <ClInclude Include="getLineNumber.h" />
+    <ClInclude Include="setLineNumber.h" />
     <ClInclude Include="getName_fromTable.h" />
     <ClInclude Include="listarCoisas.h" />
     <ClInclude Include="mealsTimePeriodManagement.h" />

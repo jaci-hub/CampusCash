@@ -155,5 +155,11 @@
     <ClInclude Include="send_meal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="setLineNumber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="getLineNumber.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

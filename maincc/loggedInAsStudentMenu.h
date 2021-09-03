@@ -4,6 +4,7 @@
 #include "classSender.h"
 #include "formatName.h"
 #include "allinOne_class.h"
+#include "getLineNumber.h"
 using namespace std;
 
 int qstateLoggedInAsStudentMenu;
@@ -67,26 +68,18 @@ void menu() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
         }
 
-        //select lineNumber from DB
+        //check lineNumber from DB
         if (tableExists(buildingOrderedFrom + "OrdersTable") == true && thereIsOrder == true) {
-            string querySelectOrderID = "SELECT orderID FROM " + buildingOrderedFrom + "OrdersTable WHERE studentEmail = '" + student1.get_email() + "'";
-            const char* qSelectOrderID = querySelectOrderID.c_str();
-            qstateLoggedInAsStudentMenu = mysql_query(conn, qSelectOrderID);
-            if (!qstateLoggedInAsStudentMenu) {
-                res = mysql_store_result(conn);
-                row = mysql_fetch_row(res);
-                if (stoi(row[0]) <= 0) {
-                    cout << "** Your order is on the way! **\n";
-                    cout << "r- Received" << "\n";
-                }
-                else if (stoi(row[0]) == 1)
-                    cout << "** Your order is being prepared right now! **\n";
-                if (stoi(row[0]) > 1) {
-                    cout << "** Line#: " << stoi(row[0]) << "\n";
-                    cout << "c- Cancel order" << "\n";
-                }
+            if (getLineNumber() <= 0) {
+                cout << "** Your order is on the way! **\n";
+                cout << "r- Received" << "\n";
             }
-            else cout << "Query failed: " << mysql_error(conn) << "\n";
+            else if (getLineNumber() == 1)
+                cout << "** Your order is being prepared right now! **\n";
+            else if (getLineNumber() > 1) {
+                cout << "** Line#: " << getLineNumber() << "\n";
+                cout << "c- Cancel order" << "\n";
+            }
         }
 
         cout << "m- Send meal" << "\n";
