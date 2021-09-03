@@ -18,7 +18,7 @@ void criarStaff() {
 
     if (conn) {
         //simulation of log in into the schools platform 
-        cout << "*** Campus Cash (CC) ***" << "\n";
+        cout << "*** Campus Cash (CCash) ***" << "\n";
         //ckecking the staff's email
     loginHere:
         string staffEmail, staffPassword;
