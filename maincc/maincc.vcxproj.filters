@@ -128,7 +128,7 @@
     <ClInclude Include="feesManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="mealsTimePeriodManagement.h">
+    <ClInclude Include="timeManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="pricesManagement.h">

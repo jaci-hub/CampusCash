@@ -27,7 +27,7 @@ void diningManagement() {
 	listaDasFoodBuildings:
 		//Create foodBuildingsTable if it doesnt exist yet
 		if (tableExists("foodBuildingsTable") == false) {
-			string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT)";
+			string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT, openingTime VARCHAR(255) NOT NULL, closingTime VARCHAR(255) NOT NULL)";
 			const char* qCriarTable = queryCriarTable.c_str();
 			qstateManagement = mysql_query(conn, qCriarTable);
 			if (qstateManagement)
@@ -70,6 +70,92 @@ void diningManagement() {
 				goto nomeDeNovo;
 			}
 			else addCoisaToTable(newBuildingName, "foodBuildingName", "foodBuildingsTable"); //ADDED
+
+			//openingTime
+		setOpeningTime:
+			cout << "** Opening Time **\n";
+			//Update opening time
+			int openinghr, openingmin;
+			cout << "*Select Hour\n";
+			for (int i = 0; i <= 12; i++)
+				cout << i << "- " << i << "\n";
+			cout << "Please, enter an option: ";
+			cin >> openinghr;
+
+			cout << "*Select Minute\n";
+			for (int i = 0; i <= 59; i++) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
+				cout << i << "- " << i << "\n";
+			cout << "Please, enter an option: ";
+			cin >> openingmin;
+
+			cout << "* Select an option\n";
+			cout << "1- AM\n";
+			cout << "2- PM\n";
+			cout << "b- Back\n";
+			cout << "Please, enter an option: ";
+			string openingampmChoice, openingampm;
+			cin >> openingampmChoice;
+			if (openingampmChoice == "1")
+				openingampm = "AM";
+			else if (openingampmChoice == "2")
+				openingampm = "PM";
+			else if (openingampmChoice == "b")
+				goto setOpeningTime;
+
+			//Update Opening time in DB
+			string openinghrString = to_string(openinghr), openingminString;
+			if (openingmin < 10)
+				openingminString = "0" + to_string(openingmin);
+			else openingminString = to_string(openingmin);
+			string newOpeningTime = openinghrString + ":" + openingminString + " " + openingampm;
+			string queryUpdateOpeningTime = "UPDATE foodBuildingsTable SET openingTime = '" + newOpeningTime + "' WHERE foodBuildingName = '" + newBuildingName + "'";
+			const char* qUpdateOpeningTime = queryUpdateOpeningTime.c_str();
+			qstateManagement = mysql_query(conn, qUpdateOpeningTime);
+			if (qstateManagement)
+				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//closingTime
+		setClosingTime:
+			cout << "** Closing Time **\n";
+			//Update closing time
+			int closinghr, closingmin;
+			cout << "*Select Hour\n";
+			for (int i = 0; i <= 12; i++)
+				cout << i << "- " << i << "\n";
+			cout << "Please, enter an option: ";
+			cin >> closinghr;
+
+			cout << "*Select Minute\n";
+			for (int i = 0; i <= 59; i++) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
+				cout << i << "- " << i << "\n";
+			cout << "Please, enter an option: ";
+			cin >> closingmin;
+
+			cout << "* Select an option\n";
+			cout << "1- AM\n";
+			cout << "2- PM\n";
+			cout << "b- Back\n";
+			cout << "Please, enter an option: ";
+			string closingampmChoice, closingampm;
+			cin >> closingampmChoice;
+			if (closingampmChoice == "1")
+				closingampm = "AM";
+			else if (closingampmChoice == "2")
+				closingampm = "PM";
+			else if (closingampmChoice == "b")
+				goto setClosingTime;
+
+			//Update Closing time in DB
+			string closinghrString = to_string(closinghr), closingminString;
+			if (closingmin < 10)
+				closingminString = "0" + to_string(closingmin);
+			else closingminString = to_string(closingmin);
+			string newClosingTime = closinghrString + ":" + closingminString + " " + closingampm;
+			string queryUpdateClosingTime = "UPDATE foodBuildingsTable SET closingTime = '" + newClosingTime + "' WHERE foodBuildingName = '" + newBuildingName + "'";
+			const char* qUpdateClosingTime = queryUpdateClosingTime.c_str();
+			qstateManagement = mysql_query(conn, qUpdateClosingTime);
+			if (qstateManagement)
+				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 				//***criar table of orders da new building***//
 			//take out all spaces and lower-case all letters

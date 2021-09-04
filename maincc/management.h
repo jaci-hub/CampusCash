@@ -4,14 +4,14 @@
 #include "diningManagement.h"
 #include "deliveryManagement.h"
 #include "feesManagement.h"
-#include "mealsTimePeriodManagement.h"
+#include "timeManagement.h"
 #include "pricesManagement.h"
 using namespace std;
 
 int managementOption;
 
 void management() {
-		cout << "0- Meals time period\n";
+		cout << "0- Times\n";
 		cout << "1- Dining\n";
 		cout << "2- Delivery\n";
 		cout << "3- Prices\n";
@@ -22,7 +22,7 @@ void management() {
 
 		//Meals time period
 		if (managementOption == 0) {
-			mealsTimePeriodManagement();
+			timeManagement();
 		}
 
 		//Dining
