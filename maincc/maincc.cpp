@@ -255,7 +255,7 @@ int main() {
 
                 if (encomendeiFood == true)
                     cancelOrder();
-                else cout << "** Your order has been canceled already!\n";
+                else cout << "** Your order has already been canceled!\n";
                 
                 goto backToMenu;
             }
