@@ -84,7 +84,7 @@ void menu() {
                 else cout << "Query failed: " << mysql_error(conn) << "\n";
 
                 cout << "** Your order is on the way! **\n";
-                cout << "- Contact deliveryman at " + entregadorEmail + "\n";
+                cout << "* Contact deliveryman at " + entregadorEmail + "\n";
                 cout << "r- Received" << "\n";
             }
             else if (getLineNumber() == 1)

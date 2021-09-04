@@ -34,11 +34,11 @@ int main() {
         cout << "*** Campus Cash (CCash) ***" << "\n";
 
         //log in as school or student menu
+        comeco:
         generalLogIn();
 
         //*****log in as school*****
         if (selection == 1) {
-        staffLogin:
             //criar o staff/fazer log in as a staff
             criarStaff();
 
@@ -59,7 +59,7 @@ int main() {
                 string reoption;
                 cin >> reoption;
                 if (reoption != "1")
-                    goto staffLogin;
+                    goto comeco;
                 else goto backToStaffMenu;
             }
 
@@ -77,19 +77,18 @@ int main() {
                 string reoption;
                 cin >> reoption;
                 if (reoption != "1")
-                    goto staffLogin;
+                    goto comeco;
                 else goto backToStaffMenu;
             }
 
             //Log Out
             else if (menuChoice == "e")
-                goto staffLogin;
+                goto comeco;
 
         }
 
         //******log in as student******
         else if (selection == 2) {
-        studentLogin:
             //criar o sender/fazer log in as a student
             criar_sender();
             //system("clear");
@@ -150,9 +149,21 @@ int main() {
 
             //OPTION 1- Order Food
             if (option == "1") {
-                if(tableExists("feesTable")==true)
+                //checking entregador available first
+                bool entregadorAvailable = false;
+                string querygetEmail = "SELECT staffEmail FROM staffDataTable WHERE staffType = 'Entregador' AND deliverTo = 'none'";
+                const char* qgetEmail = querygetEmail.c_str();
+                qstateMain = mysql_query(conn, qgetEmail);
+                if (!qstateMain) {
+                    res = mysql_store_result(conn);
+                    while (row = mysql_fetch_row(res))
+                        entregadorAvailable = true;
+                }
+                else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+                if(tableExists("feesTable")==true && entregadorAvailable == true)
                     order_food();
-                else cout << "** Fee not set yet!\n";
+                else cout << "** Not taking orders currently!\n";
 
                 cout << "\n";
                 //ask if student would like to go to menu or log out
@@ -162,7 +173,7 @@ int main() {
                 string reoption;
                 cin >> reoption;
                 if (reoption != "1")
-                    goto studentLogin;
+                    goto comeco;
                 else goto backToMenu;
             }
 
@@ -184,7 +195,7 @@ int main() {
                 string reoption;
                 cin >> reoption;
                 if (reoption != "1")
-                    goto studentLogin;
+                    goto comeco;
                 else goto backToMenu;
             }
 
@@ -206,13 +217,13 @@ int main() {
                 string reoption;
                 cin >> reoption;
                 if (reoption != "1")
-                    goto studentLogin;
+                    goto comeco;
                 else goto backToMenu;
             }
 
             //OPTION 3- Log out
             else if (option == "e")
-                goto studentLogin;
+                goto comeco;
 
             //OPTION c - cancel Order
             else if (option == "c") {
