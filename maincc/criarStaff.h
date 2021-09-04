@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "classStaff.h"
 #include "file_com_pragmaonce_mysql.h"
 using namespace std;
 
@@ -37,7 +38,10 @@ void criarStaff() {
                     break;
                 }
             }
-            if (check_email_val == false) {
+            if (check_email_val == true) {
+                staff.email = check_email;
+            }
+            else {
                 cout << "email not found!\n";
                 goto tryStaffEmailagain;
             }

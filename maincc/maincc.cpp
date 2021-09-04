@@ -48,7 +48,7 @@ int main() {
             schoolOptionMenu(); //from SchoolStudentOptionLoginMenu.h
 
             //Go to Show orders
-            if (menuChoice == 1) {
+            if (menuChoice == "1") {
                 show_orders();
 
                 cout << "\n";
@@ -64,7 +64,7 @@ int main() {
             }
 
             //Go to management
-            else if (menuChoice == 2) {
+            else if (menuChoice == "2") {
                 management();
                 if (managementOption == 5)
                     goto backToStaffMenu;
@@ -82,7 +82,7 @@ int main() {
             }
 
             //Log Out
-            else if (menuChoice == 3)
+            else if (menuChoice == "e")
                 goto staffLogin;
 
         }
@@ -211,7 +211,7 @@ int main() {
             }
 
             //OPTION 3- Log out
-            else if (option == "3")
+            else if (option == "e")
                 goto studentLogin;
 
             //OPTION c - cancel Order
@@ -224,6 +224,13 @@ int main() {
             //OPTION r - received Order
             else if (option == "r") {
                 receivedOrder();
+
+                //set the entregador status to 'none' (staffStatus column)
+
+
+                //set entregadorEmail to 'none' in student DB
+
+
                 goto backToMenu;
             }
 

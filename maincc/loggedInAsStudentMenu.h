@@ -84,7 +84,7 @@ void menu() {
 
         cout << "m- Send meal" << "\n";
         cout << "2- Send cash" << "\n";
-        cout << "3- Log out" << "\n";
+        cout << "e- Log out" << "\n";
         cout << "Please, enter an option: ";
         cin >> option;
     }

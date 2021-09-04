@@ -1,20 +1,29 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include "classStaff.h"
+#include "getStaffSpecificInfo.h"
+#include "entregador.h"
 using namespace std;
 
 //***Opcoes do menu***
-unsigned int menuChoice;
+string menuChoice;
 void schoolOptionMenu() {
-    cout << "1- Show Orders\n";
-    cout << "2- Management\n"; //show if logged in as manager
-    cout << "3- Log Out\n";
-    cout << "Please, enter an option: ";
-    cin >> menuChoice;
+    if (getStaffSpecificInfo(staff.get_email(), "staffType") == "Chef" || getStaffSpecificInfo(staff.get_email(), "staffType") == "Manager") {
+        cout << "1- Show Orders\n";
+        if (getStaffSpecificInfo(staff.get_email(), "staffType") == "Manager")
+            cout << "2- Management\n";
+        cout << "e- Log Out\n";
+        cout << "Please, enter an option: ";
+        cin >> menuChoice;
+    }
 
-    if (menuChoice < 1 || menuChoice > 3) {
-        //system("clear");
-        schoolOptionMenu();
+    if (getStaffSpecificInfo(staff.get_email(), "staffType") == "Entregador") {
+        entregador();
+
+        cout << "e- Log Out\n";
+        cout << "Please, enter an option: ";
+        cin >> menuChoice;
     }
 }
 //*******

@@ -161,5 +161,14 @@
     <ClInclude Include="getLineNumber.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="getStaffSpecificInfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="classStaff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entregador.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

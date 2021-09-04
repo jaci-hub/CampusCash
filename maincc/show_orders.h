@@ -119,6 +119,14 @@ void show_orders() {
                         if (qstateShowOrders)
                             cout << "Query failed: " << mysql_error(conn) << "\n";
 
+                        //set entregador whose status is 'none' to 'delivering'
+
+
+                        //send the order info to the entregador
+
+
+                        //set the entregadorEmail in student DB as the email of the entregador
+
                         goto showOrders;
                     }
 

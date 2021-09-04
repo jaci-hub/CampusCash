@@ -155,6 +155,7 @@
     <ClInclude Include="cancelOrderOne.h" />
     <ClInclude Include="classOrderFood.h" />
     <ClInclude Include="classSender.h" />
+    <ClInclude Include="classStaff.h" />
     <ClInclude Include="columnExists.h" />
     <ClInclude Include="criarStaff.h" />
     <ClInclude Include="criar_receiver.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="deliveryManagement.h" />
     <ClInclude Include="diningManagement.h" />
     <ClInclude Include="dropTable.h" />
+    <ClInclude Include="entregador.h" />
     <ClInclude Include="feesManagement.h" />
     <ClInclude Include="formatName.h" />
     <ClInclude Include="getCurrentDateTime.h" />
@@ -174,6 +176,7 @@
     <ClInclude Include="getCurrentYear.h" />
     <ClInclude Include="getLastDay.h" />
     <ClInclude Include="getLineNumber.h" />
+    <ClInclude Include="getStaffSpecificInfo.h" />
     <ClInclude Include="setLineNumber.h" />
     <ClInclude Include="getName_fromTable.h" />
     <ClInclude Include="listarCoisas.h" />
