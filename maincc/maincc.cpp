@@ -227,7 +227,35 @@ int main() {
 
             //OPTION c - cancel Order
             else if (option == "c") {
-                cancelOrder();
+                //***check if student's order wasnt canceled yet
+                //get buildingOrderedFrom first
+                string buildingOrderedFrom;
+                string querybuildingOrderedFrom = "SELECT buildingOrderedFrom FROM studentDataTable WHERE studentEmail = '" + student1.get_email() + "'";
+                const char* qbuildingOrderedFrom = querybuildingOrderedFrom.c_str();
+                qstateLoggedInAsStudentMenu = mysql_query(conn, qbuildingOrderedFrom);
+                if (!qstateLoggedInAsStudentMenu) {
+                    res = mysql_store_result(conn);
+                    row = mysql_fetch_row(res);
+                    buildingOrderedFrom = row[0];
+                }
+                else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+                bool encomendeiFood = false;
+                if (buildingOrderedFrom != "none") {
+                    string queryencomendeiFood = "SELECT orderID FROM " + buildingOrderedFrom + "OrdersTable WHERE studentEmail = '" + student1.get_email() + "'";
+                    const char* qencomendeiFood = queryencomendeiFood.c_str();
+                    qstateLoggedInAsStudentMenu = mysql_query(conn, qencomendeiFood);
+                    if (!qstateLoggedInAsStudentMenu) {
+                        res = mysql_store_result(conn);
+                        while (row = mysql_fetch_row(res))
+                            encomendeiFood = true;
+                    }
+                    else cout << "Query failed: " << mysql_error(conn) << "\n";
+                }
+
+                if (encomendeiFood == true)
+                    cancelOrder();
+                else cout << "** Your order has been canceled already!\n";
                 
                 goto backToMenu;
             }
