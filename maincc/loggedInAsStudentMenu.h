@@ -71,7 +71,20 @@ void menu() {
         //check lineNumber from DB
         if (tableExists(buildingOrderedFrom + "OrdersTable") == true && thereIsOrder == true) {
             if (getLineNumber() <= 0) {
+                //get entregador email
+                string entregadorEmail;
+                string queryentregadorEmail = "SELECT entregadorEmail FROM studentDataTable WHERE studentEmail = '" + student1.get_email() + "'";
+                const char* qentregadorEmail = queryentregadorEmail.c_str();
+                qstateLoggedInAsStudentMenu = mysql_query(conn, qentregadorEmail);
+                if (!qstateLoggedInAsStudentMenu) {
+                    res = mysql_store_result(conn);
+                    row = mysql_fetch_row(res);
+                    entregadorEmail = row[0];
+                }
+                else cout << "Query failed: " << mysql_error(conn) << "\n";
+
                 cout << "** Your order is on the way! **\n";
+                cout << "- Contact deliveryman at " + entregadorEmail + "\n";
                 cout << "r- Received" << "\n";
             }
             else if (getLineNumber() == 1)

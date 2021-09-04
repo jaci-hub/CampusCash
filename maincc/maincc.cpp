@@ -225,11 +225,31 @@ int main() {
             else if (option == "r") {
                 receivedOrder();
 
-                //set the entregador status to 'none' (staffStatus column)
+                    //***set the entregador deliverTo to 'none'
+                //get the entregadorEmail first
+                string entregadorEmail;
+                string queryentregadorEmail = "SELECT entregadorEmail FROM studentDataTable WHERE studentEmail = '" + student1.get_email() + "'";
+                const char* qentregadorEmail = queryentregadorEmail.c_str();
+                qstateMain = mysql_query(conn, qentregadorEmail);
+                if (!qstateMain) {
+                    res = mysql_store_result(conn);
+                    row = mysql_fetch_row(res);
+                    entregadorEmail = row[0];
+                }
+                else cout << "Query failed: " << mysql_error(conn) << "\n";
 
+                string queryUpdateentregadorDeliverTo = "UPDATE staffDataTable SET deliverTo = 'none' WHERE staffEmail = '" + entregadorEmail + "'";
+                const char* qUpdateentregadorDeliverTo = queryUpdateentregadorDeliverTo.c_str();
+                qstateMain = mysql_query(conn, qUpdateentregadorDeliverTo);
+                if (qstateMain)
+                    cout << "Query failed: " << mysql_error(conn) << "\n";
 
                 //set entregadorEmail to 'none' in student DB
-
+                string queryUpdateentregadorEmail = "UPDATE studentDataTable SET entregadorEmail = 'none' WHERE studentEmail = '" + student1.get_email() + "'";
+                const char* qUpdateentregadorEmail = queryUpdateentregadorEmail.c_str();
+                qstateMain = mysql_query(conn, qUpdateentregadorEmail);
+                if (qstateMain)
+                    cout << "Query failed: " << mysql_error(conn) << "\n";
 
                 goto backToMenu;
             }

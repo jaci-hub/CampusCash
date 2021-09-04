@@ -67,8 +67,6 @@ void show_orders() {
                     //take out all spaces and lower-case all letters
                     allinOne_class.buildingName = formatName(allinOne_class.buildingName);
 
-                    //************ASK FOR PIN HERE TO GET TO SEE THE BUILDINGS ORDERS????????
-
                     //Getting the orders from that building
                     bool next = false;
                     if (tableExists(allinOne_class.get_buildingName() + "OrdersTable") == true) {
@@ -81,7 +79,7 @@ void show_orders() {
                             while (row = mysql_fetch_row(res)) {
                                 if (stoi(row[0]) > 0) {
                                     next = true;
-                                    cout << "Order #" << row[0] << "\n";
+                                    cout << "Order #" << row[0] << "\n"; 
                                     cout << "Email: " << row[1] << "\n";
                                     cout << "Diet: " << row[2] << "\n";
                                     cout << "Meal: " << row[3] << "\n";
@@ -101,8 +99,25 @@ void show_orders() {
                         else cout << "Query failed: " << mysql_error(conn) << "\n";
                     }
                     else cout << "No order!\n";
+
+                    //getting the entregador email first
+                    string entregadorEmail;
+                    bool entregadorAvailable = false;
+                    string querygetEmail = "SELECT staffEmail FROM staffDataTable WHERE staffType = 'Entregador' AND deliverTo = 'none'";
+                    const char* qgetEmail = querygetEmail.c_str();
+                    qstateShowOrders = mysql_query(conn, qgetEmail);
+                    if (!qstateShowOrders) {
+                        res = mysql_store_result(conn);
+                        while (row = mysql_fetch_row(res)) {
+                            entregadorEmail = row[0];
+                            entregadorAvailable = true;
+                        }
+                    }
+                    else cout << "Query failed: " << mysql_error(conn) << "\n";
                     
-                    cout << "n- Next\n";
+                    if (entregadorAvailable == true)
+                        cout << "n- Next\n";
+                    else cout << "* No deliveryman available!\n";
                     cout << "q- Cancel Order #1\n";
                     cout << "c- Cancel All Orders\n";
                     cout << "e- EXIT\n";
@@ -119,13 +134,32 @@ void show_orders() {
                         if (qstateShowOrders)
                             cout << "Query failed: " << mysql_error(conn) << "\n";
 
-                        //set entregador whose status is 'none' to 'delivering'
+                            //*** Assigning delivery***
+                        //get the email of the student that just got order done (orderID = 0)
+                        string StudentEmail;
+                        string querygetorderStudentEmail = "SELECT studentEmail FROM " + allinOne_class.get_buildingName() + "OrdersTable WHERE orderID = 0";
+                        const char* qgetorderStudentEmail = querygetorderStudentEmail.c_str();
+                        qstateShowOrders = mysql_query(conn, qgetorderStudentEmail);
+                        if (!qstateShowOrders) {
+                            res = mysql_store_result(conn);
+                            row = mysql_fetch_row(res);
+                            StudentEmail = row[0];
+                        }
+                        else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-
-                        //send the order info to the entregador
-
+                        //***set entregador whose deliverTo is 'none' to StudentEmail
+                        string queryUpdatedeliverTo = "UPDATE staffDataTable SET deliverTo = '" + StudentEmail + "' WHERE staffEmail = '" + entregadorEmail + "'";
+                        const char* qUpdatedeliverTo = queryUpdatedeliverTo.c_str();
+                        qstateShowOrders = mysql_query(conn, qUpdatedeliverTo);
+                        if (qstateShowOrders)
+                            cout << "Query failed: " << mysql_error(conn) << "\n";                        
 
                         //set the entregadorEmail in student DB as the email of the entregador
+                        string queryUpdateentregadorEmail = "UPDATE studentDataTable SET entregadorEmail = '" + entregadorEmail + "' WHERE studentEmail = '" + StudentEmail + "'";
+                        const char* qUpdateentregadorEmail = queryUpdateentregadorEmail.c_str();
+                        qstateShowOrders = mysql_query(conn, qUpdateentregadorEmail);
+                        if (qstateShowOrders)
+                            cout << "Query failed: " << mysql_error(conn) << "\n";
 
                         goto showOrders;
                     }
@@ -180,16 +214,16 @@ void show_orders() {
                     }
 
                     if (ordersOption == "e")
-                        goto show_orders_byFoodBuildingEnd;
+                        goto show_ordersEnd;
                 }
                 else if(foodBuildingChoice == "e")
-                    goto show_orders_byFoodBuildingEnd;
+                    goto show_ordersEnd;
             }
         }
     }
     else puts("Connection to DataBase has failed");
 
     //end funcao
-show_orders_byFoodBuildingEnd:
+show_ordersEnd:
     cout << "";
 }
