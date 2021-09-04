@@ -4,6 +4,8 @@
 #include "diningManagement.h"
 #include "deliveryManagement.h"
 #include "feesManagement.h"
+#include "isFoodBuildingOpenYet.h"
+#include "isFoodBuildingClosedYet.h"
 using namespace std;
 
 int qstateTimeManagement;
@@ -21,14 +23,14 @@ void timeManagement() {
 		principio:
 		cout << "* Select an option \n";
 		cout << "1- Working hours\n";
-		cout << "2- Meals hours\n";
+		cout << "2- Meal hours\n";
 		cout << "e- EXIT\n";
 		cout << "Please, enter an option: ";
 		string firstChoice;
 		cin >> firstChoice;
 		if (firstChoice == "2") {
 		theBuildings:
-			cout << "* Select a building \n";
+			cout << "* Meals hours at: \n";
 			//listing the buildings in the foodBuildingsTable
 			if (tableExists("foodBuildingsTable") == true)
 				listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
@@ -103,17 +105,22 @@ void timeManagement() {
 						else if (ampmChoice == "b")
 							goto setStartTime;
 
-						//Update Start time in DB
+						//BEFORE UPDATE IN DB, CHECK IF THE TIME IS AFTER OPENINGTIME!!!
 						string hrString = to_string(hr), minString;
 						if (min < 10)
 							minString = "0" + to_string(min);
 						else minString = to_string(min);
-						string newStartTime = hrString + ":" + minString + " " + ampm;
-						string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
-						const char* qUpdateStartTime = queryUpdateStartTime.c_str();
-						qstateTimeManagement = mysql_query(conn, qUpdateStartTime);
-						if (qstateTimeManagement)
-							cout << "Query failed: " << mysql_error(conn) << "\n";
+
+						if (isFoodBuildingOpenYet(buildingName, hrString + ":" + minString + " " + ampm) == true) {
+							//Update Start time in DB
+							string newStartTime = hrString + ":" + minString + " " + ampm;
+							string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
+							const char* qUpdateStartTime = queryUpdateStartTime.c_str();
+							qstateTimeManagement = mysql_query(conn, qUpdateStartTime);
+							if (qstateTimeManagement)
+								cout << "Query failed: " << mysql_error(conn) << "\n";
+						}
+						else cout << "* Building not open yet at that time!\n";
 
 						goto selectedMeal;
 					}
@@ -147,17 +154,22 @@ void timeManagement() {
 						else if (ampmChoice == "b")
 							goto setEndTime;
 
-						//Update End time in DB
+						//BEFORE UPDATE IN DB, CHECK IF THE TIME IS BEFORE CLOSINGTIME!!!
 						string hrString = to_string(hr), minString;
 						if (min < 10)
 							minString = "0" + to_string(min);
 						else minString = to_string(min);
-						string newEndTime = hrString + ":" + minString + " " + ampm;
-						string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
-						const char* qUpdateEndTime = queryUpdateEndTime.c_str();
-						qstateTimeManagement = mysql_query(conn, qUpdateEndTime);
-						if (qstateTimeManagement)
-							cout << "Query failed: " << mysql_error(conn) << "\n";
+
+						if (isFoodBuildingClosedYet(buildingName, hrString + ":" + minString + " " + ampm) == false) {
+							//Update Start time in DB
+							string newEndTime = hrString + ":" + minString + " " + ampm;
+							string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
+							const char* qUpdateEndTime = queryUpdateEndTime.c_str();
+							qstateTimeManagement = mysql_query(conn, qUpdateEndTime);
+							if (qstateTimeManagement)
+								cout << "Query failed: " << mysql_error(conn) << "\n";
+						}
+						else cout << "* Building already closed at that time!\n";
 
 						goto selectedMeal;
 					}
@@ -173,7 +185,7 @@ void timeManagement() {
 
 		else if (firstChoice == "1") {
 			listarEdificios:
-			cout << "* Select a building \n";
+			cout << "* Working hours at: \n";
 			//listing the buildings in the foodBuildingsTable
 			if (tableExists("foodBuildingsTable") == true)
 				listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
@@ -189,7 +201,7 @@ void timeManagement() {
 				 string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", edificioSelected);
 				 
 				 //***Display Opening and Closing times by day//
-				 cout << "** " << buildingName << " **\n";
+				 cout << "** " << buildingName << " working hours**\n";
 				 cout << "* Select a day to update hours\n";
 				 //listar dias: openingTime - closingTime
 				 string querySelectTimes = "SELECT dayName, openingTime, closingTime FROM " + buildingName + "WorkingTimesTable";
@@ -199,7 +211,7 @@ void timeManagement() {
 					 res = mysql_store_result(conn);
 					 int i = 1;
 					 while (row = mysql_fetch_row(res)) {
-						 cout << i << row[0] << ": " << row[1] << " - " << row[2] << "\n";
+						 cout << i << "- " << row[0] << ": " << row[1] << " - " << row[2] << "\n";
 						 i++;
 					 }
 				 }
@@ -266,7 +278,7 @@ void timeManagement() {
 						 openingminString = "0" + to_string(openingmin);
 					 else openingminString = to_string(openingmin);
 					 string newOpeningTime = openinghrString + ":" + openingminString + " " + openingampm;
-					 string queryUpdateOpeningTime = "UPDATE foodBuildingsTable SET openingTime = '" + newOpeningTime + "' WHERE foodBuildingName = '" + buildingName + "'";
+					 string queryUpdateOpeningTime = "UPDATE " + buildingName + "WorkingTimesTable SET openingTime = '" + newOpeningTime + "' WHERE dayName = '" + dayName + "'";
 					 const char* qUpdateOpeningTime = queryUpdateOpeningTime.c_str();
 					 qstateManagement = mysql_query(conn, qUpdateOpeningTime);
 					 if (qstateManagement)
@@ -309,7 +321,7 @@ void timeManagement() {
 						 closingminString = "0" + to_string(closingmin);
 					 else closingminString = to_string(closingmin);
 					 string newClosingTime = closinghrString + ":" + closingminString + " " + closingampm;
-					 string queryUpdateClosingTime = "UPDATE foodBuildingsTable SET closingTime = '" + newClosingTime + "' WHERE foodBuildingName = '" + buildingName + "'";
+					 string queryUpdateClosingTime = "UPDATE " + buildingName + "WorkingTimesTable SET closingTime = '" + newClosingTime + "' WHERE dayName = '" + dayName + "'";
 					 const char* qUpdateClosingTime = queryUpdateClosingTime.c_str();
 					 qstateManagement = mysql_query(conn, qUpdateClosingTime);
 					 if (qstateManagement)

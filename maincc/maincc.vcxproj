@@ -177,9 +177,12 @@
     <ClInclude Include="getLastDay.h" />
     <ClInclude Include="getLineNumber.h" />
     <ClInclude Include="getStaffSpecificInfo.h" />
+    <ClInclude Include="isFoodBuildingClosedYet.h" />
+    <ClInclude Include="isFoodBuildingOpenYet.h" />
     <ClInclude Include="setLineNumber.h" />
     <ClInclude Include="getName_fromTable.h" />
     <ClInclude Include="listarCoisas.h" />
+    <ClInclude Include="timeConverter.h" />
     <ClInclude Include="timeManagement.h" />
     <ClInclude Include="menuPlanManagement.h" />
     <ClInclude Include="otherMenuPlanManagement.h" />

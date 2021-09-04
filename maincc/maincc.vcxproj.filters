@@ -170,5 +170,14 @@
     <ClInclude Include="entregador.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="isFoodBuildingOpenYet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="isFoodBuildingClosedYet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="timeConverter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
