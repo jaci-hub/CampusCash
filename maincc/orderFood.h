@@ -38,6 +38,9 @@ void order_food() {
 		if (isdigit(optionEscolhida[0]) != 0) {
 			//Setting buildingName
 			myOrder.selectedBuilding = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", optionEscolhida);
+
+            //Check if myOrder.selectedBuilding is open------------
+            
 			//take out all spaces and lower-case all letters
 			myOrder.selectedBuilding = formatName(myOrder.selectedBuilding);
 
@@ -162,7 +165,10 @@ void order_food() {
                 }
                 else if (isdigit(mealSelecionado[0]) != 0) {
                     myOrder.selectedMeal = getName_fromTable(menuTable, "meal", "mealID", mealSelecionado);
-                    //setting the price of the meal
+
+                    //check the time of the meal-------------------------
+
+                    //setting the cost of the meal
                     myOrder.foodOrderTotal += stod(getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "price", "mealID", mealSelecionado));
                     categoryList:
                     //listar categorias 1st time
