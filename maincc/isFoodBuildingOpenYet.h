@@ -17,7 +17,7 @@ bool isFoodBuildingOpenYet(string foodBuildingNameFormated, string AnOpeningTime
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
 
 	if (conn) {
-
+		return true;
 	}
 	else puts("Connection to DataBase has failed");
 }
