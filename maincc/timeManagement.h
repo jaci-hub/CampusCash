@@ -11,8 +11,8 @@ int qstateTimeManagement;
 void timeManagement() {
 	//Stablishing the connection to mysql database
 	MYSQL* conn;
-	//MYSQL_ROW row;
-	//MYSQL_RES* res;
+	MYSQL_ROW row;
+	MYSQL_RES* res;
 	conn = mysql_init(0);
 
 	conn = mysql_real_connect(conn, "localhost", "root", "ReinoDaMatamba3", "allstudentdata", 3306, NULL, 0);
@@ -188,24 +188,47 @@ void timeManagement() {
 				 edificioSelecionado:
 				 string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", edificioSelected);
 				 
-				 //***Display Opening and Closing times//
-					//opening time
-				 string openingTime = getName_fromTable("foodBuildingsTable", "openingTime", "foodBuildingID", edificioSelected);
-
-				 //closing time
-				 string closingTime = getName_fromTable("foodBuildingsTable", "closingTime", "foodBuildingID", edificioSelected);
-
+				 //***Display Opening and Closing times by day//
 				 cout << "** " << buildingName << " **\n";
-				 cout << "Working hours\n";
-				 cout << openingTime << " - " << closingTime << "\n";
-				 cout << "1- Update time\n";
+				 cout << "* Select a day to update hours\n";
+				 //listar dias: openingTime - closingTime
+				 string querySelectTimes = "SELECT dayName, openingTime, closingTime FROM " + buildingName + "WorkingTimesTable";
+				 const char* qSelectTimes = querySelectTimes.c_str();
+				 qstateTimeManagement = mysql_query(conn, qSelectTimes);
+				 if (!qstateTimeManagement) {
+					 res = mysql_store_result(conn);
+					 int i = 1;
+					 while (row = mysql_fetch_row(res)) {
+						 cout << i << row[0] << ": " << row[1] << " - " << row[2] << "\n";
+						 i++;
+					 }
+				 }
+				 else cout << "Query failed: " << mysql_error(conn) << "\n";
+
 				 cout << "b- Back\n";
 				 cout << "Please, enter an option: ";
 				 string updateOption;
 				 cin >> updateOption;
 				 if (updateOption == "b")
 					 goto listarEdificios;
-				 else if (updateOption == "1") {
+				 else if (isdigit(updateOption[0]) != 0) {
+					 //setting numbers to days
+					 string dayName;
+					 if (updateOption == "1")
+						 dayName = "Sunday";
+					 else if (updateOption == "2")
+						 dayName = "Monday";
+					 else if (updateOption == "3")
+						 dayName = "Tuesday";
+					 else if (updateOption == "4")
+						 dayName = "Wednesday";
+					 else if (updateOption == "5")
+						 dayName = "Thursday";
+					 else if (updateOption == "6")
+						 dayName = "Friday";
+					 else if (updateOption == "7")
+						 dayName = "Saturday";
+
 					 //openingTime
 				 setOpeningTime:
 					 cout << "** Opening Time **\n";

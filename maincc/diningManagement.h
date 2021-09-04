@@ -82,9 +82,16 @@ void diningManagement() {
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Create workingTimesTable
-			string queryCriarfoodBuildingsTimesTable = "CREATE TABLE " + newBuildingName + "WorkingTimesTable(dayName VARCHAR(20) NOT NULL, openingTime VARCHAR(255) NOT NULL, closingTime VARCHAR(255) NOT NULL)";
+			string queryCriarfoodBuildingsTimesTable = "CREATE TABLE " + newBuildingName + "WorkingTimesTable(dayName VARCHAR(255) NOT NULL, openingTime VARCHAR(255) NOT NULL, closingTime VARCHAR(255) NOT NULL)";
 			const char* qCriarfoodBuildingsTimesTable = queryCriarfoodBuildingsTimesTable.c_str();
 			qstateManagement = mysql_query(conn, qCriarfoodBuildingsTimesTable);
+			if (qstateManagement)
+				cout << "Query failed: " << mysql_error(conn) << "\n";
+
+			//Insert days workingTimesTable
+			string queryAddDays = "INSERT INTO " + newBuildingName + "WorkingTimesTable(dayName, openingTime, closingTime) VALUES('Sunday', 'none', 'none'), ('Monday', 'none', 'none'), ('Tuesday', 'none', 'none'), ('Wednesday', 'none', 'none'), ('Thursday', 'none', 'none'), ('Friday', 'none', 'none'), ('Saturday', 'none', 'none')";
+			const char* qAddDays = queryAddDays.c_str();
+			qstateManagement = mysql_query(conn, qAddDays);
 			if (qstateManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
