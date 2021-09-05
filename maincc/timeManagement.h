@@ -30,19 +30,28 @@ void timeManagement() {
 		cin >> firstChoice;
 		if (firstChoice == "2") {
 		theBuildings:
+			string nomeDaBuilding;
 			cout << "* Meals hours at: \n";
 			//listing the buildings in the foodBuildingsTable
-			if (tableExists("foodBuildingsTable") == true)
-				listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
-			else cout << "No building!\n";
+			string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+			const char* qListarbuildings = queryListarbuildings.c_str();
+			qstateTimeManagement = mysql_query(conn, qListarbuildings);
+			if (!qstateTimeManagement) {
+				res = mysql_store_result(conn);
+				row = mysql_fetch_row(res);
+				cout << "s- " << row[0] << "\n";
+				nomeDaBuilding = row[0];
+			}
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
+
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string casaSelected;
 			cin >> casaSelected;
 
-			if (isdigit(casaSelected[0]) != 0) {
+			if (casaSelected == "s") {
 			theMeals:
-				string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", casaSelected);
+				string buildingName = nomeDaBuilding;
 				buildingName = formatName(buildingName);
 				cout << "* Select meal \n";
 				//listing the meals in the MealsTimeAndPrice
@@ -290,20 +299,29 @@ void timeManagement() {
 
 		else if (firstChoice == "1") {
 			listarEdificios:
+			string nomeDaBuilding;
 			cout << "* Working hours at: \n";
 			//listing the buildings in the foodBuildingsTable
-			if (tableExists("foodBuildingsTable") == true)
-				listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
-			else cout << "No building!\n";
+			string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+			const char* qListarbuildings = queryListarbuildings.c_str();
+			qstateTimeManagement = mysql_query(conn, qListarbuildings);
+			if (!qstateTimeManagement) {
+				res = mysql_store_result(conn);
+				row = mysql_fetch_row(res);
+				cout << "s- " << row[0] << "\n";
+				nomeDaBuilding = row[0];
+			}
+			else cout << "Query failed: " << mysql_error(conn) << "\n";
+
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string edificioSelected;
 			cin >> edificioSelected;
 			 if (edificioSelected == "b")
 				goto principio;
-			 if (isdigit(edificioSelected[0]) != 0) {
+			 if (edificioSelected == "s") {
 				 edificioSelecionado:
-				 string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", edificioSelected);
+				 string buildingName = nomeDaBuilding;
 				 
 				 //***Display Opening and Closing times by day//
 				 cout << "** " << buildingName << " working hours**\n";

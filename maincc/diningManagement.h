@@ -34,24 +34,32 @@ void diningManagement() {
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
 
-		cout << "* Select a building \n";
+		cout << "* Select building \n";
+		string nomeDaBuilding;
 		//listing the buildings in the foodBuildingsTable
-		if (tableExists("foodBuildingsTable") == true)
-			listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
-		else cout << "* No building!\n";
+		string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+		const char* qListarbuildings = queryListarbuildings.c_str();
+		qstateManagement = mysql_query(conn, qListarbuildings);
+		if (!qstateManagement) {
+			res = mysql_store_result(conn);
+			row = mysql_fetch_row(res);
+			cout << "s- " << row[0] << "\n";
+			nomeDaBuilding = row[0];
+		}
+		else cout << "Query failed: " << mysql_error(conn) << "\n";
 
 		//adding/removing a building options
-		cout << "a- Add\n";
-		cout << "r- Remove\n";
+		cout << "a- Add\n"; //MOVE THIS FROM HERE
+		cout << "r- Remove\n"; //MOVE THIS FROM HERE
 		cout << "b- Back\n";
 		cout << "Please, enter an option: ";
 		string optionEscolhida;
 		cin >> optionEscolhida;
 
 		//heading to Menu Plan
-		if (isdigit(optionEscolhida[0]) != 0) {
+		if (optionEscolhida == "s") {
 			//Setting buildingName
-			allinOne_class.buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", optionEscolhida);
+			allinOne_class.buildingName = nomeDaBuilding;
 			//take out all spaces and lower-case all letters
 			allinOne_class.buildingName = formatName(allinOne_class.buildingName);
 

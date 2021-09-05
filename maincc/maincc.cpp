@@ -66,7 +66,7 @@ int main() {
             //Go to management
             else if (menuChoice == "2") {
                 management();
-                if (managementOption == 5)
+                if (managementOption == 6)
                     goto backToStaffMenu;
 
                 cout << "\n";
@@ -84,7 +84,6 @@ int main() {
             //Log Out
             else if (menuChoice == "e")
                 goto comeco;
-
         }
 
         //******log in as student******

@@ -26,21 +26,20 @@ void feesManagement() {
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 
 			//Inserting Variables
-			string queryInsertValuesFeesTable = "INSERT INTO feesTable(feeName, PercentageFee) VALUES('Meal Transaction Fee', 0), ('Cash Transaction Fee', 0), ('ON campus Delivery Fee', 0), ('OFF campus Delivery Fee', 0)";
+			string queryInsertValuesFeesTable = "INSERT INTO feesTable(feeName, PercentageFee) VALUES('Meal Transaction Fee', 0), ('Cash Transaction Fee', 0)";
 			const char* qInsertValuesFeesTable = queryInsertValuesFeesTable.c_str();
 			qstateFeeManagement = mysql_query(conn, qInsertValuesFeesTable);
 			if (qstateFeeManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
 		cout << "* Select an option\n";
-		cout << "1- Transaction fee\n";
-		cout << "2- Delivery fee\n";
+		cout << "t- Transaction fee\n";
 		cout << "e- EXIT\n";
 		cout << "Please, enter an option: ";
 		string feeOption;
 		cin >> feeOption;
 
-		if (feeOption == "1") {
+		if (feeOption == "t") {
 		theTransactionFee:
 			//get Meal transaction fee from DB and display it
 			string mealTransactionFee;
@@ -107,75 +106,6 @@ void feesManagement() {
 			else if (TransactionFeeOption == "b")
 				goto inicio;
 		}
-
-		else if (feeOption == "2") {
-		theOnOffCampusDeliveryFee:
-			//get ON campus delivery fee from DB and display it
-			string onCampusDeliveryFee;
-			string queryGettingonCampusDeliveryFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'ON campus Delivery Fee'";
-			const char* qGettingonCampusDeliveryFee = queryGettingonCampusDeliveryFee.c_str();
-			qstateFeeManagement = mysql_query(conn, qGettingonCampusDeliveryFee);
-			if (!qstateFeeManagement) {
-				res = mysql_store_result(conn);
-				row = mysql_fetch_row(res);
-				onCampusDeliveryFee = row[0];
-			}
-
-			//get OFF campus delivery fee from DB and display it
-			string offCampusDeliveryFee;
-			string queryGettingoffCampusDeliveryFee = "SELECT PercentageFee FROM feesTable WHERE feeName = 'OFF campus Delivery Fee'";
-			const char* qGettingoffCampusDeliveryFee = queryGettingoffCampusDeliveryFee.c_str();
-			qstateFeeManagement = mysql_query(conn, qGettingoffCampusDeliveryFee);
-			if (!qstateFeeManagement) {
-				res = mysql_store_result(conn);
-				row = mysql_fetch_row(res);
-				offCampusDeliveryFee = row[0];
-			}
-
-			else cout << "Query failed: " << mysql_error(conn) << "\n";
-			cout << "** ON campus Delivery fee: " << onCampusDeliveryFee << "%\n";
-			cout << "** OFF campus Delivery fee: " << offCampusDeliveryFee <<"%\n\n";
-			cout << "1- Update ON campus Delivery fee\n";
-			cout << "2- Update OFF campus Delivery fee\n";
-			cout << "b- Back\n";
-			cout << "Please, enter an option: ";
-			string onOffCampusDeliveryFeeOption;
-			cin >> onOffCampusDeliveryFeeOption;
-
-			if (onOffCampusDeliveryFeeOption == "1") {
-				string newonCampusDeliveryFee;
-				cout << "Fee(%): ";
-				cin >> newonCampusDeliveryFee;
-
-				//UPDATE onCampusDeliveryFee in DB
-				string queryUpdateonCampusDeliveryFee = "UPDATE feesTable SET PercentageFee = " + newonCampusDeliveryFee + " WHERE feeName = 'ON campus Delivery Fee'";
-				const char* qUpdateonCampusDeliveryFee = queryUpdateonCampusDeliveryFee.c_str();
-				qstateFeeManagement = mysql_query(conn, qUpdateonCampusDeliveryFee);
-				if (qstateFeeManagement)
-					cout << "Query failed: " << mysql_error(conn) << "\n";
-
-				goto theOnOffCampusDeliveryFee;
-			}
-
-			if (onOffCampusDeliveryFeeOption == "2") {
-				string newoffCampusDeliveryFee;
-				cout << "Fee(%): ";
-				cin >> newoffCampusDeliveryFee;
-
-				//UPDATE offCampusDeliveryFee in DB
-				string queryUpdateoffCampusDeliveryFee = "UPDATE feesTable SET PercentageFee = " + newoffCampusDeliveryFee + " WHERE feeName = 'OFF campus Delivery Fee'";
-				const char* qUpdateoffCampusDeliveryFee = queryUpdateoffCampusDeliveryFee.c_str();
-				qstateFeeManagement = mysql_query(conn, qUpdateoffCampusDeliveryFee);
-				if (qstateFeeManagement)
-					cout << "Query failed: " << mysql_error(conn) << "\n";
-
-				goto theOnOffCampusDeliveryFee;
-			}
-
-			else if (onOffCampusDeliveryFeeOption == "b")
-				goto inicio;
-		}
-
 		else if (feeOption == "e") {
 			goto feesManagementEnd;
 		}

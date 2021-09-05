@@ -24,7 +24,7 @@ void show_orders() {
 
     if (conn) {
         bool buildingsYet = false;
-
+        string nomeDaBuilding;
         //Create foodBuildingsTable if it doesnt exist yet
         if (tableExists("foodBuildingsTable") == false) {
             string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT)";
@@ -50,19 +50,28 @@ void show_orders() {
             if (buildingsYet == false) {
                 cout << "** No building!!\n";
             }
-
             else if (buildingsYet == true) {
                 cout << "* Select building \n";
                 //listing the buildings in the foodBuildingsTable
-                listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
+                string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '"+ staff.get_email() +"'";
+                const char* qListarbuildings = queryListarbuildings.c_str();
+                qstateShowOrders = mysql_query(conn, qListarbuildings);
+                if (!qstateShowOrders) {
+                    res = mysql_store_result(conn);
+                    row = mysql_fetch_row(res);
+                    cout << "s- " << row[0] << "\n";
+                    nomeDaBuilding = row[0];
+                }
+                else cout << "Query failed: " << mysql_error(conn) << "\n";
+
                 cout << "e- EXIT\n";
                 string foodBuildingChoice;
                 cout << "Please, enter an option: ";
                 cin >> foodBuildingChoice;
-                if (isdigit(foodBuildingChoice[0]) != 0) {
+                if (foodBuildingChoice == "s") {
                     showOrders:
                     //Getting the food buildings name
-                    allinOne_class.buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", foodBuildingChoice);
+                    allinOne_class.buildingName = nomeDaBuilding;
 
                     //take out all spaces and lower-case all letters
                     allinOne_class.buildingName = formatName(allinOne_class.buildingName);
@@ -103,7 +112,7 @@ void show_orders() {
                     //getting the entregador email first
                     string entregadorEmail;
                     bool entregadorAvailable = false;
-                    string querygetEmail = "SELECT staffEmail FROM staffDataTable WHERE staffType = 'Entregador' AND deliverTo = 'none'";
+                    string querygetEmail = "SELECT staffEmail FROM staffDataTable WHERE staffType = 'Entregador' AND foodBuilding = '" + nomeDaBuilding + "' AND deliverTo = 'none'";
                     const char* qgetEmail = querygetEmail.c_str();
                     qstateShowOrders = mysql_query(conn, qgetEmail);
                     if (!qstateShowOrders) {

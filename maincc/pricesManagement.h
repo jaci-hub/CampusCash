@@ -17,20 +17,28 @@ void pricesManagement() {
 
 	if (conn) {
 	theBuildings:
-		cout << "* Select a building \n";
+		cout << "* Select building \n";
+		string nomeDaBuilding;
 		//listing the buildings in the foodBuildingsTable
-		if (tableExists("foodBuildingsTable") == true)
-			listarCoisas("foodBuildingID", "foodBuildingName", "foodBuildingsTable");
-		else cout << "*No building!\n";
+		string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+		const char* qListarbuildings = queryListarbuildings.c_str();
+		qstatepricesManagement = mysql_query(conn, qListarbuildings);
+		if (!qstatepricesManagement) {
+			res = mysql_store_result(conn);
+			row = mysql_fetch_row(res);
+			cout << "s- " << row[0] << "\n";
+			nomeDaBuilding = row[0];
+		}
+		else cout << "Query failed: " << mysql_error(conn) << "\n";
 
 		cout << "e- EXIT\n";
 		cout << "Please, enter an option: ";
 		string escolha;
 		cin >> escolha;
 
-		if (isdigit(escolha[0]) != 0) {
+		if (escolha == "s") {
 		theMeals:
-			string buildingName = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", escolha);
+			string buildingName = nomeDaBuilding;
 			buildingName = formatName(buildingName);
 			cout << "* Select meal \n";
 			//listing the meals in the MealsTimeAndPrice
