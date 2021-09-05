@@ -128,7 +128,8 @@ void timeManagement() {
 
 							cout << "* Select an option\n";
 							cout << "1- AM\n";
-							cout << "2- PM\n";
+							if (starthr != "0")
+								cout << "2- PM\n";
 							cout << "b- Back\n";
 							cout << "Please, enter an option: ";
 							string ampmChoice;
@@ -229,7 +230,8 @@ void timeManagement() {
 
 							cout << "* Select an option\n";
 							cout << "1- AM\n";
-							cout << "2- PM\n";
+							if (endhr != "0")
+								cout << "2- PM\n";
 							cout << "b- Back\n";
 							cout << "Please, enter an option: ";
 							string ampmChoice;
@@ -349,87 +351,117 @@ void timeManagement() {
 				 setOpeningTime:
 					 cout << "** Opening Time **\n";
 					 //Update opening time
-					 int openinghr, openingmin;
+					 string openinghrChoice, openinghr;
+					 int openingmin;
 					 cout << "*Select Hour\n";
+					 cout << "n- None\n";
 					 for (int i = 0; i <= 12; i++)
 						 cout << i << "- " << i << "\n";
 					 cout << "Please, enter an option: ";
-					 cin >> openinghr;
+					 cin >> openinghrChoice;
+					 if (openinghrChoice == "n")
+						 openinghr = "none";
+					 else openinghr = openinghrChoice;
 
-					 cout << "*Select Minute\n";
-					 for (int i = 0; i <= 59; i++) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
-						 cout << i << "- " << i << "\n";
-					 cout << "Please, enter an option: ";
-					 cin >> openingmin;
+					 if (openinghr != "none") {
+						 cout << "*Select Minute\n";
+						 for (int i = 0; i <= 59; i += 5) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
+							 cout << i << "- " << i << "\n";
+						 cout << "Please, enter an option: ";
+						 cin >> openingmin;
 
-					 cout << "* Select an option\n";
-					 cout << "1- AM\n";
-					 cout << "2- PM\n";
-					 cout << "b- Back\n";
-					 cout << "Please, enter an option: ";
-					 string openingampmChoice, openingampm;
-					 cin >> openingampmChoice;
-					 if (openingampmChoice == "1")
-						 openingampm = "AM";
-					 else if (openingampmChoice == "2")
-						 openingampm = "PM";
-					 else if (openingampmChoice == "b")
-						 goto setOpeningTime;
+						 cout << "* Select an option\n";
+						 cout << "1- AM\n";
+						 if (openinghr != "0")
+							 cout << "2- PM\n";
+						 cout << "b- Back\n";
+						 cout << "Please, enter an option: ";
+						 string openingampmChoice, openingampm;
+						 cin >> openingampmChoice;
+						 if (openingampmChoice == "1")
+							 openingampm = "AM";
+						 else if (openingampmChoice == "2")
+							 openingampm = "PM";
+						 else if (openingampmChoice == "b")
+							 goto setOpeningTime;
 
-					 //Update Opening time in DB
-					 string openinghrString = to_string(openinghr), openingminString;
-					 if (openingmin < 10)
-						 openingminString = "0" + to_string(openingmin);
-					 else openingminString = to_string(openingmin);
-					 string newOpeningTime = openinghrString + ":" + openingminString + " " + openingampm;
-					 string queryUpdateOpeningTime = "UPDATE " + buildingName + "WorkingTimesTable SET openingTime = '" + newOpeningTime + "' WHERE dayName = '" + dayName + "'";
-					 const char* qUpdateOpeningTime = queryUpdateOpeningTime.c_str();
-					 qstateManagement = mysql_query(conn, qUpdateOpeningTime);
-					 if (qstateManagement)
-						 cout << "Query failed: " << mysql_error(conn) << "\n";
+						 //Update Opening time in DB
+						 string openingminString;
+						 if (openingmin < 10)
+							 openingminString = "0" + to_string(openingmin);
+						 else openingminString = to_string(openingmin);
+						 string newOpeningTime = openinghr + ":" + openingminString + " " + openingampm;
+						 string queryUpdateOpeningTime = "UPDATE " + buildingName + "WorkingTimesTable SET openingTime = '" + newOpeningTime + "' WHERE dayName = '" + dayName + "'";
+						 const char* qUpdateOpeningTime = queryUpdateOpeningTime.c_str();
+						 qstateManagement = mysql_query(conn, qUpdateOpeningTime);
+						 if (qstateManagement)
+							 cout << "Query failed: " << mysql_error(conn) << "\n";
+					 }
+					 else {
+						 string queryUpdateOpeningTime = "UPDATE " + buildingName + "WorkingTimesTable SET openingTime = '" + openinghr + "' WHERE dayName = '" + dayName + "'";
+						 const char* qUpdateOpeningTime = queryUpdateOpeningTime.c_str();
+						 qstateManagement = mysql_query(conn, qUpdateOpeningTime);
+						 if (qstateManagement)
+							 cout << "Query failed: " << mysql_error(conn) << "\n";
+					 }
 
 					 //closingTime
 				 setClosingTime:
 					 cout << "** Closing Time **\n";
 					 //Update closing time
-					 int closinghr, closingmin;
+					 string closinghrChoice, closinghr;
+					 int closingmin;
 					 cout << "*Select Hour\n";
+					 cout << "n- None\n";
 					 for (int i = 0; i <= 12; i++)
 						 cout << i << "- " << i << "\n";
 					 cout << "Please, enter an option: ";
-					 cin >> closinghr;
+					 cin >> closinghrChoice;
+					 if (closinghrChoice == "n")
+						 closinghr = "none";
+					 else closinghr = closinghrChoice;
 
-					 cout << "*Select Minute\n";
-					 for (int i = 0; i <= 59; i++) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
-						 cout << i << "- " << i << "\n";
-					 cout << "Please, enter an option: ";
-					 cin >> closingmin;
+					 if (closinghr != "none") {
+						 cout << "*Select Minute\n";
+						 for (int i = 0; i <= 59; i += 5) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
+							 cout << i << "- " << i << "\n";
+						 cout << "Please, enter an option: ";
+						 cin >> closingmin;
 
-					 cout << "* Select an option\n";
-					 cout << "1- AM\n";
-					 cout << "2- PM\n";
-					 cout << "b- Back\n";
-					 cout << "Please, enter an option: ";
-					 string closingampmChoice, closingampm;
-					 cin >> closingampmChoice;
-					 if (closingampmChoice == "1")
-						 closingampm = "AM";
-					 else if (closingampmChoice == "2")
-						 closingampm = "PM";
-					 else if (closingampmChoice == "b")
-						 goto setClosingTime;
+						 cout << "* Select an option\n";
+						 cout << "1- AM\n";
+						 if (closinghr != "0")
+							 cout << "2- PM\n";
+						 cout << "b- Back\n";
+						 cout << "Please, enter an option: ";
+						 string closingampmChoice, closingampm;
+						 cin >> closingampmChoice;
+						 if (closingampmChoice == "1")
+							 closingampm = "AM";
+						 else if (closingampmChoice == "2")
+							 closingampm = "PM";
+						 else if (closingampmChoice == "b")
+							 goto setClosingTime;
 
-					 //Update Closing time in DB
-					 string closinghrString = to_string(closinghr), closingminString;
-					 if (closingmin < 10)
-						 closingminString = "0" + to_string(closingmin);
-					 else closingminString = to_string(closingmin);
-					 string newClosingTime = closinghrString + ":" + closingminString + " " + closingampm;
-					 string queryUpdateClosingTime = "UPDATE " + buildingName + "WorkingTimesTable SET closingTime = '" + newClosingTime + "' WHERE dayName = '" + dayName + "'";
-					 const char* qUpdateClosingTime = queryUpdateClosingTime.c_str();
-					 qstateManagement = mysql_query(conn, qUpdateClosingTime);
-					 if (qstateManagement)
-						 cout << "Query failed: " << mysql_error(conn) << "\n";
+						 //Update Closing time in DB
+						 string closingminString;
+						 if (closingmin < 10)
+							 closingminString = "0" + to_string(closingmin);
+						 else closingminString = to_string(closingmin);
+						 string newClosingTime = closinghr + ":" + closingminString + " " + closingampm;
+						 string queryUpdateClosingTime = "UPDATE " + buildingName + "WorkingTimesTable SET closingTime = '" + newClosingTime + "' WHERE dayName = '" + dayName + "'";
+						 const char* qUpdateClosingTime = queryUpdateClosingTime.c_str();
+						 qstateManagement = mysql_query(conn, qUpdateClosingTime);
+						 if (qstateManagement)
+							 cout << "Query failed: " << mysql_error(conn) << "\n";
+					 }
+					 else {
+						 string queryUpdateClosingTime = "UPDATE " + buildingName + "WorkingTimesTable SET closingTime = '" + closinghr + "' WHERE dayName = '" + dayName + "'";
+						 const char* qUpdateClosingTime = queryUpdateClosingTime.c_str();
+						 qstateManagement = mysql_query(conn, qUpdateClosingTime);
+						 if (qstateManagement)
+							 cout << "Query failed: " << mysql_error(conn) << "\n";
+					 }
 
 					 goto edificioSelecionado;
 				 }
