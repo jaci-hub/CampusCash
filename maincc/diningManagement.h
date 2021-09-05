@@ -37,7 +37,7 @@ void diningManagement() {
 		cout << "* Select building \n";
 		string nomeDaBuilding;
 		//listing the buildings in the foodBuildingsTable
-		string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+		string queryListarbuildings = "SELECT foodBuilding FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
 		const char* qListarbuildings = queryListarbuildings.c_str();
 		qstateManagement = mysql_query(conn, qListarbuildings);
 		if (!qstateManagement) {

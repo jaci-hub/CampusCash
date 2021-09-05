@@ -33,7 +33,7 @@ void timeManagement() {
 			string nomeDaBuilding;
 			cout << "* Meals hours at: \n";
 			//listing the buildings in the foodBuildingsTable
-			string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+			string queryListarbuildings = "SELECT foodBuilding FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
 			const char* qListarbuildings = queryListarbuildings.c_str();
 			qstateTimeManagement = mysql_query(conn, qListarbuildings);
 			if (!qstateTimeManagement) {
@@ -164,7 +164,7 @@ void timeManagement() {
 								if (qstateTimeManagement)
 									cout << "Query failed: " << mysql_error(conn) << "\n";
 							}
-							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == false && mealName == "Brunch") {
+							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == false && mealName == "Brunch" || mealName == "Dinner") {
 								//Update Start time in DB
 								string newStartTime = starthr + ":" + minString + " " + startampm;
 								string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
@@ -266,7 +266,7 @@ void timeManagement() {
 								if (qstateTimeManagement)
 									cout << "Query failed: " << mysql_error(conn) << "\n";
 							}
-							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", endhr + ":" + minString + " " + endampm) == false && mealName == "Brunch") {
+							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", endhr + ":" + minString + " " + endampm) == false && mealName == "Brunch" || mealName == "Dinner") {
 								//Update End time in DB
 								string newEndTime = endhr + ":" + minString + " " + endampm;
 								string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
@@ -302,7 +302,7 @@ void timeManagement() {
 			string nomeDaBuilding;
 			cout << "* Working hours at: \n";
 			//listing the buildings in the foodBuildingsTable
-			string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+			string queryListarbuildings = "SELECT foodBuilding FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
 			const char* qListarbuildings = queryListarbuildings.c_str();
 			qstateTimeManagement = mysql_query(conn, qListarbuildings);
 			if (!qstateTimeManagement) {
