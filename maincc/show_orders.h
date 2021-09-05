@@ -53,7 +53,7 @@ void show_orders() {
             else if (buildingsYet == true) {
                 cout << "* Select building \n";
                 //listing the buildings in the foodBuildingsTable
-                string queryListarbuildings = "SELECT foodBuildingName FROM staffDataTable WHERE staffEmail = '"+ staff.get_email() +"'";
+                string queryListarbuildings = "SELECT foodBuilding FROM staffDataTable WHERE staffEmail = '"+ staff.get_email() +"'";
                 const char* qListarbuildings = queryListarbuildings.c_str();
                 qstateShowOrders = mysql_query(conn, qListarbuildings);
                 if (!qstateShowOrders) {
@@ -82,7 +82,7 @@ void show_orders() {
                         string queryFoodBuildingOrders = "SELECT * FROM " + allinOne_class.get_buildingName() + "OrdersTable";
                         const char* qFoodBuildingOrders = queryFoodBuildingOrders.c_str();
                         qstateShowOrders = mysql_query(conn, qFoodBuildingOrders);
-                        cout << "* Orders *\n";
+                        cout << "* " << nomeDaBuilding << " Orders *\n";
                         if (!qstateShowOrders) {
                             res = mysql_store_result(conn);
                             while (row = mysql_fetch_row(res)) {
