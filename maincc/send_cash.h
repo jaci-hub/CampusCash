@@ -33,15 +33,15 @@ void send_cash() {
             cout << "You do not have enough cash! " << "\n";
             send_cash();
         }
-        else if (amount_toSend * (1.00 + getFee("Cash Transaction Fee") / 100.00) > student1.get_balance()) {
+        else if (amount_toSend * (1.00 + getFee("feesTable", "none", "Cash Transaction Fee") / 100.00) > student1.get_balance()) {
             cout << "Couldn't pay the transaction fee! " << "\n";
             send_cash();
         }
         else if (amount_toSend <= student1.get_balance()) {
             //show total
             cout << "Amount: $" << amount_toSend << "\n";
-            cout << "Transaction fee: $" << amount_toSend * getFee("Cash Transaction Fee") / 100.00 << "\n";
-            cout << "TOTAL: $" << amount_toSend * (1.00 + getFee("Cash Transaction Fee") / 100.00) << "\n";
+            cout << "Transaction fee: $" << amount_toSend * getFee("feesTable", "none", "Cash Transaction Fee") / 100.00 << "\n";
+            cout << "TOTAL: $" << amount_toSend * (1.00 + getFee("feesTable", "none", "Cash Transaction Fee") / 100.00) << "\n";
             cout << "* Select an option\n";
             cout << "1- Make transaction\n";
             cout << "2- Cancel transaction\n";
@@ -58,7 +58,7 @@ void send_cash() {
                     row = mysql_fetch_row(res);
                     string oldCash = row[0];
                     double newCash = stod(oldCash);
-                    newCash -= amount_toSend * (1.00 + getFee("Cash Transaction Fee") / 100.00);
+                    newCash -= amount_toSend * (1.00 + getFee("feesTable", "none", "Cash Transaction Fee") / 100.00);
 
                     //Update senders balance in the classSender
                     student1.balance = newCash;

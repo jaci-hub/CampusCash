@@ -32,6 +32,17 @@ void deliveryFeesManagement() {
 			if (qstatedeliveryFeesManagement)
 				cout << "Query failed: " << mysql_error(conn) << "\n";
 		}
+		//get foodBuilding
+		string foodBuilding;
+		string queryGettingfoodBuilding = "SELECT foodBuilding FROM staffDataTable WHERE staffEmail = '" + staff.get_email() + "'";
+		const char* qGettingfoodBuilding = queryGettingfoodBuilding.c_str();
+		qstatedeliveryFeesManagement = mysql_query(conn, qGettingfoodBuilding);
+		if (!qstatedeliveryFeesManagement) {
+			res = mysql_store_result(conn);
+			row = mysql_fetch_row(res);
+			foodBuilding = row[0];
+		}
+
 		cout << "* Select an option\n";
 		cout << "d- Delivery fee\n";
 		cout << "e- EXIT\n";
@@ -42,7 +53,7 @@ void deliveryFeesManagement() {
 			theOnOffCampusDeliveryFee:
 			//get ON campus delivery fee from DB and display it
 			string onCampusDeliveryFee;
-			string queryGettingonCampusDeliveryFee = "SELECT " + formatName(staff.get_foodBuilding()) + " FROM deliveryFeesTable WHERE feeName = 'ON campus Delivery Fee'";
+			string queryGettingonCampusDeliveryFee = "SELECT " + formatName(foodBuilding) + " FROM deliveryFeesTable WHERE feeName = 'ON campus Delivery Fee'";
 			const char* qGettingonCampusDeliveryFee = queryGettingonCampusDeliveryFee.c_str();
 			qstatedeliveryFeesManagement = mysql_query(conn, qGettingonCampusDeliveryFee);
 			if (!qstatedeliveryFeesManagement) {
@@ -53,7 +64,7 @@ void deliveryFeesManagement() {
 
 			//get OFF campus delivery fee from DB and display it
 			string offCampusDeliveryFee;
-			string queryGettingoffCampusDeliveryFee = "SELECT " + formatName(staff.get_foodBuilding()) + " FROM deliveryFeesTable WHERE feeName = 'OFF campus Delivery Fee'";
+			string queryGettingoffCampusDeliveryFee = "SELECT " + formatName(foodBuilding) + " FROM deliveryFeesTable WHERE feeName = 'OFF campus Delivery Fee'";
 			const char* qGettingoffCampusDeliveryFee = queryGettingoffCampusDeliveryFee.c_str();
 			qstatedeliveryFeesManagement = mysql_query(conn, qGettingoffCampusDeliveryFee);
 			if (!qstatedeliveryFeesManagement) {
@@ -63,8 +74,10 @@ void deliveryFeesManagement() {
 			}
 
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
-			cout << "** ON campus Delivery fee: " << onCampusDeliveryFee << "%\n";
-			cout << "** OFF campus Delivery fee: " << offCampusDeliveryFee << "%\n\n";
+
+			cout << "** " << foodBuilding << " **\n";
+			cout << "* ON campus Delivery fee: " << onCampusDeliveryFee << "%\n";
+			cout << "* OFF campus Delivery fee: " << offCampusDeliveryFee << "%\n\n";
 			cout << "1- Update ON campus Delivery fee\n";
 			cout << "2- Update OFF campus Delivery fee\n";
 			cout << "b- Back\n";
@@ -78,7 +91,7 @@ void deliveryFeesManagement() {
 				cin >> newonCampusDeliveryFee;
 
 				//UPDATE onCampusDeliveryFee in DB
-				string queryUpdateonCampusDeliveryFee = "UPDATE deliveryFeesTable SET " + formatName(staff.get_foodBuilding()) + " = " + newonCampusDeliveryFee + " WHERE feeName = 'ON campus Delivery Fee'";
+				string queryUpdateonCampusDeliveryFee = "UPDATE deliveryFeesTable SET " + formatName(foodBuilding) + " = " + newonCampusDeliveryFee + " WHERE feeName = 'ON campus Delivery Fee'";
 				const char* qUpdateonCampusDeliveryFee = queryUpdateonCampusDeliveryFee.c_str();
 				qstatedeliveryFeesManagement = mysql_query(conn, qUpdateonCampusDeliveryFee);
 				if (qstatedeliveryFeesManagement)
@@ -93,7 +106,7 @@ void deliveryFeesManagement() {
 				cin >> newoffCampusDeliveryFee;
 
 				//UPDATE offCampusDeliveryFee in DB
-				string queryUpdateoffCampusDeliveryFee = "UPDATE deliveryFeesTable SET " + formatName(staff.get_foodBuilding()) + " = " + newoffCampusDeliveryFee + " WHERE feeName = 'OFF campus Delivery Fee'";
+				string queryUpdateoffCampusDeliveryFee = "UPDATE deliveryFeesTable SET " + formatName(foodBuilding) + " = " + newoffCampusDeliveryFee + " WHERE feeName = 'OFF campus Delivery Fee'";
 				const char* qUpdateoffCampusDeliveryFee = queryUpdateoffCampusDeliveryFee.c_str();
 				qstatedeliveryFeesManagement = mysql_query(conn, qUpdateoffCampusDeliveryFee);
 				if (qstatedeliveryFeesManagement)

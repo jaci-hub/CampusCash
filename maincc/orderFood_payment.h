@@ -24,8 +24,8 @@ void orderFood_payment() {
 
     if (conn) {
         cout << "* Subtotal: $" << myOrder.get_foodOrderTotal() << "\n";
-        cout << "* Delivery Fee: $" << myOrder.get_foodOrderTotal() * getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00 << "\n";
-        cout << "** TOTAL: $" << myOrder.get_foodOrderTotal() * (1.00 + getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) << "\n";
+        cout << "* Delivery Fee: $" << myOrder.get_foodOrderTotal() * getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00 << "\n";
+        cout << "** TOTAL: $" << myOrder.get_foodOrderTotal() * (1.00 + getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) << "\n";
 
         //payment Method AVAILABLE AT SPECIFIED TIMES
         paymentMethod:
@@ -65,7 +65,7 @@ void orderFood_payment() {
 
                 //Cash
                 if (thePaymentMethod == "studentBalance") {
-                    newValue -= myOrder.get_foodOrderTotal() * (1.00 + getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00);
+                    newValue -= myOrder.get_foodOrderTotal() * (1.00 + getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00);
 
                     //Update senders balance in the classSender
                     student1.balance = newValue;
@@ -89,7 +89,7 @@ void orderFood_payment() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //add order to FoodBuildingsOrdersTable
-            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(setLineNumber()) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(myOrder.get_foodOrderTotal() * getFee(myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
+            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(setLineNumber()) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(myOrder.get_foodOrderTotal() * getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
             const char* qAddOrder = queryAddOrder.c_str();
             qstateFoodPayment = mysql_query(conn, qAddOrder);
             if (qstateFoodPayment)

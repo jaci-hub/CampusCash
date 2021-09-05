@@ -30,13 +30,13 @@ void send_meal() {
             cout << "You do not have enough cash!" << "\n";
             goto send_mealEnd;
         }
-        else if (student1.get_balance() * (getFee("Meal Transaction Fee") / 100.00) > student1.get_balance()) {
+        else if (student1.get_balance() * (getFee("feesTable", "none", "Meal Transaction Fee") / 100.00) > student1.get_balance()) {
             cout << "Couldn't pay the transaction fee! " << "\n";
             goto send_mealEnd;
         }
-        else if (student1.get_balance() * (getFee("Meal Transaction Fee") / 100.00) <= student1.get_balance()) {
+        else if (student1.get_balance() * (getFee("feesTable", "none", "Meal Transaction Fee") / 100.00) <= student1.get_balance()) {
             //show total
-            cout << "Meal Transaction fee: $" << student1.get_balance() * getFee("Meal Transaction Fee") / 100.00 << "\n";
+            cout << "Meal Transaction fee: $" << student1.get_balance() * getFee("feesTable", "none", "Meal Transaction Fee") / 100.00 << "\n";
             cout << "* Select an option\n";
             cout << "1- Make transaction\n";
             cout << "2- Cancel transaction\n";
@@ -58,7 +58,7 @@ void send_meal() {
                     //balance
                     string oldBalance = row[1];
                     double newBalance = stod(oldBalance);
-                    newBalance -= student1.get_balance() * getFee("Meal Transaction Fee") / 100.00;
+                    newBalance -= student1.get_balance() * getFee("feesTable", "none", "Meal Transaction Fee") / 100.00;
 
                     //Update senders mealPlanBalance in the classSender
                     student1.mealPlanBalance = newMeal;
