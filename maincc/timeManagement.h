@@ -74,102 +74,205 @@ void timeManagement() {
 					cout << "Please, enter an option: ";
 					string updateOption;
 					cin >> updateOption;
-
+					string startampm, endampm;
 					if (updateOption == "1") {
-					setStartTime:
 						//Update Start time
-						int hr, min;
+					setStartTime:
+						//get endhr from DB so it sets the right boundaries every time
+						string starthrChoice, starthr, endhr, endTime = getName_fromTable(buildingName + "MealsTimeAndPrice", "endTime", "meal", mealName);
+						if (endTime == "none")
+							endhr = "none";
+						else {
+							int i = endTime.find(':');
+							for (int j = 0; j < i; j++)
+								endhr += endTime[j];
+						}
+
 						cout << "*Select Hour\n";
-						for (int i = 0; i <= 12; i++)
-							cout << i << "- " << i << "\n";
+						if (endhr != "none") {
+							cout << "n- None\n";
+							if (stoi(endhr) == 12) {
+								for (int i = 0; i < 12; i++)
+									cout << i << "- " << i << "\n";
+							}
+							else if (stoi(endhr) != 12) {
+								for (int i = 0; i <= 12; i++) {
+									if (i == stoi(endhr))
+										continue;
+									else cout << i << "- " << i << "\n";
+								}
+							}
+						}
+						else {
+							cout << "n- None\n";
+							for (int i = 0; i <= 12; i++)
+								cout << i << "- " << i << "\n";
+						}
+
 						cout << "Please, enter an option: ";
-						cin >> hr;
+						cin >> starthrChoice;
 
-						cout << "*Select Minute\n";
-						for (int i = 0; i <= 59; i++) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
-							cout << i << "- " << i << "\n";
-						cout << "Please, enter an option: ";
-						cin >> min;
+						if (isdigit(starthrChoice[0]) != 0)
+							starthr = starthrChoice;
+						else if (starthrChoice == "n")
+							starthr = "none";
 
-						cout << "* Select an option\n";
-						cout << "1- AM\n";
-						cout << "2- PM\n";
-						cout << "b- Back\n";
-						cout << "Please, enter an option: ";
-						string ampmChoice, ampm;
-						cin >> ampmChoice;
-						if (ampmChoice == "1")
-							ampm = "AM";
-						else if (ampmChoice == "2")
-							ampm = "PM";
-						else if (ampmChoice == "b")
-							goto setStartTime;
+						//BEFORE UPDATE IN DB, CHECK IF THE TIME IS AFTER OPENINGTIME AND BEFORE CLOSING TIME!!!
+						if (starthr != "none") {
+							cout << "*Select Minute\n";
+							for (int i = 0; i <= 59; i += 5) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
+								cout << i << "- " << i << "\n";
+							cout << "Please, enter an option: ";
+							int min;
+							cin >> min;
 
-						//BEFORE UPDATE IN DB, CHECK IF THE TIME IS AFTER OPENINGTIME!!!
-						string hrString = to_string(hr), minString;
-						if (min < 10)
-							minString = "0" + to_string(min);
-						else minString = to_string(min);
+							cout << "* Select an option\n";
+							cout << "1- AM\n";
+							cout << "2- PM\n";
+							cout << "b- Back\n";
+							cout << "Please, enter an option: ";
+							string ampmChoice;
+							cin >> ampmChoice;
+							if (ampmChoice == "1")
+								startampm = "AM";
+							else if (ampmChoice == "2")
+								startampm = "PM";
+							else if (ampmChoice == "b")
+								goto setStartTime;
 
-						if (isFoodBuildingOpenYet(buildingName, hrString + ":" + minString + " " + ampm) == true) {
-							//Update Start time in DB
-							string newStartTime = hrString + ":" + minString + " " + ampm;
-							string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
+							string minString;
+							if (min < 10)
+								minString = "0" + to_string(min);
+							else minString = to_string(min);
+
+							if (isFoodBuildingOpenYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == false && mealName != "Brunch") {
+								//Update Start time in DB
+								string newStartTime = starthr + ":" + minString + " " + startampm;
+								string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
+								const char* qUpdateStartTime = queryUpdateStartTime.c_str();
+								qstateTimeManagement = mysql_query(conn, qUpdateStartTime);
+								if (qstateTimeManagement)
+									cout << "Query failed: " << mysql_error(conn) << "\n";
+							}
+							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == false && mealName == "Brunch") {
+								//Update Start time in DB
+								string newStartTime = starthr + ":" + minString + " " + startampm;
+								string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
+								const char* qUpdateStartTime = queryUpdateStartTime.c_str();
+								qstateTimeManagement = mysql_query(conn, qUpdateStartTime);
+								if (qstateTimeManagement)
+									cout << "Query failed: " << mysql_error(conn) << "\n";
+							}
+							else cout << "* Invalid!\n";
+						}
+						else {
+							string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + starthr + "' WHERE meal = '" + mealName + "'";
 							const char* qUpdateStartTime = queryUpdateStartTime.c_str();
 							qstateTimeManagement = mysql_query(conn, qUpdateStartTime);
 							if (qstateTimeManagement)
 								cout << "Query failed: " << mysql_error(conn) << "\n";
 						}
-						else cout << "* Building not open yet at that time!\n";
 
 						goto selectedMeal;
 					}
 					else if (updateOption == "2") {
-					setEndTime:
 						//Update End time
-						int hr, min;
+					setEndTime:
+						//get starthr from DB so it sets the right boundaries every time
+						string endhrChoice, endhr, starthr, startTime = getName_fromTable(buildingName + "MealsTimeAndPrice", "startTime", "meal", mealName);
+						if (startTime == "none")
+							starthr = "none";
+						else {
+							int i = startTime.find(':');
+							for (int j = 0; j < i; j++)
+								starthr += startTime[j];
+						}
+
+						//only cout hours different from the start hour
 						cout << "*Select Hour\n";
-						for (int i = 0; i <= 12; i++)
-							cout << i << "- " << i << "\n";
+						if (starthr != "none") {
+							cout << "n- None\n";
+							if (stoi(starthr) == 12) {
+								for (int i = 0; i < 12; i++)
+									cout << i << "- " << i << "\n";
+							}
+							else if (stoi(starthr) != 12) {
+								for (int i = 0; i <= 12; i++) {
+									if (i == stoi(starthr))
+										continue;
+									else cout << i << "- " << i << "\n";
+								}
+							}
+						}
+						else {
+							cout << "n- None\n";
+							for (int i = 0; i <= 12; i++)
+								cout << i << "- " << i << "\n";
+						}
+
 						cout << "Please, enter an option: ";
-						cin >> hr;
+						cin >> endhrChoice;
 
-						cout << "*Select Minute\n";
-						for (int i = 0; i <= 59; i++) //CURIOUS: why are the minutes in time schedules usually multiples of 5???
-							cout << i << "- " << i << "\n";
-						cout << "Please, enter an option: ";
-						cin >> min;
+						if (isdigit(endhrChoice[0]) != 0)
+							endhr = endhrChoice;
+						else if (endhrChoice == "n")
+							endhr = "none";
 
-						cout << "* Select an option\n";
-						cout << "1- AM\n";
-						cout << "2- PM\n";
-						cout << "b- Back\n";
-						cout << "Please, enter an option: ";
-						string ampmChoice, ampm;
-						cin >> ampmChoice;
-						if (ampmChoice == "1")
-							ampm = "AM";
-						else if (ampmChoice == "2")
-							ampm = "PM";
-						else if (ampmChoice == "b")
-							goto setEndTime;
+						//BEFORE UPDATE IN DB, CHECK IF THE TIME IS BEFORE CLOSINGTIME  AND AFTER OPENING TIME!!!
+						if (endhr != "none") {
+							cout << "*Select Minute\n";
+							for (int i = 0; i <= 59; i += 5)
+								cout << i << "- " << i << "\n";
+							cout << "Please, enter an option: ";
+							int min;
+							cin >> min;
 
-						//BEFORE UPDATE IN DB, CHECK IF THE TIME IS BEFORE CLOSINGTIME!!!
-						string hrString = to_string(hr), minString;
-						if (min < 10)
-							minString = "0" + to_string(min);
-						else minString = to_string(min);
+							cout << "* Select an option\n";
+							cout << "1- AM\n";
+							cout << "2- PM\n";
+							cout << "b- Back\n";
+							cout << "Please, enter an option: ";
+							string ampmChoice;
+							cin >> ampmChoice;
+							if (ampmChoice == "1")
+								endampm = "AM";
+							else if (ampmChoice == "2")
+								endampm = "PM";
+							else if (ampmChoice == "b")
+								goto setEndTime;
 
-						if (isFoodBuildingClosedYet(buildingName, hrString + ":" + minString + " " + ampm) == false) {
-							//Update Start time in DB
-							string newEndTime = hrString + ":" + minString + " " + ampm;
-							string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
+							string minString;
+							if (min < 10)
+								minString = "0" + to_string(min);
+							else minString = to_string(min);
+
+							if (isFoodBuildingOpenYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Monday", endhr + ":" + minString + " " + endampm) == false && mealName != "Brunch") {
+								//Update End time in DB
+								string newEndTime = endhr + ":" + minString + " " + endampm;
+								string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
+								const char* qUpdateEndTime = queryUpdateEndTime.c_str();
+								qstateTimeManagement = mysql_query(conn, qUpdateEndTime);
+								if (qstateTimeManagement)
+									cout << "Query failed: " << mysql_error(conn) << "\n";
+							}
+							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", endhr + ":" + minString + " " + endampm) == false && mealName == "Brunch") {
+								//Update End time in DB
+								string newEndTime = endhr + ":" + minString + " " + endampm;
+								string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
+								const char* qUpdateEndTime = queryUpdateEndTime.c_str();
+								qstateTimeManagement = mysql_query(conn, qUpdateEndTime);
+								if (qstateTimeManagement)
+									cout << "Query failed: " << mysql_error(conn) << "\n";
+							}
+							else cout << "* Invalid!\n";
+						}
+						else {
+							string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + endhr + "' WHERE meal = '" + mealName + "'";
 							const char* qUpdateEndTime = queryUpdateEndTime.c_str();
 							qstateTimeManagement = mysql_query(conn, qUpdateEndTime);
 							if (qstateTimeManagement)
 								cout << "Query failed: " << mysql_error(conn) << "\n";
 						}
-						else cout << "* Building already closed at that time!\n";
 
 						goto selectedMeal;
 					}
@@ -202,6 +305,7 @@ void timeManagement() {
 				 
 				 //***Display Opening and Closing times by day//
 				 cout << "** " << buildingName << " working hours**\n";
+				 buildingName = formatName(buildingName);
 				 cout << "* Select a day to update hours\n";
 				 //listar dias: openingTime - closingTime
 				 string querySelectTimes = "SELECT dayName, openingTime, closingTime FROM " + buildingName + "WorkingTimesTable";

@@ -55,7 +55,19 @@ void order_food() {
             else minutoAgora = tempMin;
             string amPmTimeNowIs = timeConverter(getCurrentHour() + ":" + minutoAgora);
 
-            if (isFoodBuildingOpenYet(myOrder.selectedBuilding, amPmTimeNowIs) == true && isFoodBuildingClosedYet(myOrder.selectedBuilding, amPmTimeNowIs) == false) {
+            //getting current dayName
+            string dayName;
+            string queryDayName = "SELECT DAYNAME(NOW())";
+            const char* qDayName = queryDayName.c_str();
+            qstateOrderFood = mysql_query(conn, qDayName);
+            if (!qstateOrderFood) {
+                res = mysql_store_result(conn);
+                row = mysql_fetch_row(res);
+                dayName = row[0];
+            }
+            else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+            if (isFoodBuildingOpenYet(myOrder.selectedBuilding, dayName, amPmTimeNowIs) == true && isFoodBuildingClosedYet(myOrder.selectedBuilding, dayName, amPmTimeNowIs) == false) {
             DietsList:
                 string dietOption;
                 cout << "* Select a diet\n";

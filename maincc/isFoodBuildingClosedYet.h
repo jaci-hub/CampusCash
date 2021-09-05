@@ -8,7 +8,7 @@ using namespace std;
 
 int qstateisFoodBuildingClosedYet;
 
-bool isFoodBuildingClosedYet(string foodBuildingNameFormated, string aClosingTime) {
+bool isFoodBuildingClosedYet(string foodBuildingNameFormated, string aDay, string aClosingTime) {
 	//Stablishing the connection to mysql database
 	MYSQL* conn;
 	MYSQL_ROW row;
@@ -20,7 +20,7 @@ bool isFoodBuildingClosedYet(string foodBuildingNameFormated, string aClosingTim
 	if (conn) {
 		//get buildingClosingTime
 		string buildingClosingTime;
-		string queryGettingbuildingClosingTime = "SELECT closingTime FROM " + foodBuildingNameFormated + "WorkingTimesTable";
+		string queryGettingbuildingClosingTime = "SELECT closingTime FROM " + foodBuildingNameFormated + "WorkingTimesTable WHERE dayName = '" + aDay + "'";
 		const char* qGettingbuildingClosingTime = queryGettingbuildingClosingTime.c_str();
 		qstateisFoodBuildingClosedYet = mysql_query(conn, qGettingbuildingClosingTime);
 		if (!qstateisFoodBuildingClosedYet) {
@@ -30,22 +30,25 @@ bool isFoodBuildingClosedYet(string foodBuildingNameFormated, string aClosingTim
 		}
 		else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-		//take the colon away from buildingClosingTime (now it can be turned into integer)
-		string tempString = timeConverter(buildingClosingTime);
-		int i = tempString.find(':');
-		tempString.erase(i, 1);
-		buildingClosingTime = tempString;
-		
-		//take the colon away from given time (now it can be turned into integer)
-		string givenTime;
-		string tempString1 = timeConverter(aClosingTime);
-		int j = tempString1.find(':');
-		tempString1.erase(j, 1);
-		givenTime = tempString1;
+		if (buildingClosingTime != "none") {
+			//take the colon away from buildingClosingTime (now it can be turned into integer)
+			string tempString = timeConverter(buildingClosingTime);
+			int i = tempString.find(':');
+			tempString.erase(i, 1);
+			buildingClosingTime = tempString;
 
-		if (stoi(givenTime) > stoi(buildingClosingTime))
-			return true;
-		else return false;
+			//take the colon away from given time (now it can be turned into integer)
+			string givenTime;
+			string tempString1 = timeConverter(aClosingTime);
+			int j = tempString1.find(':');
+			tempString1.erase(j, 1);
+			givenTime = tempString1;
+
+			if (stoi(givenTime) > stoi(buildingClosingTime))
+				return true;
+			else return false;
+		}
+		else return true;
 	}
 	else puts("Connection to DataBase has failed");
 }

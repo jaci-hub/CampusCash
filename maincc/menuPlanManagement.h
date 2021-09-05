@@ -269,8 +269,14 @@ void menuPlanManagement() {
             cout << "*" << dayName << "* " << monthName << " " << dayChosen << ", " << ano << "\n";
 
             //listing the meals from the menuTableInUse
-            listarCoisas("mealID", "meal", menuTableInUse);
-
+            //listarCoisas("mealID", "meal", menuTableInUse);
+            if (dayName == "Saturday" || dayName == "Sunday")
+                cout << "2- Brunch\n";
+            else {
+                cout << "1- Breakfast\n";
+                cout << "3- Lunch\n";
+            }
+            cout << "4- Diner\n";
             cout << "5- Back\n";
 
             string mealChosen;
