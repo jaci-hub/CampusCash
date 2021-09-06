@@ -15,6 +15,7 @@
 #include "isFoodBuildingOpenYet.h"
 #include "isFoodBuildingClosedYet.h"
 #include "timeConverter.h"
+#include "canIorder.h"
 using namespace std;
 
 int qstateOrderFood;
@@ -42,8 +43,9 @@ void order_food() {
 		cin >> optionEscolhida;
 		if (isdigit(optionEscolhida[0]) != 0) {
 			//Setting buildingName
-			myOrder.selectedBuilding = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", optionEscolhida);
-
+            string comprarFrom = getName_fromTable("foodBuildingsTable", "foodBuildingName", "foodBuildingID", optionEscolhida);
+			myOrder.selectedBuilding = comprarFrom;
+            
             //take out all spaces and lower-case all letters
             myOrder.selectedBuilding = formatName(myOrder.selectedBuilding);
 
@@ -69,6 +71,8 @@ void order_food() {
 
             if (isFoodBuildingOpenYet(myOrder.selectedBuilding, dayName, amPmTimeNowIs) == true && isFoodBuildingClosedYet(myOrder.selectedBuilding, dayName, amPmTimeNowIs) == false) {
             DietsList:
+                //display building name
+                cout << "** " << comprarFrom << " **\n";
                 string dietOption;
                 cout << "* Select a diet\n";
                 //listar as diets from myOrder.selectedBuilding + "DietTable"
@@ -126,64 +130,69 @@ void order_food() {
                     string categoryOption0, categoryOption1, categoryOption2;
                     if (mealSelecionado == "b")
                         goto DietsList;
-                    else if (mealSelecionado == "5") {
+                    else if (mealSelecionado == "5") {//AND is time for a certain meal
                         myOrder.selectedMeal = "Other";
-
-                    categoryListInitial:
-                        //listar categorias 0th time
-                        string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
-                        cout << "* Select a category \n";
-                        if (tableExists(CategoryTableName)) {
-                            int theID;
-                            string theName;
-                            string queryListarIDname = "SELECT categoryID, categoryName FROM " + CategoryTableName;
-                            const char* qListarIDname = queryListarIDname.c_str();
-                            qstateOrderFood = mysql_query(conn, qListarIDname);
-                            if (!qstateOrderFood) {
-                                res = mysql_store_result(conn);
-                                while (row = mysql_fetch_row(res)) {
-                                    theID = stoi(row[0]);
-                                    theName = row[1];
-                                    cout << theID << "- " << theName << "\n";
+                        categoryListInitial:
+                        if (canIorder(myOrder.get_selectedBuilding(), "Breakfast") == true || canIorder(myOrder.get_selectedBuilding(), "Brunch") == true || canIorder(myOrder.get_selectedBuilding(), "Lunch") == true || canIorder(myOrder.get_selectedBuilding(), "Dinner") == true) {
+                            //listar categorias 0th time
+                            string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
+                            cout << "* Select a category \n";
+                            if (tableExists(CategoryTableName)) {
+                                int theID;
+                                string theName;
+                                string queryListarIDname = "SELECT categoryID, categoryName FROM " + CategoryTableName;
+                                const char* qListarIDname = queryListarIDname.c_str();
+                                qstateOrderFood = mysql_query(conn, qListarIDname);
+                                if (!qstateOrderFood) {
+                                    res = mysql_store_result(conn);
+                                    while (row = mysql_fetch_row(res)) {
+                                        theID = stoi(row[0]);
+                                        theName = row[1];
+                                        cout << theID << "- " << theName << "\n";
+                                    }
                                 }
+                                else cout << "Query failed: " << mysql_error(conn) << "\n";
                             }
-                            else cout << "Query failed: " << mysql_error(conn) << "\n";
-                        }
-                        else cout << "* No category!\n";
-                        cout << "n- None\n";
-                        cout << "b- Back\n";
-                        cout << "Please, enter an option: ";
-                        cin >> categoryOption0;
-                        if (isdigit(categoryOption0[0]) != 0) {
-                            //listar os items na selected category
-                            string categoryName = getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0);
-
-                            //take out all spaces and lower-case all letters
-                            categoryName = formatName(categoryName);
-
-                            //naming the items table
-                            string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
-                            cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0) + "\n";
-                            if (tableExists(ItemsTableName) == true) {
-                                //listing categoryName table selected
-                                listarCoisas("itemID", "itemName", ItemsTableName);
-                            }
-                            else cout << "* No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0) << "!\n";
+                            else cout << "* No category!\n";
+                            cout << "n- None\n";
                             cout << "b- Back\n";
                             cout << "Please, enter an option: ";
-                            string itemOption;
-                            cin >> itemOption;
-                            if (isdigit(itemOption[0]) != 0) {
-                                myOrder.selectedSideOne = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
-                                myOrder.foodOrderTotal += stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                            cin >> categoryOption0;
+                            if (isdigit(categoryOption0[0]) != 0) {
+                                //listar os items na selected category
+                                string categoryName = getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0);
+
+                                //take out all spaces and lower-case all letters
+                                categoryName = formatName(categoryName);
+
+                                //naming the items table
+                                string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
+                                cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0) + "\n";
+                                if (tableExists(ItemsTableName) == true) {
+                                    //listing categoryName table selected
+                                    listarCoisas("itemID", "itemName", ItemsTableName);
+                                }
+                                else cout << "* No " << getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0) << "!\n";
+                                cout << "b- Back\n";
+                                cout << "Please, enter an option: ";
+                                string itemOption;
+                                cin >> itemOption;
+                                if (isdigit(itemOption[0]) != 0) {
+                                    myOrder.selectedSideOne = getName_fromTable(ItemsTableName, "itemName", "itemID", itemOption);
+                                    myOrder.foodOrderTotal += stod(getName_fromTable(ItemsTableName, "price", "itemID", itemOption));
+                                }
+                                else if (itemOption == "b")
+                                    goto categoryListInitial;
                             }
-                            else if (itemOption == "b")
-                                goto categoryListInitial;
+                            else if (categoryOption0 == "n")
+                                goto deliveryPart;
+                            else if (categoryOption0 == "b")
+                                goto MealsList;
                         }
-                        else if (categoryOption0 == "n")
-                            goto deliveryPart;
-                        else if (categoryOption0 == "b")
+                        else {
+                            cout << "Not taking orders currently!!\n";
                             goto MealsList;
+                        }
 
                         goto categoryList;
                     }
@@ -191,28 +200,7 @@ void order_food() {
                         myOrder.selectedMeal = getName_fromTable(menuTable, "meal", "mealID", mealSelecionado);
                     categoryList:
                         //*****check the time of the meal*********
-                        //getting current time first
-                        string minutoAgora, tempMin = getCurrentMinute();
-                        if (stoi(tempMin) < 10)
-                            minutoAgora = "0" + tempMin;
-                        else minutoAgora = tempMin;
-                        int TimeNowIntForm = stoi(getCurrentHour() + minutoAgora);
-
-                        //start time and end time
-                        string mealStartTimeAmPm = getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "startTime", "meal", myOrder.selectedMeal), mealEndTimeAmPm = getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "endTime", "meal", myOrder.selectedMeal);
-                        string mealStartTimeMilitar = timeConverter(mealStartTimeAmPm), mealEndTimeMilitar = timeConverter(mealEndTimeAmPm);
-
-                        string tempString1 = mealStartTimeMilitar, tempString2 = mealEndTimeMilitar;
-
-                        int i = tempString1.find(':');
-                        tempString1.erase(i, 1);
-                        mealStartTimeMilitar = tempString1;
-
-                        int j = tempString2.find(':');
-                        tempString2.erase(j, 1);
-                        mealEndTimeMilitar = tempString2;
-
-                        if (TimeNowIntForm >= stoi(mealStartTimeMilitar) && TimeNowIntForm < stoi(mealEndTimeMilitar)) {
+                        if (canIorder(myOrder.get_selectedBuilding(), myOrder.selectedMeal) == true) {
                             //setting the cost of the meal
                             myOrder.foodOrderTotal += stod(getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "price", "mealID", mealSelecionado));
                         
@@ -327,7 +315,7 @@ void order_food() {
                                 goto MealsList;
                         }
                         else {
-                            cout << "No longer serving " + myOrder.selectedMeal +" today.\n";
+                            cout << "Not serving " + myOrder.selectedMeal + ".\n";
                             goto MealsList;
                         }
                     }

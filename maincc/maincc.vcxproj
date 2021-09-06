@@ -153,6 +153,7 @@
     <ClInclude Include="cancelAllOrders.h" />
     <ClInclude Include="cancelOrder.h" />
     <ClInclude Include="cancelOrderOne.h" />
+    <ClInclude Include="canIorder.h" />
     <ClInclude Include="classOrderFood.h" />
     <ClInclude Include="classSender.h" />
     <ClInclude Include="classStaff.h" />

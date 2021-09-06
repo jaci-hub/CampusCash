@@ -182,5 +182,8 @@
     <ClInclude Include="deliveryFeesManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="canIorder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
