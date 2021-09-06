@@ -233,8 +233,8 @@ void menuPlanManagement() {
             cin >> dayChosen;
             if (dayChosen == to_string(i))
                 goto mesAndAno;
-            else if (stoi(dayChosen) <= stoi(getCurrentDay()) && stoi(mes) == stoi(getCurrentMonth())) {
-                cout << "**Cant select today or past days!\n";
+            else if (stoi(dayChosen) < stoi(getCurrentDay()) && stoi(mes) == stoi(getCurrentMonth())) {
+                cout << "**Cant select past days!\n";
                 goto listaDosDias;
             }
             //INSERT CHOSEN DAY into menuTableInUse IF IT DOESNT EXIST YET

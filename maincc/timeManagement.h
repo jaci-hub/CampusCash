@@ -39,11 +39,12 @@ void timeManagement() {
 			if (!qstateTimeManagement) {
 				res = mysql_store_result(conn);
 				row = mysql_fetch_row(res);
-				cout << "s- " << row[0] << "\n";
 				nomeDaBuilding = row[0];
 			}
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
-
+			if (nomeDaBuilding != "none")
+				cout << "s- " << nomeDaBuilding << "\n";
+			else cout << "* No building!\n";
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string casaSelected;
@@ -308,11 +309,12 @@ void timeManagement() {
 			if (!qstateTimeManagement) {
 				res = mysql_store_result(conn);
 				row = mysql_fetch_row(res);
-				cout << "s- " << row[0] << "\n";
 				nomeDaBuilding = row[0];
 			}
 			else cout << "Query failed: " << mysql_error(conn) << "\n";
-
+			if (nomeDaBuilding != "none")
+				cout << "s- " << nomeDaBuilding << "\n";
+			else cout << "* No building!\n";
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string edificioSelected;

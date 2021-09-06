@@ -7,7 +7,7 @@
 #include "send_meal.h"
 #include "send_cash.h"
 #include "loggedInAsStudentMenu.h"
-#include "loggedInAsSchoolMenu.h"
+#include "loggedInAsStaffMenu.h"
 #include "generalLogIn.h"
 #include "orderFood.h"
 #include "delivery.h"
@@ -33,11 +33,11 @@ int main() {
     if (conn) {
         cout << "*** Campus Cash (CCash) ***" << "\n";
 
-        //log in as school or student menu
+        //log in as staff or student menu
         comeco:
         generalLogIn();
 
-        //*****log in as school*****
+        //*****log in as staff*****
         if (selection == 1) {
             //criar o staff/fazer log in as a staff
             criarStaff();
@@ -45,7 +45,7 @@ int main() {
         backToStaffMenu:
             cout << "*** Campus Cash (CC) ***" << "\n";
             //show menu
-            schoolOptionMenu(); //from SchoolStudentOptionLoginMenu.h
+            staffOptionMenu();
 
             //Go to Show orders
             if (menuChoice == "1") {

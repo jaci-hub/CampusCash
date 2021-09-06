@@ -45,17 +45,19 @@ void diningManagement() {
 		if (!qstateManagement) {
 			res = mysql_store_result(conn);
 			row = mysql_fetch_row(res);
-			if (row[0] != "none")
-				cout << "s- " << row[0] << "\n";
 			nomeDaBuilding = row[0];
 		}
 		else cout << "Query failed: " << mysql_error(conn) << "\n";
 
 		//adding/removing a building options
-		if(nomeDaBuilding == "none")
+		if (nomeDaBuilding == "none") {
+			cout << "* No building!\n";
 			cout << "a- Add (NOTE: This will assign you a new building!)\n";
-		if (nomeDaBuilding != "none")
+		}
+		else {
+			cout << "s- " << nomeDaBuilding << "\n";
 			cout << "r- Remove (NOTE: This will remove the building and its workers from all records permanently!)\n";
+		}
 		cout << "b- Back\n";
 		cout << "Please, enter an option: ";
 		string optionEscolhida;

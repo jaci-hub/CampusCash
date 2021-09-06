@@ -202,7 +202,7 @@
     <ClInclude Include="orderFood.h" />
     <ClInclude Include="orderFood_payment.h" />
     <ClInclude Include="generalLogin.h" />
-    <ClInclude Include="loggedInAsSchoolMenu.h" />
+    <ClInclude Include="loggedInAsStaffMenu.h" />
     <ClInclude Include="send_cash.h" />
     <ClInclude Include="tableExists.h" />
   </ItemGroup>

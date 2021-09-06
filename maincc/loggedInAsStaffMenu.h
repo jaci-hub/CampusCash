@@ -8,7 +8,7 @@ using namespace std;
 
 //***Opcoes do menu***
 string menuChoice;
-void schoolOptionMenu() {
+void staffOptionMenu() {
     if(getStaffSpecificInfo(staff.get_email(), "staffType") == "Transactions Manager")
         cout << "2- Management\n";
 

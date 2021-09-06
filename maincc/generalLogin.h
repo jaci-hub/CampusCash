@@ -7,7 +7,7 @@ using namespace std;
 unsigned int selection;
 void generalLogIn() {
     cout << "Log In as:\n";
-    cout << "1- School" << "\n";
+    cout << "1- Staff" << "\n";
     cout << "2- Student" << "\n";
     cout << "3- EXIT" << "\n";
     cout << "Please, enter an option: ";

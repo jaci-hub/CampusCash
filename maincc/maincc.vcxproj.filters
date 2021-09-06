@@ -62,7 +62,7 @@
     <ClInclude Include="management.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="loggedInAsSchoolMenu.h">
+    <ClInclude Include="loggedInAsStaffMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="addCoisaToTable.h">

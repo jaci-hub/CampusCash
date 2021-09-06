@@ -51,35 +51,39 @@ void deliveryFeesManagement() {
 		cin >> feeOption;
 			if (feeOption == "d") {
 			theOnOffCampusDeliveryFee:
-			//get ON campus delivery fee from DB and display it
-			string onCampusDeliveryFee;
-			string queryGettingonCampusDeliveryFee = "SELECT " + formatName(foodBuilding) + " FROM deliveryFeesTable WHERE feeName = 'ON campus Delivery Fee'";
-			const char* qGettingonCampusDeliveryFee = queryGettingonCampusDeliveryFee.c_str();
-			qstatedeliveryFeesManagement = mysql_query(conn, qGettingonCampusDeliveryFee);
-			if (!qstatedeliveryFeesManagement) {
-				res = mysql_store_result(conn);
-				row = mysql_fetch_row(res);
-				onCampusDeliveryFee = row[0];
-			}
+				if (foodBuilding != "none") {
+					//get ON campus delivery fee from DB and display it
+					string onCampusDeliveryFee;
+					string queryGettingonCampusDeliveryFee = "SELECT " + formatName(foodBuilding) + " FROM deliveryFeesTable WHERE feeName = 'ON campus Delivery Fee'";
+					const char* qGettingonCampusDeliveryFee = queryGettingonCampusDeliveryFee.c_str();
+					qstatedeliveryFeesManagement = mysql_query(conn, qGettingonCampusDeliveryFee);
+					if (!qstatedeliveryFeesManagement) {
+						res = mysql_store_result(conn);
+						row = mysql_fetch_row(res);
+						onCampusDeliveryFee = row[0];
+					}
 
-			//get OFF campus delivery fee from DB and display it
-			string offCampusDeliveryFee;
-			string queryGettingoffCampusDeliveryFee = "SELECT " + formatName(foodBuilding) + " FROM deliveryFeesTable WHERE feeName = 'OFF campus Delivery Fee'";
-			const char* qGettingoffCampusDeliveryFee = queryGettingoffCampusDeliveryFee.c_str();
-			qstatedeliveryFeesManagement = mysql_query(conn, qGettingoffCampusDeliveryFee);
-			if (!qstatedeliveryFeesManagement) {
-				res = mysql_store_result(conn);
-				row = mysql_fetch_row(res);
-				offCampusDeliveryFee = row[0];
-			}
+					//get OFF campus delivery fee from DB and display it
+					string offCampusDeliveryFee;
+					string queryGettingoffCampusDeliveryFee = "SELECT " + formatName(foodBuilding) + " FROM deliveryFeesTable WHERE feeName = 'OFF campus Delivery Fee'";
+					const char* qGettingoffCampusDeliveryFee = queryGettingoffCampusDeliveryFee.c_str();
+					qstatedeliveryFeesManagement = mysql_query(conn, qGettingoffCampusDeliveryFee);
+					if (!qstatedeliveryFeesManagement) {
+						res = mysql_store_result(conn);
+						row = mysql_fetch_row(res);
+						offCampusDeliveryFee = row[0];
+					}
 
-			else cout << "Query failed: " << mysql_error(conn) << "\n";
+					else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-			cout << "** " << foodBuilding << " **\n";
-			cout << "* ON campus Delivery fee: " << onCampusDeliveryFee << "%\n";
-			cout << "* OFF campus Delivery fee: " << offCampusDeliveryFee << "%\n\n";
-			cout << "1- Update ON campus Delivery fee\n";
-			cout << "2- Update OFF campus Delivery fee\n";
+					cout << "** " << foodBuilding << " **\n";
+					cout << "* ON campus Delivery fee: " << onCampusDeliveryFee << "%\n";
+					cout << "* OFF campus Delivery fee: " << offCampusDeliveryFee << "%\n\n";
+					cout << "1- Update ON campus Delivery fee\n";
+					cout << "2- Update OFF campus Delivery fee\n";
+				}
+				else cout << "* No building!\n";
+
 			cout << "b- Back\n";
 			cout << "Please, enter an option: ";
 			string onOffCampusDeliveryFeeOption;
