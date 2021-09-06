@@ -11,6 +11,7 @@
 #include "listarCoisas.h"
 #include "dropTable.h"
 #include "foodBuildingExists.h"
+#include "classStaff.h"
 using namespace std;
 
 int qstateManagement;
