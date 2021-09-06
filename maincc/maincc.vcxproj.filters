@@ -185,5 +185,11 @@
     <ClInclude Include="canIorder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="employeesManagement.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="buildingExists.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

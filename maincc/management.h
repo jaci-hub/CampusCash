@@ -7,6 +7,7 @@
 #include "timeManagement.h"
 #include "pricesManagement.h"
 #include "deliveryFeesManagement.h"
+#include "employeesManagement.h"
 using namespace std;
 
 int managementOption;
@@ -20,8 +21,9 @@ void management() {
 		cout << "2- Delivery\n";
 		cout << "3- Prices\n";
 		cout << "5- Delivery Fees\n";
+		cout << "6- Employees\n";
 	}
-		cout << "6- Back to main Menu\n"; //THIS IS IN THE if-statement in main()
+		cout << "7- Back to main Menu\n"; //THIS IS IN THE if-statement in main()
 		cout << "Please, enter an option: ";
 		cin >> managementOption;
 
@@ -53,5 +55,10 @@ void management() {
 		//Delivery Fees
 		else if (managementOption == 5) {
 			deliveryFeesManagement();
+		}
+
+		//Employees
+		else if (managementOption == 6) {
+			employeesManagement();
 		}
 }

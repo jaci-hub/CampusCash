@@ -66,7 +66,7 @@ int main() {
             //Go to management
             else if (menuChoice == "2") {
                 management();
-                if (managementOption == 6)
+                if (managementOption == 7)
                     goto backToStaffMenu;
 
                 cout << "\n";

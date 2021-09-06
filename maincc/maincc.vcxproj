@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClInclude Include="addCoisaToTable.h" />
     <ClInclude Include="allinOne_class.h" />
+    <ClInclude Include="buildingExists.h" />
     <ClInclude Include="cancelAllOrders.h" />
     <ClInclude Include="cancelOrder.h" />
     <ClInclude Include="cancelOrderOne.h" />
@@ -166,6 +167,7 @@
     <ClInclude Include="deliveryManagement.h" />
     <ClInclude Include="diningManagement.h" />
     <ClInclude Include="dropTable.h" />
+    <ClInclude Include="employeesManagement.h" />
     <ClInclude Include="entregador.h" />
     <ClInclude Include="feesManagement.h" />
     <ClInclude Include="formatName.h" />
