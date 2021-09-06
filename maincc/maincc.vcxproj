@@ -183,6 +183,7 @@
     <ClInclude Include="getStaffSpecificInfo.h" />
     <ClInclude Include="isFoodBuildingClosedYet.h" />
     <ClInclude Include="isFoodBuildingOpenYet.h" />
+    <ClInclude Include="PROJECT_GOAL_STATEMENT.h" />
     <ClInclude Include="setLineNumber.h" />
     <ClInclude Include="getName_fromTable.h" />
     <ClInclude Include="listarCoisas.h" />
