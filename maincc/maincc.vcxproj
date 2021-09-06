@@ -150,7 +150,7 @@
   <ItemGroup>
     <ClInclude Include="addCoisaToTable.h" />
     <ClInclude Include="allinOne_class.h" />
-    <ClInclude Include="buildingExists.h" />
+    <ClInclude Include="foodBuildingExists.h" />
     <ClInclude Include="cancelAllOrders.h" />
     <ClInclude Include="cancelOrder.h" />
     <ClInclude Include="cancelOrderOne.h" />

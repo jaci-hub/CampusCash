@@ -10,7 +10,7 @@
 #include "allinOne_class.h"
 #include "listarCoisas.h"
 #include "dropTable.h"
-#include "buildingExists.h"
+#include "foodBuildingExists.h"
 using namespace std;
 
 int qstateManagement;
@@ -81,7 +81,7 @@ void diningManagement() {
 				cout << "* Invalid!";
 				goto nomeDeNovo;
 			}
-			else if (buildingExists("foodBuildingsTable", newBuildingName) == true) {
+			else if (foodBuildingExists(newBuildingName) == true) {
 				cout << "* Building already exists!";
 				goto nomeDeNovo;
 			}

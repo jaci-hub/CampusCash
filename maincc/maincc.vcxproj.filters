@@ -188,7 +188,7 @@
     <ClInclude Include="employeesManagement.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="buildingExists.h">
+    <ClInclude Include="foodBuildingExists.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
