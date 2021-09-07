@@ -50,7 +50,7 @@ void send_cash() {
             cin >> transactionConfirmation;
             if (transactionConfirmation == 1) {
                 //Taking care of sender
-                string queryEmail1 = "SELECT studentBalance FROM studentdatatable WHERE studentEmail = '" + student1.get_email() + "'";
+                string queryEmail1 = "SELECT Cash FROM studentdatatable WHERE studentEmail = '" + student1.get_email() + "'";
                 const char* qEmail1 = queryEmail1.c_str();
                 qstateCashTransaction = mysql_query(conn, qEmail1);
                 if (!qstateCashTransaction) {
@@ -65,7 +65,7 @@ void send_cash() {
 
                     //Update senders balance in the DB
                     string newCashString = to_string(newCash);
-                    string querynewCash1 = "UPDATE studentdatatable SET studentBalance = '" + newCashString + "' WHERE studentEmail = '" + student1.get_email() + "'";
+                    string querynewCash1 = "UPDATE studentdatatable SET Cash = '" + newCashString + "' WHERE studentEmail = '" + student1.get_email() + "'";
                     const char* qnewCash1 = querynewCash1.c_str();
                     qstateCashTransaction = mysql_query(conn, qnewCash1);
                     if (qstateCashTransaction)
@@ -74,7 +74,7 @@ void send_cash() {
                 else cout << "Query failed: " << mysql_error(conn) << "\n";
 
                 //Taking care of receiver
-                string queryEmail2 = "SELECT studentBalance FROM studentdatatable WHERE studentEmail = '" + receiversEmail + "'";
+                string queryEmail2 = "SELECT Cash FROM studentdatatable WHERE studentEmail = '" + receiversEmail + "'";
                 const char* qEmail2 = queryEmail2.c_str();
                 qstateCashTransaction = mysql_query(conn, qEmail2);
                 if (!qstateCashTransaction) {
@@ -86,7 +86,7 @@ void send_cash() {
 
                     //Update receivers balance in the DB
                     string newCashString = to_string(newCash);
-                    string querynewCash2 = "UPDATE studentdatatable SET studentBalance = '" + newCashString + "' WHERE studentEmail = '" + receiversEmail + "'";
+                    string querynewCash2 = "UPDATE studentdatatable SET Cash = '" + newCashString + "' WHERE studentEmail = '" + receiversEmail + "'";
                     const char* qnewCash2 = querynewCash2.c_str();
                     qstateCashTransaction = mysql_query(conn, qnewCash2);
                     if (qstateCashTransaction)

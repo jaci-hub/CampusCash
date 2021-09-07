@@ -8,6 +8,7 @@
 #include "pricesManagement.h"
 #include "deliveryFeesManagement.h"
 #include "employeesManagement.h"
+#include "paymentMethodsManagement.h"
 using namespace std;
 
 int managementOption;
@@ -18,6 +19,7 @@ void management() {
 	else if (getStaffSpecificInfo(staff.get_email(), "staffType") == "Manager") {
 		cout << "0- Times\n";
 		cout << "1- Dining\n";
+		cout << "8- Payment methods\n";
 		cout << "2- Delivery\n";
 		cout << "3- Prices\n";
 		cout << "5- Delivery Fees\n";
@@ -60,5 +62,10 @@ void management() {
 		//Employees
 		else if (managementOption == 6) {
 			employeesManagement();
+		}
+
+		//Payment methods
+		else if (managementOption == 8) {
+			paymentMethodsManagement();
 		}
 }

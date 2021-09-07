@@ -27,18 +27,35 @@ void orderFood_payment() {
         cout << "* Delivery Fee: $" << myOrder.get_foodOrderTotal() * getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00 << "\n";
         cout << "** TOTAL: $" << myOrder.get_foodOrderTotal() * (1.00 + getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) << "\n";
 
-        //payment Method AVAILABLE AT SPECIFIED TIMES
-        paymentMethod:
+        //payment Method AVAILABLE AT SELECTED FOOD BUILDING
+    paymentMethod:
+        string paymentMethod1, paymentMethod2; //HAVE TO BE EITHER: Meals OR Cash!!!
         cout << "* Select payment method\n";
-        cout << "1- Meals\n";
-        cout << "2- Cash\n";
+        string queryListarpaymentMethods = "SELECT paymentMethod1, paymentMethod2 FROM foodBuildingsTable WHERE foodBuildingName = '" + myOrder.get_selectedBuilding() + "'";
+        const char* qListarpaymentMethods = queryListarpaymentMethods.c_str();
+        qstateFoodPayment = mysql_query(conn, qListarpaymentMethods);
+        if (!qstateFoodPayment) {
+            res = mysql_store_result(conn);
+            row = mysql_fetch_row(res);
+            paymentMethod1 = row[0];
+            paymentMethod2 = row[1];
+        }
+        else cout << "Query failed: " << mysql_error(conn) << "\n";
+
+        if (paymentMethod1 != "none")
+            cout << "1- " << paymentMethod1 << "\n";
+        if (paymentMethod2 != "none")
+            cout << "2- " << paymentMethod2 << "\n";
+        cout << "c- Cancel order\n";
         cout << "Please, enter an option: ";
         string metodoDePagamento, thePaymentMethod;
         cin >> metodoDePagamento;
         if (metodoDePagamento == "1")
-            thePaymentMethod = "studentMeals";
+            thePaymentMethod = paymentMethod1;
         else if (metodoDePagamento == "2")
-            thePaymentMethod = "studentBalance";
+            thePaymentMethod = paymentMethod2;
+        else if (metodoDePagamento == "c")
+            goto orderFood_paymentEnd;
         else goto paymentMethod;
 
         
@@ -64,14 +81,14 @@ void orderFood_payment() {
                 double newValue = stod(oldValue);
 
                 //Cash
-                if (thePaymentMethod == "studentBalance") {
+                if (thePaymentMethod == "Cash") {
                     newValue -= myOrder.get_foodOrderTotal() * (1.00 + getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00);
 
                     //Update senders balance in the classSender
                     student1.balance = newValue;
                 }
                 //Meals
-                else if (thePaymentMethod == "studentMeals") {
+                else if (thePaymentMethod == "Meals") {
                     newValue -= 1;
 
                     //Update senders balance in the classSender

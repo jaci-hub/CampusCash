@@ -45,7 +45,7 @@ void send_meal() {
             cin >> transactionConfirmation;
             if (transactionConfirmation == 1) {
                 //Taking care of sender
-                string queryEmail1 = "SELECT studentMeals, studentBalance FROM studentdatatable WHERE studentEmail = '" + student1.get_email() + "'";
+                string queryEmail1 = "SELECT Meals, Cash FROM studentdatatable WHERE studentEmail = '" + student1.get_email() + "'";
                 const char* qEmail1 = queryEmail1.c_str();
                 qstateMealTransaction = mysql_query(conn, qEmail1);
                 if (!qstateMealTransaction) {
@@ -67,7 +67,7 @@ void send_meal() {
 
                     //Update senders meal in the DB
                     string newMealString = to_string(newMeal);
-                    string querynewMeal1 = "UPDATE studentdatatable SET studentMeals = '" + newMealString + "' WHERE studentEmail = '" + student1.get_email() + "'";
+                    string querynewMeal1 = "UPDATE studentdatatable SET Meals = '" + newMealString + "' WHERE studentEmail = '" + student1.get_email() + "'";
                     const char* qnewMeal1 = querynewMeal1.c_str();
                     qstateMealTransaction = mysql_query(conn, qnewMeal1);
                     if (qstateMealTransaction)
@@ -75,7 +75,7 @@ void send_meal() {
 
                     //Update senders balance in the DB
                     string newBalanceString = to_string(newBalance);
-                    string querynewBalance1 = "UPDATE studentdatatable SET studentBalance = '" + newBalanceString + "' WHERE studentEmail = '" + student1.get_email() + "'";
+                    string querynewBalance1 = "UPDATE studentdatatable SET Cash = '" + newBalanceString + "' WHERE studentEmail = '" + student1.get_email() + "'";
                     const char* qnewBalance1 = querynewBalance1.c_str();
                     qstateMealTransaction = mysql_query(conn, qnewBalance1);
                     if (qstateMealTransaction)
@@ -84,7 +84,7 @@ void send_meal() {
                 else cout << "Query failed: " << mysql_error(conn) << "\n";
 
                 //Taking care of receiver
-                string queryEmail2 = "SELECT studentMeals FROM studentdatatable WHERE studentEmail = '" + receiversEmail + "'";
+                string queryEmail2 = "SELECT Meals FROM studentdatatable WHERE studentEmail = '" + receiversEmail + "'";
                 const char* qEmail2 = queryEmail2.c_str();
                 qstateMealTransaction = mysql_query(conn, qEmail2);
                 if (!qstateMealTransaction) {
@@ -96,7 +96,7 @@ void send_meal() {
 
                     //Update receivers meal in the DB
                     string newMealString = to_string(newMeal);
-                    string querynewMeal2 = "UPDATE studentdatatable SET studentMeals = '" + newMealString + "' WHERE studentEmail = '" + receiversEmail + "'";
+                    string querynewMeal2 = "UPDATE studentdatatable SET Meals = '" + newMealString + "' WHERE studentEmail = '" + receiversEmail + "'";
                     const char* qnewMeal2 = querynewMeal2.c_str();
                     qstateMealTransaction = mysql_query(conn, qnewMeal2);
                     if (qstateMealTransaction)

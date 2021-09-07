@@ -29,7 +29,7 @@ void diningManagement() {
 	listaDasFoodBuildings:
 		//Create foodBuildingsTable if it doesnt exist yet
 		if (tableExists("foodBuildingsTable") == false) {
-			string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT)";
+			string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT, paymentMethod1 VARCHAR(255) NOT NULL, paymentMethod2 VARCHAR(255) NOT NULL)";
 			const char* qCriarTable = queryCriarTable.c_str();
 			qstateManagement = mysql_query(conn, qCriarTable);
 			if (qstateManagement)
@@ -88,7 +88,14 @@ void diningManagement() {
 				cout << "* Building already exists!";
 				goto nomeDeNovo;
 			}
-			else addCoisaToTable(newBuildingName, "foodBuildingName", "foodBuildingsTable"); //ADDED
+			else {
+				//add newBuildingName to foodBuildingsTable and set paymentMethods to 'none'
+				string queryAdd = "INSERT INTO foodBuildingsTable(foodBuildingName, paymentMethod1, paymentMethod2) VALUES('" + newBuildingName + "', 'none', 'none')";
+				const char* qAdd = queryAdd.c_str();
+				qstateManagement = mysql_query(conn, qAdd);
+				if (qstateManagement)
+					cout << "Query failed: " << mysql_error(conn) << "\n";
+			} 
 
 			//Assign building to the manager in staffDataTable under foodBuilding
 			string queryUpdatefoodBuilding = "UPDATE staffDataTable SET foodBuilding = '" + newBuildingName + "' WHERE staffEmail = '" + staff.get_email() + "'";

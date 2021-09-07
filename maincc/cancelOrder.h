@@ -103,14 +103,14 @@ void cancelOrder() {
             double newValue = stod(oldValue);
 
             //Cash
-            if (thePaymentMethod == "studentBalance") {
+            if (thePaymentMethod == "Cash") {
                 newValue += totalCharged;
 
                 //Update senders balance in the classSender
                 student1.balance = newValue;
             }
             //Meals
-            else if (thePaymentMethod == "studentMeals") {
+            else if (thePaymentMethod == "Meals") {
                 newValue += 1;
 
                 //Update senders balance in the classSender

@@ -117,7 +117,7 @@ int main() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //setting balance
-            string queryBalance = "SELECT studentBalance FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
+            string queryBalance = "SELECT Cash FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
             const char* qBalance = queryBalance.c_str();
             qstateSender = mysql_query(conn, qBalance);
             if (!qstateSender) {
@@ -128,7 +128,7 @@ int main() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //setting mealPlanBalance
-            string queryMeal = "SELECT studentMeals FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
+            string queryMeal = "SELECT Meals FROM studentdatatable WHERE studentEmail = '" + student1.email + "'";
             const char* qMeal = queryMeal.c_str();
             qstateSender = mysql_query(conn, qMeal);
             if (!qstateSender) {
@@ -160,7 +160,7 @@ int main() {
                 }
                 else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-                if(tableExists("feesTable")==true && entregadorAvailable == true)
+                if(tableExists("deliveryFeesTable")==true && entregadorAvailable == true)
                     order_food();
                 else cout << "** Not taking orders currently!\n";
 

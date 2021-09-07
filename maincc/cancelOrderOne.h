@@ -78,10 +78,10 @@ void cancelOrderOne() {
             double newValue = stod(oldValue);
 
             //Cash
-            if (paymentMethod == "studentBalance")
+            if (paymentMethod == "Cash")
                 newValue += totalCharged;
             //Meals
-            else if (paymentMethod == "studentMeals")
+            else if (paymentMethod == "Meals")
                 newValue += 1;
 
             //Update student balance in the DB

@@ -27,7 +27,7 @@ void show_orders() {
         string nomeDaBuilding;
         //Create foodBuildingsTable if it doesnt exist yet
         if (tableExists("foodBuildingsTable") == false) {
-            string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT)";
+            string queryCriarTable = "CREATE TABLE foodBuildingsTable(foodBuildingName VARCHAR(255) NOT NULL, foodBuildingID INT KEY AUTO_INCREMENT, paymentMethod1 VARCHAR(255) NOT NULL, paymentMethod2 VARCHAR(255) NOT NULL)";
             const char* qCriarTable = queryCriarTable.c_str();
             qstateShowOrders = mysql_query(conn, qCriarTable);
             if (qstateShowOrders)
