@@ -198,12 +198,12 @@ void order_food() {
                     }
                     else if (isdigit(mealSelecionado[0]) != 0) {
                         myOrder.selectedMeal = getName_fromTable(menuTable, "meal", "mealID", mealSelecionado);
-                    categoryList:
+                    
                         //*****check the time of the meal*********
                         if (canIorder(myOrder.get_selectedBuilding(), myOrder.selectedMeal) == true) {
                             //setting the cost of the meal
                             myOrder.foodOrderTotal += stod(getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "price", "mealID", mealSelecionado));
-                        
+                            categoryList:
                             //listar categorias 1st time
                             string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
                             cout << "* Select a category \n";
