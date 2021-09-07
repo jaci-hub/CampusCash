@@ -47,7 +47,7 @@ void order_food() {
 			myOrder.selectedBuilding = comprarFrom;
             
             //take out all spaces and lower-case all letters
-            myOrder.selectedBuilding = formatName(myOrder.selectedBuilding);
+            comprarFrom = formatName(comprarFrom);
 
             //*******Check if myOrder.selectedBuilding is open*****
             //getting current time first
@@ -69,15 +69,15 @@ void order_food() {
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
-            if (isFoodBuildingOpenYet(myOrder.selectedBuilding, dayName, amPmTimeNowIs) == true && isFoodBuildingClosedYet(myOrder.selectedBuilding, dayName, amPmTimeNowIs) == false) {
+            if (isFoodBuildingOpenYet(comprarFrom, dayName, amPmTimeNowIs) == true && isFoodBuildingClosedYet(comprarFrom, dayName, amPmTimeNowIs) == false) {
             DietsList:
                 //display building name
-                cout << "** " << comprarFrom << " **\n";
+                cout << "** " << myOrder.selectedBuilding << " **\n";
                 string dietOption;
                 cout << "* Select a diet\n";
                 //listar as diets from myOrder.selectedBuilding + "DietTable"
-                if (tableExists(myOrder.selectedBuilding + "DietTable") == true)
-                    listarCoisas("dietID", "dietName", myOrder.selectedBuilding + "DietTable");
+                if (tableExists(comprarFrom + "DietTable") == true)
+                    listarCoisas("dietID", "dietName", comprarFrom + "DietTable");
                 else cout << "* No diet!\n";
 
                 cout << "b- Back\n";
@@ -85,13 +85,13 @@ void order_food() {
                 cin >> dietOption;
                 if (isdigit(dietOption[0]) != 0) {
                 MealsList:
-                    myOrder.selectedDiet = getName_fromTable(myOrder.selectedBuilding + "DietTable", "dietName", "dietID", dietOption);
+                    myOrder.selectedDiet = getName_fromTable(comprarFrom + "DietTable", "dietName", "dietID", dietOption);
                     myOrder.selectedDiet = formatName(myOrder.selectedDiet);
 
                     //Display menu
                     string dayToday = getCurrentDay(), mes = getCurrentMonth(), ano = getCurrentYear();
-                    string menuTable = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "MenuPlanTable" + mes + ano;
-                    string timesAndPriceTableName = myOrder.get_selectedBuilding() + "MealsTimeAndPrice";
+                    string menuTable = myOrder.get_selectedDiet() + comprarFrom + "MenuPlanTable" + mes + ano;
+                    string timesAndPriceTableName = comprarFrom + "MealsTimeAndPrice";
                     string mealID, mealName, dishAndIngredients, price, startTime, endTime;
 
                     if (tableExists(menuTable) == true) {
@@ -133,9 +133,9 @@ void order_food() {
                     else if (mealSelecionado == "5") {//AND is time for a certain meal
                         myOrder.selectedMeal = "Other";
                         categoryListInitial:
-                        if (canIorder(myOrder.get_selectedBuilding(), "Breakfast") == true || canIorder(myOrder.get_selectedBuilding(), "Brunch") == true || canIorder(myOrder.get_selectedBuilding(), "Lunch") == true || canIorder(myOrder.get_selectedBuilding(), "Dinner") == true) {
+                        if (canIorder(comprarFrom, "Other") == true) {
                             //listar categorias 0th time
-                            string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
+                            string CategoryTableName = myOrder.get_selectedDiet() + comprarFrom + "CategoryTable";
                             cout << "* Select a category \n";
                             if (tableExists(CategoryTableName)) {
                                 int theID;
@@ -166,7 +166,7 @@ void order_food() {
                                 categoryName = formatName(categoryName);
 
                                 //naming the items table
-                                string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
+                                string ItemsTableName = categoryName + myOrder.get_selectedDiet() + comprarFrom + "ItemsTable";
                                 cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption0) + "\n";
                                 if (tableExists(ItemsTableName) == true) {
                                     //listing categoryName table selected
@@ -200,12 +200,12 @@ void order_food() {
                         myOrder.selectedMeal = getName_fromTable(menuTable, "meal", "mealID", mealSelecionado);
                     
                         //*****check the time of the meal*********
-                        if (canIorder(myOrder.get_selectedBuilding(), myOrder.selectedMeal) == true) {
+                        if (canIorder(comprarFrom, myOrder.selectedMeal) == true) {
                             //setting the cost of the meal
-                            myOrder.foodOrderTotal += stod(getName_fromTable(myOrder.get_selectedBuilding() + "MealsTimeAndPrice", "price", "mealID", mealSelecionado));
+                            myOrder.foodOrderTotal += stod(getName_fromTable(comprarFrom + "MealsTimeAndPrice", "price", "mealID", mealSelecionado));
                             categoryList:
                             //listar categorias 1st time
-                            string CategoryTableName = myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "CategoryTable";
+                            string CategoryTableName = myOrder.get_selectedDiet() + comprarFrom + "CategoryTable";
                             cout << "* Select a category \n";
                             if (tableExists(CategoryTableName)) {
                                 //listing the categories in the CategoryTableName
@@ -238,7 +238,7 @@ void order_food() {
                                 categoryName = formatName(categoryName);
 
                                 //naming the items table
-                                string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
+                                string ItemsTableName = categoryName + myOrder.get_selectedDiet() + comprarFrom + "ItemsTable";
                                 cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption1) + "\n";
                                 if (tableExists(ItemsTableName) == true) {
                                     //listing categoryName table selected
@@ -286,7 +286,7 @@ void order_food() {
                                     categoryName = formatName(categoryName);
 
                                     //naming the items table
-                                    string ItemsTableName = categoryName + myOrder.get_selectedDiet() + myOrder.get_selectedBuilding() + "ItemsTable";
+                                    string ItemsTableName = categoryName + myOrder.get_selectedDiet() + comprarFrom + "ItemsTable";
                                     cout << "* All " + getName_fromTable(CategoryTableName, "categoryName", "categoryID", categoryOption2) + "\n";
                                     if (tableExists(ItemsTableName) == true) {
                                         //listing categoryName table selected

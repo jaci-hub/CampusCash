@@ -58,7 +58,6 @@ void orderFood_payment() {
             goto orderFood_paymentEnd;
         else goto paymentMethod;
 
-        
         cout << "** You will be #" << setLineNumber() << " in line! **\n";
 
         cout << "* Select an option\n";
@@ -106,14 +105,14 @@ void orderFood_payment() {
             else cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //add order to FoodBuildingsOrdersTable
-            string queryAddOrder = "INSERT INTO " + myOrder.get_selectedBuilding() + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(setLineNumber()) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(myOrder.get_foodOrderTotal() * getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
+            string queryAddOrder = "INSERT INTO " + formatName(myOrder.get_selectedBuilding()) + "OrdersTable(orderID, studentEmail, diet, meal, sideOne, sideTwo, sideThree, onOffCampus, dorm, roomNumber, subTotal, deliveryFee, paymentMethod, orderDateTime) VALUES(" + to_string(setLineNumber()) + ", '" + student1.get_email() + "', " + "'" + myOrder.get_selectedDiet() + "', " + "'" + myOrder.get_selectedMeal() + "', " + "'" + myOrder.get_selectedSideOne() + "', " + "'" + myOrder.get_selectedSideTwo() + "', " + "'" + myOrder.get_selectedSideThree() + "', " + "'" + myOrder.get_selectedOnOffCampus() + "', " + "'" + myOrder.get_selectedDorm() + "', " + "'" + myOrder.get_selectedRoom() + "', " + to_string(myOrder.get_foodOrderTotal()) + ", " + to_string(myOrder.get_foodOrderTotal() * getFee("deliveryFeesTable", formatName(myOrder.get_selectedBuilding()), myOrder.get_selectedOnOffCampus() + " Delivery Fee") / 100.00) + ", '" + thePaymentMethod + "', '" + getCurrentDateTime() + "')";
             const char* qAddOrder = queryAddOrder.c_str();
             qstateFoodPayment = mysql_query(conn, qAddOrder);
             if (qstateFoodPayment)
                 cout << "Query failed: " << mysql_error(conn) << "\n";
 
             //add FoodBuilding to studentdatatable->buildingOrderedFrom
-            string queryAddFoodBuilding = "UPDATE studentDataTable SET buildingOrderedFrom = '" + myOrder.get_selectedBuilding() + "' WHERE studentEmail = '" + student1.get_email() + "'";
+            string queryAddFoodBuilding = "UPDATE studentDataTable SET buildingOrderedFrom = '" + formatName(myOrder.get_selectedBuilding()) + "' WHERE studentEmail = '" + student1.get_email() + "'";
             const char* qAddFoodBuilding = queryAddFoodBuilding.c_str();
             qstateFoodPayment = mysql_query(conn, qAddFoodBuilding);
             if (qstateFoodPayment)

@@ -18,7 +18,7 @@ int setLineNumber() {
 	if (conn) {
         int countRows, lastOrder, lineNumber;
         //get the countRows
-        string querySelectcountRows = "SELECT COUNT(*) FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
+        string querySelectcountRows = "SELECT COUNT(*) FROM " + formatName(myOrder.get_selectedBuilding()) + "OrdersTable";
         const char* qSelectcountRows = querySelectcountRows.c_str();
         qstatesetLineNumber = mysql_query(conn, qSelectcountRows);
         if (!qstatesetLineNumber) {
@@ -32,7 +32,7 @@ int setLineNumber() {
         if (countRows == 0)
             lineNumber = 1;
         else {
-            string querySelectOrderID = "SELECT MAX(orderID) FROM " + myOrder.get_selectedBuilding() + "OrdersTable";
+            string querySelectOrderID = "SELECT MAX(orderID) FROM " + formatName(myOrder.get_selectedBuilding()) + "OrdersTable";
             const char* qSelectOrderID = querySelectOrderID.c_str();
             qstatesetLineNumber = mysql_query(conn, qSelectOrderID);
             if (!qstatesetLineNumber) {
