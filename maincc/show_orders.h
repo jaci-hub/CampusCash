@@ -75,7 +75,7 @@ void show_orders() {
                         while (row = mysql_fetch_row(res)) {
                             if (stoi(row[0]) > 0) {
                                 next = true;
-                                cout << "Order #" << row[0] << "\n";
+                                cout << "Line #" << row[0] << "\n";
                                 cout << "Email: " << row[1] << "\n";
                                 cout << "Diet: " << row[2] << "\n";
                                 cout << "Meal: " << row[3] << "\n";
