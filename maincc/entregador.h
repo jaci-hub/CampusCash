@@ -62,7 +62,8 @@ void entregador() {
                 cout << "Room: " << row[9] << "\n";
                 cout << "Subtotal: $" << row[10] << "\n";
                 cout << "Delivery Fee: $" << row[11] << "\n";
-                cout << "DateTime: " << row[13] << "\n\n"; //row[12] is paymentMethod
+                cout << "Payment Method: " << row[12] << "\n";
+                cout << "DateTime: " << row[13] << "\n\n";
             }
             else cout << "Query failed: " << mysql_error(conn) << "\n";
         }
