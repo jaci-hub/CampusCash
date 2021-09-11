@@ -156,7 +156,7 @@ void timeManagement() {
 								minString = "0" + to_string(min);
 							else minString = to_string(min);
 
-							if (isFoodBuildingOpenYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == false && mealName != "Brunch") {
+							if (isFoodBuildingOpenYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Tuesday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Tuesday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Wednesday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Wednesday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Thursday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Thursday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Friday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Friday", starthr + ":" + minString + " " + startampm) == false && mealName != "Brunch") {
 								//Update Start time in DB
 								string newStartTime = starthr + ":" + minString + " " + startampm;
 								string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
@@ -165,7 +165,7 @@ void timeManagement() {
 								if (qstateTimeManagement)
 									cout << "Query failed: " << mysql_error(conn) << "\n";
 							}
-							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == false && mealName == "Brunch" || mealName == "Dinner") {
+							else if (isFoodBuildingOpenYet(buildingName, "Saturday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Saturday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == false && mealName == "Brunch" || mealName == "Dinner") {
 								//Update Start time in DB
 								string newStartTime = starthr + ":" + minString + " " + startampm;
 								string queryUpdateStartTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET startTime = '" + newStartTime + "' WHERE meal = '" + mealName + "'";
@@ -258,7 +258,7 @@ void timeManagement() {
 								minString = "0" + to_string(min);
 							else minString = to_string(min);
 
-							if (isFoodBuildingOpenYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Monday", endhr + ":" + minString + " " + endampm) == false && mealName != "Brunch") {
+							if (isFoodBuildingOpenYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Monday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Tuesday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Tuesday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Wednesday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Wednesday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Thursday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Thursday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Friday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Friday", starthr + ":" + minString + " " + startampm) == false && mealName != "Brunch") {
 								//Update End time in DB
 								string newEndTime = endhr + ":" + minString + " " + endampm;
 								string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
@@ -267,7 +267,7 @@ void timeManagement() {
 								if (qstateTimeManagement)
 									cout << "Query failed: " << mysql_error(conn) << "\n";
 							}
-							else if (isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", endhr + ":" + minString + " " + endampm) == false && mealName == "Brunch" || mealName == "Dinner") {
+							else if (isFoodBuildingOpenYet(buildingName, "Saturday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Saturday", starthr + ":" + minString + " " + startampm) == false || isFoodBuildingOpenYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == true && isFoodBuildingClosedYet(buildingName, "Sunday", starthr + ":" + minString + " " + startampm) == false && mealName == "Brunch" || mealName == "Dinner") {
 								//Update End time in DB
 								string newEndTime = endhr + ":" + minString + " " + endampm;
 								string queryUpdateEndTime = "UPDATE " + buildingName + "MealsTimeAndPrice SET endTime = '" + newEndTime + "' WHERE meal = '" + mealName + "'";
