@@ -4,7 +4,7 @@ Quick overview:
   Campus Cash is sort of like DoorDash + PayPal (or a combination of similar platforms) for colleges and universities.
 
 Goal:
-  My goal is very simple: to make sure students in all colleges and universities campus feel more entiteled and independent about their "campus cash/food"; I want to provide students more control over their "campus cash", which includes:
+  My goal is very simple: to make sure students in all colleges and universities feel more entiteled and independent about their "campus cash/food"; I want to provide students more control over their "campus cash", which includes:
     - enabling students to order food (wheather they are living ON or OFF campus) from the campus cafeteria or any other building that provides food for students - I see a real potential here for more work-study jobs!!!
     - enabling students to send each other cash.
     - enabling students to send each other meals.
