@@ -1,7 +1,7 @@
 # CampusCash
 
 Quick overview: 
-  Campus Cash is like DoorDash + PayPal (or a combination of similar platforms) for colleges and universities.
+  Campus Cash is like DoorDash + Venmo (or a combination of similar platforms) for colleges and universities.
 
 Goal:
   My goal is very simple: to make sure students in all colleges and universities feel more entitled and independent about their "campus cash/food"; I want to provide students more control over their "campus cash", which includes:
